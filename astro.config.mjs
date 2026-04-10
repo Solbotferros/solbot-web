@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import { locales, defaultLang } from './src/lib/i18n/locales';
-import { routingConfig } from '@lib/i18n/router';
+import { routingConfig } from './src/lib/i18n/router';
 
 // https://astro.build/config
 export default defineConfig({
