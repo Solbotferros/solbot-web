@@ -15,7 +15,6 @@ export default defineConfig({
   },
 
   vite: {
-    // @ts-ignore
     plugins: [tailwindcss()],
   },
 });
