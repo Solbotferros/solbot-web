@@ -1,17 +1,32 @@
 ---
-import Header from '@components/layout/Header.astro';
 import Footer from '@components/layout/Footer.astro';
+import Header from '@components/layout/Header.astro';
 
 import '@styles/global.css';
 
+import type { Language } from '@lib/i18n/types';
+
+import { translatePathname } from '@lib/i18n/utils';
+
 const { title, description } = Astro.props;
 
-const lang = Astro.currentLocale || 'es';
+import { locales, defaultLang } from '@lib/i18n/locales';
+
+const lang = Astro.currentLocale as Language;
+
+// SEO for multilingual sites: Generate alternate URLs for each locale
+const currentPath = Astro.url.pathname;
+const siteUrl = Astro.site?.origin ?? 'https://solbot-herreria.es';
+// Build alternate URLs by translating the current path for each locale
+const alternateUrls = Object.fromEntries(
+  locales.map((l) => [l, `${siteUrl}${translatePathname(currentPath, l)}`]),
+);
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
+    <!-- GENERAL META TAGS -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -19,6 +34,15 @@ const lang = Astro.currentLocale || 'es';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- SEO: canonical link -->
+    <link rel="canonical" href={alternateUrls[lang]} />
+
+    <!-- SEO: hreflang alternates for multilingual site -->
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={alternateUrls[l]} />)}
+
+    <!-- SEO: x-default alternate -->
+    <link rel="alternate" hreflang="x-default" href={alternateUrls[defaultLang]} />
   </head>
   <body>
     <Header />
