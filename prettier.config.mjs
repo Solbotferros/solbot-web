@@ -12,7 +12,7 @@ export default {
   tabWidth: 2,
   useTabs: false,
   semi: true,
-  singleQuote: false,
+  singleQuote: true,
   trailingComma: 'all',
   printWidth: 100,
 };
