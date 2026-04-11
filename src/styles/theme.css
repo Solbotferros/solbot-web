@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Base colors */
+  --color-brand: oklch(0.72 0.16 88);
+  --color-brand-soft: oklch(from var(--color-brand) calc(l + 0.16) calc(c * 0.35) h);
+  --color-brand-muted: oklch(from var(--color-brand) calc(l + 0.08) calc(c * 0.55) h);
+  --color-brand-strong: oklch(from var(--color-brand) calc(l - 0.1) calc(c * 0.95) h);
+  --color-brand-emphasis: oklch(from var(--color-brand) calc(l - 0.18) calc(c * 0.75) h);
+
+  /* Neutral anchors */
+  --color-neutral-base: oklch(0.97 0.004 85);
+  --color-neutral-strong: oklch(0.22 0.006 85);
+
+  /* Semantic tokens exposed to Tailwind */
+  --color-bg: var(--color-neutral-base);
+  --color-bg-subtle: oklch(from var(--color-bg) calc(l - 0.03) c h);
+  --color-surface: oklch(1 0 0);
+  --color-surface-hover: oklch(from var(--color-surface) calc(l - 0.03) c h);
+  --color-surface-elevated: oklch(1 0 0);
+  --color-surface-accent: var(--color-brand-soft);
+
+  --color-text: var(--color-neutral-strong);
+  --color-text-muted: oklch(from var(--color-text) calc(l + 0.22) calc(c * 0.5) h);
+  --color-text-soft: oklch(from var(--color-text) calc(l + 0.36) calc(c * 0.35) h);
+
+  --color-primary: var(--color-brand);
+  --color-primary-hover: var(--color-brand-strong);
+  --color-primary-active: var(--color-brand-emphasis);
+  --color-accent: var(--color-brand-muted);
+
+  --color-border: oklch(from var(--color-bg) calc(l - 0.1) 0.01 h);
+  --color-border-strong: oklch(from var(--color-bg) calc(l - 0.16) 0.012 h);
+
+  --color-muted: var(--color-bg-subtle);
+
+  --color-on-primary: oklch(0.18 0.01 85);
+  --color-on-accent: oklch(0.18 0.01 85);
+
+  --color-header-bg: color-mix(in oklab, var(--color-surface) 82%, transparent);
+  --color-on-header: var(--color-text);
+  --color-header-border: color-mix(in oklab, var(--color-border) 70%, transparent);
+
+  --color-scrim: color-mix(in oklab, black 18%, transparent);
+  --color-on-scrim: oklch(0.97 0.004 85);
+
+  --color-glow: color-mix(in oklab, var(--color-brand) 30%, transparent);
+  --color-focus: color-mix(in oklab, var(--color-brand) 45%, white 55%);
+}
+
+@layer base {
+  :root,
+  [data-theme='light'] {
+    color-scheme: light;
+
+    /* Brand */
+    --color-brand: oklch(0.72 0.16 88);
+    --color-brand-soft: oklch(from var(--color-brand) calc(l + 0.16) calc(c * 0.35) h);
+    --color-brand-muted: oklch(from var(--color-brand) calc(l + 0.08) calc(c * 0.55) h);
+    --color-brand-strong: oklch(from var(--color-brand) calc(l - 0.1) calc(c * 0.95) h);
+    --color-brand-emphasis: oklch(from var(--color-brand) calc(l - 0.18) calc(c * 0.75) h);
+
+    /* Neutrals */
+    --color-neutral-base: oklch(0.975 0.004 85);
+    --color-neutral-strong: oklch(0.22 0.006 85);
+
+    /*
+      ΔL suaves en light
+      bg -> bg-subtle -> surface-hover
+    */
+    --color-bg: var(--color-neutral-base);
+    --color-bg-subtle: oklch(from var(--color-bg) calc(l - 0.03) c h);
+    --color-surface: oklch(0.995 0.002 85);
+    --color-surface-hover: oklch(from var(--color-surface) calc(l - 0.03) c h);
+    --color-surface-elevated: oklch(1 0 0);
+    --color-surface-accent: var(--color-brand-soft);
+
+    --color-text: var(--color-neutral-strong);
+    --color-text-muted: oklch(from var(--color-text) calc(l + 0.22) calc(c * 0.55) h);
+    --color-text-soft: oklch(from var(--color-text) calc(l + 0.36) calc(c * 0.4) h);
+
+    --color-primary: var(--color-brand);
+    --color-primary-hover: var(--color-brand-strong);
+    --color-primary-active: var(--color-brand-emphasis);
+    --color-accent: var(--color-brand-muted);
+
+    --color-border: oklch(from var(--color-bg) calc(l - 0.1) 0.01 h);
+    --color-border-strong: oklch(from var(--color-bg) calc(l - 0.16) 0.012 h);
+
+    --color-muted: var(--color-bg-subtle);
+
+    --color-on-primary: oklch(0.18 0.01 85);
+    --color-on-accent: oklch(0.18 0.01 85);
+
+    --color-header-bg: color-mix(in oklab, var(--color-surface) 82%, transparent);
+    --color-on-header: var(--color-text);
+    --color-header-border: color-mix(in oklab, var(--color-border) 70%, transparent);
+
+    --color-scrim: color-mix(in oklab, black 18%, transparent);
+    --color-on-scrim: oklch(0.97 0.004 85);
+
+    --color-glow: color-mix(in oklab, var(--color-brand) 30%, transparent);
+    --color-focus: color-mix(in oklab, var(--color-brand) 40%, white 60%);
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    /*
+      En dark sube un poco la luz del amarillo para que no se apague.
+    */
+    --color-brand: oklch(0.78 0.15 88);
+    --color-brand-soft: oklch(from var(--color-brand) calc(l - 0.42) calc(c * 0.35) h);
+    --color-brand-muted: oklch(from var(--color-brand) calc(l - 0.28) calc(c * 0.5) h);
+    --color-brand-strong: oklch(from var(--color-brand) calc(l + 0.06) calc(c * 0.95) h);
+    --color-brand-emphasis: oklch(from var(--color-brand) calc(l + 0.12) calc(c * 0.8) h);
+
+    /* Neutrals */
+    --color-neutral-base: oklch(0.16 0.006 85);
+    --color-neutral-strong: oklch(0.94 0.004 85);
+
+    /*
+      delta de luminancia aproximadamente el doble que en light
+      más separación entre capas para que dark respire bien
+    */
+    --color-bg: var(--color-neutral-base);
+    --color-bg-subtle: oklch(from var(--color-bg) calc(l + 0.06) c h);
+    --color-surface: oklch(from var(--color-bg) calc(l + 0.08) c h);
+    --color-surface-hover: oklch(from var(--color-surface) calc(l + 0.06) c h);
+    --color-surface-elevated: oklch(from var(--color-surface) calc(l + 0.08) c h);
+    --color-surface-accent: var(--color-brand-muted);
+
+    --color-text: var(--color-neutral-strong);
+    --color-text-muted: oklch(from var(--color-text) calc(l - 0.16) calc(c * 0.6) h);
+    --color-text-soft: oklch(from var(--color-text) calc(l - 0.28) calc(c * 0.45) h);
+
+    /*
+      En dark el hover del primary suele ir hacia más luz, no menos.
+    */
+    --color-primary: var(--color-brand);
+    --color-primary-hover: var(--color-brand-strong);
+    --color-primary-active: var(--color-brand-emphasis);
+    --color-accent: oklch(from var(--color-brand) calc(l - 0.06) calc(c * 0.9) h);
+
+    --color-border: oklch(from var(--color-bg) calc(l + 0.12) 0.01 h);
+    --color-border-strong: oklch(from var(--color-bg) calc(l + 0.18) 0.012 h);
+
+    --color-muted: var(--color-bg-subtle);
+
+    --color-on-primary: oklch(0.18 0.01 85);
+    --color-on-accent: oklch(0.18 0.01 85);
+
+    --color-header-bg: color-mix(in oklab, var(--color-bg) 76%, transparent);
+    --color-on-header: var(--color-text);
+    --color-header-border: color-mix(in oklab, var(--color-brand) 16%, transparent);
+
+    --color-scrim: color-mix(in oklab, black 45%, transparent);
+    --color-on-scrim: oklch(0.97 0.004 85);
+
+    --color-glow: color-mix(in oklab, var(--color-brand) 38%, transparent);
+    --color-focus: color-mix(in oklab, var(--color-brand) 50%, white 20%);
+  }
+}
