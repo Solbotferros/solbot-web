@@ -35,11 +35,13 @@ const logoClass = responsive ? logoSizeClasses[size] : '';
 
 <div class={`flex items-center ${className}`}>
   <Logo class={logoClass} size={responsive ? 'xs' : size} />
-  <div class="ml-3 sm:ml-4 md:ml-5">
+  <div>
     {
       showText && (
-        <span class={`font-serif leading-loose font-semibold tracking-[0.25em] ${textClass}`}>
-          Solbot
+        <span
+          class={`font-orbitron leading-loose font-semibold tracking-normal uppercase ${textClass}`}
+        >
+          Sol<span class="text-amber-300">bot</span>
           {/* {BUSINESS_INFO.nombre} */}
         </span>
       )
