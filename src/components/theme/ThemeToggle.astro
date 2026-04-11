@@ -1,6 +1,10 @@
 ---
 import SunIcon from '@components/icons/SunIcon.astro';
 import MoonIcon from '@components/icons/MoonIcon.astro';
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const t = useTranslations(Astro.currentLocale as Language);
 ---
 
 <div id="theme-toggle" aria-label="Seleccionar tema">
@@ -8,7 +12,7 @@ import MoonIcon from '@components/icons/MoonIcon.astro';
     type="button"
     class="theme-toggle__option"
     data-theme-option="light"
-    aria-label="Activar tema claro"
+    aria-label={t('theme.aria-light')}
     aria-pressed="false"
   >
     <SunIcon />
@@ -18,7 +22,7 @@ import MoonIcon from '@components/icons/MoonIcon.astro';
     type="button"
     class="theme-toggle__option"
     data-theme-option="dark"
-    aria-label="Activar tema oscuro"
+    aria-label={t('theme.aria-dark')}
     aria-pressed="false"
   >
     <MoonIcon />
