@@ -1,0 +1,48 @@
+---
+import Logo from './Logo.astro';
+// import { BUSINESS_INFO } from "@lib/config/business_info";
+
+export interface Props {
+  class?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  showText?: boolean;
+  responsive?: boolean;
+}
+
+const { class: className = '', size = 'md', showText = true, responsive = true } = Astro.props;
+
+const textSizeClasses = {
+  xs: 'text-xs',
+  sm: 'text-sm',
+  md: 'text-xl',
+  lg: 'text-2xl',
+};
+
+const logoSizeClasses = {
+  xs: 'sm:h-10 sm:w-12 md:h-12 md:w-14 lg:h-14 lg:w-16',
+  sm: 'sm:h-12 sm:w-14 md:h-14 md:w-16 lg:h-16 lg:w-20',
+  md: 'sm:h-12 sm:w-14 md:h-14 md:w-16 lg:h-20 lg:w-24',
+  lg: 'sm:h-16 sm:w-20 md:h-20 md:w-24 lg:h-24 lg:w-28',
+};
+
+// Si responsive=true, usa clases de Tailwind; si no, usa el size fijo
+const textClass = responsive
+  ? 'text-sm sm:text-base md:text-xl lg:text-2xl'
+  : textSizeClasses[size];
+
+const logoClass = responsive ? logoSizeClasses[size] : '';
+---
+
+<div class={`flex items-center ${className}`}>
+  <Logo class={logoClass} size={responsive ? 'xs' : size} />
+  <div class="ml-3 sm:ml-4 md:ml-5">
+    {
+      showText && (
+        <span class={`font-serif leading-loose font-semibold tracking-[0.25em] ${textClass}`}>
+          Solbot
+          {/* {BUSINESS_INFO.nombre} */}
+        </span>
+      )
+    }
+  </div>
+</div>

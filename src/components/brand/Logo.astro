@@ -1,0 +1,26 @@
+---
+import Image from 'astro/components/Image.astro';
+import logoSrc from '@assets/brand/logo.png';
+
+export interface Props {
+  class?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+}
+
+const { class: className = '', size = 'md' } = Astro.props;
+
+const sizeClasses = {
+  xs: 'h-6 w-8',
+  sm: 'h-8 w-10',
+  md: 'h-14 w-16',
+  lg: 'h-20 w-24',
+};
+---
+
+<Image
+  src={logoSrc}
+  alt="SolBot Logo"
+  width={200}
+  height={200}
+  class={`${sizeClasses[size]} ${className}`.trim()}
+/>
