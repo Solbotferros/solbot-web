@@ -1,0 +1,43 @@
+/* 1️⃣ Carga de fuentes (self-host vía Fontsource) */
+@import '@fontsource-variable/inter';
+@import '@fontsource/rajdhani/400.css';
+@import '@fontsource/rajdhani/500.css';
+@import '@fontsource/rajdhani/600.css';
+@import '@fontsource/rajdhani/700.css';
+@import '@fontsource-variable/orbitron';
+
+/* 2️⃣ Tokens tipográficos del sistema */
+@theme {
+  /* Familias disponibles */
+  --font-inter: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-dm-serif: 'Rajdhani', serif;
+  --font-orbitron: 'Orbitron Variable', sans-serif;
+
+  /* Defaults del sistema (si no hay selector activo) */
+  --font-default-heading: var(--font-dm-serif);
+  --font-default-body: var(--font-inter);
+}
+
+/* 3️⃣ Aplicación y packs */
+@layer base {
+  :root {
+    /* Canales que usa la UI */
+    --font-heading: var(--font-default-heading);
+    --font-body: var(--font-default-body);
+  }
+
+  /* Aplicación global */
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .heading {
+    font-family: var(--font-heading);
+  }
+}
