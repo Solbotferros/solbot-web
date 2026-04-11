@@ -1,0 +1,45 @@
+---
+interface Props {
+  size?: string | number;
+  width?: string | number;
+  height?: string | number;
+  class?: string;
+  viewBox?: string;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: string | number;
+  ariaHidden?: boolean;
+  title?: string;
+}
+
+const {
+  size = 24,
+  width = size,
+  height = size,
+  class: className = '',
+  viewBox = '0 0 24 24',
+  fill = 'none',
+  stroke = 'currentColor',
+  strokeWidth = 2,
+  ariaHidden = true,
+  title,
+} = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={width}
+  height={height}
+  viewBox={viewBox}
+  fill={fill}
+  stroke={stroke}
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden={ariaHidden ? 'true' : undefined}
+  role={ariaHidden ? undefined : 'img'}
+>
+  {title && <title>{title}</title>}
+  <slot />
+</svg>
