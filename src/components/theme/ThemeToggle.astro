@@ -1,0 +1,161 @@
+---
+import SunIcon from '@components/icons/SunIcon.astro';
+import MoonIcon from '@components/icons/MoonIcon.astro';
+---
+
+<div id="theme-toggle" aria-label="Seleccionar tema">
+  <button
+    type="button"
+    class="theme-toggle__option"
+    data-theme-option="light"
+    aria-label="Activar tema claro"
+    aria-pressed="false"
+  >
+    <SunIcon />
+  </button>
+
+  <button
+    type="button"
+    class="theme-toggle__option"
+    data-theme-option="dark"
+    aria-label="Activar tema oscuro"
+    aria-pressed="false"
+  >
+    <MoonIcon />
+  </button>
+</div>
+
+<script>
+  import { getPreferredTheme, applyTheme, setTheme, type Theme } from '@lib/theme';
+
+  const root = document.querySelector('#theme-toggle');
+  const options = root?.querySelectorAll('[data-theme-option]');
+
+  const updateUI = (theme: Theme) => {
+    if (!root || !options) return;
+
+    root.setAttribute('data-selected', theme);
+
+    options.forEach((option) => {
+      const isActive = option.getAttribute('data-theme-option') === theme;
+      option.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  };
+
+  const theme = getPreferredTheme();
+  applyTheme(theme);
+  updateUI(theme);
+
+  options?.forEach((option) => {
+    option.addEventListener('click', () => {
+      const next = option.getAttribute('data-theme-option');
+      if (next !== 'light' && next !== 'dark') return;
+
+      setTheme(next);
+      updateUI(next);
+    });
+  });
+</script>
+
+<style>
+  #theme-toggle {
+    --toggle-padding: 0.25rem;
+    --toggle-height: 2rem;
+    --option-width: 2.5rem;
+    --option-height: calc(var(--toggle-height) - var(--toggle-padding) * 2);
+
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: repeat(2, var(--option-width));
+    align-items: center;
+    gap: 0;
+
+    padding: var(--toggle-padding);
+    border-radius: 100vh;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: var(--toggle-padding);
+      left: var(--toggle-padding);
+
+      width: var(--option-width);
+      height: var(--option-height);
+
+      border-radius: 999px;
+      background-color: var(--color-surface-elevated);
+      border: 1px solid var(--color-border-strong);
+
+      box-shadow:
+        0 1px 2px rgb(0 0 0 / 0.08),
+        0 4px 12px rgb(0 0 0 / 0.08);
+
+      transition:
+        transform 200ms ease,
+        background-color 200ms ease,
+        border-color 200ms ease,
+        box-shadow 200ms ease;
+
+      pointer-events: none;
+    }
+
+    &[data-selected='dark']::before {
+      transform: translateX(100%);
+    }
+
+    button {
+      position: relative;
+      z-index: 1;
+
+      display: grid;
+      place-items: center;
+      width: var(--option-width);
+      height: var(--option-height);
+
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+
+      transition:
+        color 200ms ease,
+        transform 200ms ease;
+    }
+
+    button[aria-pressed='true'] {
+      color: var(--color-text);
+    }
+
+    button:hover {
+      color: var(--color-text);
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    svg {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  [data-theme='dark'] {
+    #theme-toggle {
+      &::before {
+        box-shadow:
+          0 1px 2px rgb(0 0 0 / 0.16),
+          0 6px 12px rgb(0 0 0 / 0.24);
+      }
+    }
+  }
+</style>

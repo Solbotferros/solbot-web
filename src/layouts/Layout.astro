@@ -43,6 +43,18 @@ const alternateUrls = Object.fromEntries(
 
     <!-- SEO: x-default alternate -->
     <link rel="alternate" hreflang="x-default" href={alternateUrls[defaultLang]} />
+
+    <!-- SCRIPT TEMA -->
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('theme');
+        const system = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        const theme = stored === 'light' || stored === 'dark' ? stored : system ? 'dark' : 'light';
+
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
   </head>
   <body>
     <Header />
