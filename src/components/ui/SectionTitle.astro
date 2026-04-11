@@ -1,0 +1,54 @@
+---
+export interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  titleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  align?: 'left' | 'center' | 'right';
+  class?: string;
+}
+
+export type SectionTitleProps = Props;
+
+const {
+  id = undefined,
+  title,
+  subtitle,
+  titleTag = 'h2',
+  align = 'left',
+  class: className = '',
+}: Props = Astro.props;
+
+const alignClasses = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+};
+
+const titleSizeClasses: Record<NonNullable<Props['titleTag']>, string> = {
+  h1: 'text-3xl sm:text-4xl lg:text-5xl',
+  h2: 'text-2xl sm:text-3xl lg:text-4xl',
+  h3: 'text-xl sm:text-2xl lg:text-3xl',
+  h4: 'text-lg sm:text-xl lg:text-2xl',
+  h5: 'text-base sm:text-lg lg:text-xl',
+  h6: 'text-sm sm:text-base lg:text-lg',
+};
+
+const TitleTag = titleTag;
+---
+
+<div id={id} class={`section-title ${alignClasses[align]} ${className}`}>
+  <TitleTag class={`${titleSizeClasses[titleTag]} font-bold leading-tight text-text`}>
+    {title || <slot name="title" />}
+  </TitleTag>
+
+  {
+    (subtitle || Astro.slots.has('subtitle')) && (
+      <p class="text-text mt-3 text-sm text-balance sm:text-base lg:text-lg">
+        {subtitle || <slot name="subtitle" />}
+      </p>
+    )
+  }
+
+  <slot />
+</div>
