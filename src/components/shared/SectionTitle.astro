@@ -6,6 +6,8 @@ export interface Props {
   titleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   align?: 'left' | 'center' | 'right';
   class?: string;
+  classTitle?: string;
+  classSubtitle?: string;
 }
 
 export type SectionTitleProps = Props;
@@ -17,6 +19,8 @@ const {
   titleTag = 'h2',
   align = 'left',
   class: className = '',
+  classTitle = '',
+  classSubtitle = '',
 }: Props = Astro.props;
 
 const alignClasses = {
@@ -37,14 +41,14 @@ const titleSizeClasses: Record<NonNullable<Props['titleTag']>, string> = {
 const TitleTag = titleTag;
 ---
 
-<div id={id} class={`section-title ${alignClasses[align]} ${className}`}>
-  <TitleTag class={`${titleSizeClasses[titleTag]} font-bold leading-tight text-text`}>
+<div id={id} class={`section-title ${alignClasses[align]}  ${className}`}>
+  <TitleTag class={`${titleSizeClasses[titleTag]} font-bold leading-tight ${classTitle}`}>
     {title || <slot name="title" />}
   </TitleTag>
 
   {
     (subtitle || Astro.slots.has('subtitle')) && (
-      <p class="text-text mt-3 text-sm text-balance sm:text-base lg:text-lg">
+      <p class={`mt-3 text-sm text-balance sm:text-base lg:text-lg ${classSubtitle}`}>
         {subtitle || <slot name="subtitle" />}
       </p>
     )
