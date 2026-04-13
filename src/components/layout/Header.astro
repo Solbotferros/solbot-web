@@ -1,6 +1,7 @@
 ---
 import LogoWithText from '@components/brand/LogoWithText.astro';
 import ButtonLink from '@components/shared/ButtonLink.astro';
+import LanguageSelector from '@components/shared/LanguageSelector.astro';
 import ThemeToggle from '@components/shared/ThemeToggle.astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
@@ -19,6 +20,7 @@ const { t } = useTranslations(Astro.currentLocale as Language);
       >
       <!-- divider -->
       <div class="bg-border h-12 w-px"></div>
+      <LanguageSelector />
       <ThemeToggle />
     </div>
   </div>

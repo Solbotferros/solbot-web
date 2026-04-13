@@ -1,0 +1,135 @@
+---
+import { locales } from '@lib/i18n/locales';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+
+const currentLocale = (Astro.currentLocale as Language) ?? 'es';
+const { t } = useTranslations(currentLocale);
+
+const currentPath = Astro.url.pathname;
+
+const items = locales.map((locale) => ({
+  code: locale,
+  label: locale.toUpperCase(),
+  href: useTranslatedPath(locale)(currentPath),
+  isActive: locale === currentLocale,
+}));
+---
+
+<nav class="language-switcher" aria-label={t('language.aria-label')}>
+  <ul class="language-switcher__list">
+    {
+      items.map((item, index) => (
+        <li class="language-switcher__item">
+          <a
+            href={item.href}
+            hreflang={item.code}
+            lang={item.code}
+            aria-current={item.isActive ? 'page' : undefined}
+            class:list={['language-switcher__link', { 'is-active': item.isActive }]}
+          >
+            {item.label}
+          </a>
+
+          {index < items.length - 1 && (
+            <span class="language-switcher__separator" aria-hidden="true">
+              ·
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .language-switcher {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .language-switcher__list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .language-switcher__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .language-switcher__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 2rem;
+    padding: 0 0.125rem;
+
+    color: var(--color-text-muted);
+    text-decoration: none;
+
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.04em;
+
+    transition:
+      color 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .language-switcher__link:hover {
+    color: var(--color-text);
+  }
+
+  .language-switcher__link:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 0.2rem;
+    border-radius: 0.25rem;
+  }
+
+  .language-switcher__link.is-active,
+  .language-switcher__link[aria-current='page'] {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .language-switcher__separator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 0.35rem;
+    color: var(--color-text-muted);
+    opacity: 0.55;
+
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .language-switcher__link {
+    position: relative;
+  }
+
+  .language-switcher__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 1.5px;
+
+    background-color: transparent;
+    transition: background-color 180ms ease;
+  }
+
+  .language-switcher__link.is-active::after,
+  .language-switcher__link[aria-current='page']::after {
+    background-color: hsl(from var(--color-text) h s l / 0.75);
+  }
+</style>
