@@ -1,13 +1,25 @@
 ---
 import LogoWithText from '@components/brand/LogoWithText.astro';
 import ThemeToggle from '@components/theme/ThemeToggle.astro';
+import ButtonLink from '@components/shared/ButtonLink.astro';
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const t = useTranslations(Astro.currentLocale as Language);
 ---
 
-<header class="bg-bg/80 sticky top-0 right-0 left-0 z-100 p-4 pb-0 backdrop-blur-md">
+<header class="bg-bg/80 sticky top-0 right-0 left-0 z-100 p-4 pb-0 backdrop-blur-xl">
   <div
     class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-xl"
   >
     <LogoWithText size="sm" />
-    <ThemeToggle />
+    <div class="flex items-center gap-6">
+      <ButtonLink href="/contacto" variant="primary" size="sm" class="mr-4"
+        >{t('hero.mainCTA')}</ButtonLink
+      >
+      <!-- divider -->
+      <div class="bg-border h-12 w-px"></div>
+      <ThemeToggle />
+    </div>
   </div>
 </header>
