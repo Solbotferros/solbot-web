@@ -1,0 +1,29 @@
+---
+import type { ServiceCardContent } from '@lib/business/services';
+
+interface Props extends ServiceCardContent {
+  href?: string;
+}
+
+const { title, description, tags, href } = Astro.props;
+const Component = href ? 'a' : 'article';
+---
+
+<Component
+  href={href}
+  class="group focus-visible:ring-accent border-border bg-surface block rounded-2xl border p-6 transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+>
+  <h3 class="text-lg font-semibold">{title}</h3>
+
+  <p class="text-text/80 mt-2 text-sm leading-6">
+    {description}
+  </p>
+
+  <ul class="mt-4 flex flex-wrap gap-2" aria-label={`Etiquetas de ${title}`}>
+    {
+      tags.map((tag) => (
+        <li class="bg-surface-accent rounded-full px-3 py-1 text-xs font-medium">{tag}</li>
+      ))
+    }
+  </ul>
+</Component>

@@ -1,0 +1,37 @@
+---
+import ServiceCard from '@components/home/services/ServiceCard.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
+
+import type { ServiceCardContent } from '@lib/business/services';
+import { services } from '@lib/business/services';
+
+import { translations } from '@lib/i18n/translations/translations';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const { tn } = useTranslations(Astro.currentLocale as Language);
+
+type HomeServicesSection = typeof translations.es.home.services;
+
+const section = tn<HomeServicesSection>('home.services');
+---
+
+<section class="mx-auto max-w-6xl px-8">
+  <SectionTitle title={section.title} subtitle={section.description} />
+
+  <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      services.map((service) => {
+        const content = section.items[service.key] as ServiceCardContent;
+
+        return (
+          <ServiceCard
+            title={content.title}
+            description={content.description}
+            tags={content.tags}
+            href={`/${service.slug}`}
+          />
+        );
+      })
+    }
+  </div>
+</section>

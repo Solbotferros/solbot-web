@@ -12,6 +12,12 @@ export interface BusinessService {
   featured?: boolean;
 }
 
+export interface ServiceCardContent {
+  readonly title: string;
+  readonly description: string;
+  readonly tags: readonly string[];
+}
+
 export const services: BusinessService[] = [
   {
     key: 'metal_structures',

@@ -5,7 +5,10 @@
  */
 
 import type { languages } from './locales';
+import { homeTranslations } from './translations/home';
 import type { translations } from './translations/translations';
+
+export type HomeServicesSection = typeof homeTranslations.es.home.services;
 
 export type Language = keyof typeof languages;
 
