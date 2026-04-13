@@ -14,9 +14,11 @@ import { locales, defaultLang } from '@lib/i18n/locales';
 
 const lang = Astro.currentLocale as Language;
 
+const fullTitle = title ? `${title} | Solbot Ferros` : 'Solbot Ferros';
+
 // SEO for multilingual sites: Generate alternate URLs for each locale
 const currentPath = Astro.url.pathname;
-const siteUrl = Astro.site?.origin ?? 'https://solbot-herreria.es';
+const siteUrl = Astro.site?.origin ?? 'https://solbot-ferros.es';
 // Build alternate URLs by translating the current path for each locale
 const alternateUrls = Object.fromEntries(
   locales.map((l) => [l, `${siteUrl}${translatePathname(currentPath, l)}`]),
@@ -32,7 +34,7 @@ const alternateUrls = Object.fromEntries(
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
 
     <!-- SEO: canonical link -->

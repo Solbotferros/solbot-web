@@ -1,16 +1,22 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import Hero from '@components/home/Hero.astro';
+import Services from '@components/home/Services.astro';
 import About from '@components/home/About.astro';
 import Projects from '@components/home/Projects.astro';
 import Contact from '@components/home/Contact.astro';
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const t = useTranslations(Astro.currentLocale as Language);
 ---
 
-<Layout title="Home Page">
+<Layout title={t('home.title')} description={t('home.description')}>
   <div class="space-y-32">
     <Hero />
-    <About />
+    <Services />
     <Projects />
+    <About />
     <Contact />
   </div>
 </Layout>
