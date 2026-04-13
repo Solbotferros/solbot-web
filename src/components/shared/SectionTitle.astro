@@ -16,8 +16,8 @@ const {
   id = undefined,
   title,
   subtitle,
+  align,
   titleTag = 'h2',
-  align = 'left',
   class: className = '',
   classTitle = '',
   classSubtitle = '',
@@ -41,8 +41,10 @@ const titleSizeClasses: Record<NonNullable<Props['titleTag']>, string> = {
 const TitleTag = titleTag;
 ---
 
-<div id={id} class={`section-title ${alignClasses[align]}  ${className}`}>
-  <TitleTag class={`${titleSizeClasses[titleTag]} font-bold leading-tight ${classTitle}`}>
+<div id={id} class={`section-title ${align ? alignClasses[align] : ''} ${className}`}>
+  <TitleTag
+    class={`${titleSizeClasses[titleTag]} font-bold leading-tight text-balance ${classTitle}`}
+  >
     {title || <slot name="title" />}
   </TitleTag>
 
