@@ -1,6 +1,10 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import ButtonLink from '@components/shared/ButtonLink.astro';
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const t = useTranslations(Astro.currentLocale as Language);
 ---
 
 <section class="relative mt-20 min-h-[80vh] px-6 sm:px-8 lg:px-12">
@@ -12,17 +16,18 @@ import ButtonLink from '@components/shared/ButtonLink.astro';
     >
       <SectionTitle
         titleTag="h1"
-        title="Herrería y mobiliario metálico a medida"
+        title={t('hero.title')}
         class="text-center lg:text-left"
-        classTitle="text-4xl sm:text-6xl lg:text-7xl"
-        subtitle="Diseñamos y fabricamos soluciones duraderas para viviendas, negocios y proyectos a medida, con un acabado profesional."
+        subtitle={t('hero.description')}
         classSubtitle="text-text/90"
       />
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-        <ButtonLink href="/contacto" variant="primary" size="lg"> Pide tu presupuesto </ButtonLink>
+        <ButtonLink href="/contacto" variant="primary" size="lg">{t('hero.mainCTA')}</ButtonLink>
 
-        <ButtonLink href="/proyectos" variant="outline" size="lg"> Ver proyectos </ButtonLink>
+        <ButtonLink href="/proyectos" variant="outline" size="lg"
+          >{t('hero.secondaryCTA')}</ButtonLink
+        >
       </div>
     </div>
 
