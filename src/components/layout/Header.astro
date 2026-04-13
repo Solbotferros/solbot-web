@@ -3,7 +3,11 @@ import LogoWithText from '@components/brand/LogoWithText.astro';
 import ThemeToggle from '@components/theme/ThemeToggle.astro';
 ---
 
-<header class="grid grid-cols-[1fr_auto] items-center gap-4 px-4 py-2">
-  <LogoWithText />
-  <ThemeToggle />
+<header class="sticky top-0 right-0 left-0 z-100 p-4 pb-0">
+  <div
+    class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-lg"
+  >
+    <LogoWithText size="sm" />
+    <ThemeToggle />
+  </div>
 </header>
