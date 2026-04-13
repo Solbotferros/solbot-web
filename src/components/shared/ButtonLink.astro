@@ -1,0 +1,69 @@
+---
+export interface Props {
+  href?: string;
+  isExternal?: boolean;
+  class?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
+}
+
+const {
+  href = '#',
+  isExternal = false,
+  class: className = '',
+  variant = 'primary',
+  size = 'md',
+  fullWidth = false,
+}: Props = Astro.props;
+
+const sizeClasses = {
+  sm: 'h-10 px-4 text-sm',
+  md: 'h-11 px-4 text-sm sm:h-12 sm:px-5 sm:text-base',
+  lg: 'h-12 px-5 text-base sm:h-14 sm:px-6 sm:text-lg',
+};
+
+const variantClasses = {
+  primary: [
+    'bg-primary text-on-primary',
+    'border border-transparent',
+    'shadow-sm',
+    'hover:brightness-110',
+    'active:brightness-95',
+  ].join(' '),
+
+  secondary: [
+    'bg-surface text-text',
+    'border border-border',
+    'shadow-sm',
+    'hover:bg-surface-hover',
+  ].join(' '),
+
+  outline: ['bg-transparent text-text', 'border border-border', 'hover:bg-bg-subtle'].join(' '),
+
+  ghost: ['bg-transparent text-text', 'border border-transparent', 'hover:bg-bg-subtle'].join(' '),
+};
+
+const classes = [
+  'inline-flex items-center justify-center',
+  'rounded-xl font-semibold whitespace-nowrap',
+  'transition-colors duration-200',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+  'ring-offset-bg',
+  sizeClasses[size],
+  variantClasses[variant],
+  fullWidth ? 'w-full' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  class={classes}
+>
+  <slot />
+</a>
