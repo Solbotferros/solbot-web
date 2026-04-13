@@ -9,7 +9,7 @@
   }
 
   body {
-    color: var(--text-color);
-    background-color: var(--bg-color);
+    color: var(--color-text);
+    background-color: var(--color-bg);
   }
 }
