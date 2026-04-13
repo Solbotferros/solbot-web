@@ -4,7 +4,7 @@ import SectionTitle from '@components/shared/SectionTitle.astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
-const t = useTranslations(Astro.currentLocale as Language);
+const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
 <section class="relative mt-20 min-h-[80vh] px-6 sm:px-8 lg:px-12">
@@ -16,17 +16,19 @@ const t = useTranslations(Astro.currentLocale as Language);
     >
       <SectionTitle
         titleTag="h1"
-        title={t('hero.title')}
+        title={t('home.hero.title')}
         class="text-center lg:text-left"
-        subtitle={t('hero.description')}
+        subtitle={t('home.hero.description')}
         classSubtitle="text-text/80 text-balance"
       />
 
       <div class="flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-        <ButtonLink href="/contacto" variant="primary" size="lg">{t('hero.mainCTA')}</ButtonLink>
+        <ButtonLink href="/contacto" variant="primary" size="lg"
+          >{t('home.hero.mainCTA')}</ButtonLink
+        >
 
         <ButtonLink href="/proyectos" variant="outline" size="lg"
-          >{t('hero.secondaryCTA')}</ButtonLink
+          >{t('home.hero.secondaryCTA')}</ButtonLink
         >
       </div>
     </div>

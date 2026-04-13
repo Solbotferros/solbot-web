@@ -3,9 +3,10 @@
  */
 
 import { defaultLang } from './locales';
-import { translations } from './translations';
-import { type Language, type TranslationKeys } from './types';
 import { routeSegments, routingConfig, segmentToKey } from './router';
+import { translations } from './translations/translations';
+import type { TranslationKeys, TranslationNodeKeys } from './types';
+import { type Language } from './types';
 
 const { prefixDefaultLocale } = routingConfig;
 
@@ -15,8 +16,13 @@ export type { Language };
  * Accede a valores anidados en un objeto usando notación de puntos
  * Ejemplo: getNestedValue({ nav: { home: 'Inicio' } }, 'nav.home') -> 'Inicio'
  */
-function getNestedValue(obj: any, path: string): string {
-  return path.split('.').reduce((current, key) => current?.[key], obj) ?? path;
+function getNestedValue(obj: unknown, path: string): unknown {
+  return path.split('.').reduce((current, key) => {
+    if (current && typeof current === 'object' && key in current) {
+      return (current as Record<string, unknown>)[key];
+    }
+    return undefined;
+  }, obj);
 }
 
 /**
@@ -26,11 +32,19 @@ function getNestedValue(obj: any, path: string): string {
  * Uso: const t = useTranslations('es'); t('nav.home')
  */
 export function useTranslations(lang: keyof typeof translations) {
-  return function t(key: TranslationKeys): string {
-    return (
-      getNestedValue(translations[lang], key) || getNestedValue(translations[defaultLang], key)
-    );
-  };
+  function t(key: TranslationKeys): string {
+    const value =
+      getNestedValue(translations[lang], key) ?? getNestedValue(translations[defaultLang], key);
+
+    return typeof value === 'string' ? value : key;
+  }
+
+  function tn<T = unknown>(key: TranslationNodeKeys): T {
+    return (getNestedValue(translations[lang], key) ??
+      getNestedValue(translations[defaultLang], key)) as T;
+  }
+
+  return { t, tn };
 }
 
 /**

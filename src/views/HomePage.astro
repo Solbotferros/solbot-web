@@ -13,7 +13,7 @@ import WhyUs from '@components/home/WhyUs.astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
-const t = useTranslations(Astro.currentLocale as Language);
+const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
 <Layout title={t('home.title')} description={t('home.description')}>

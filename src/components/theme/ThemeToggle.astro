@@ -4,7 +4,7 @@ import MoonIcon from '@components/icons/MoonIcon.astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
-const t = useTranslations(Astro.currentLocale as Language);
+const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
 <div id="theme-toggle" aria-label="Seleccionar tema">
@@ -30,7 +30,7 @@ const t = useTranslations(Astro.currentLocale as Language);
 </div>
 
 <script>
-  import { getPreferredTheme, applyTheme, setTheme, type Theme } from '@lib/theme';
+  import { applyTheme, getPreferredTheme, setTheme, type Theme } from '@lib/theme';
 
   const root = document.querySelector('#theme-toggle');
   const options = root?.querySelectorAll('[data-theme-option]');

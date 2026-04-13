@@ -1,11 +1,11 @@
 ---
 import LogoWithText from '@components/brand/LogoWithText.astro';
-import ThemeToggle from '@components/theme/ThemeToggle.astro';
 import ButtonLink from '@components/shared/ButtonLink.astro';
+import ThemeToggle from '@components/theme/ThemeToggle.astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
-const t = useTranslations(Astro.currentLocale as Language);
+const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
 <header class="bg-bg/80 sticky top-0 right-0 left-0 z-100 p-4 pb-0 backdrop-blur-xl">
@@ -15,7 +15,7 @@ const t = useTranslations(Astro.currentLocale as Language);
     <LogoWithText size="sm" />
     <div class="flex items-center gap-6">
       <ButtonLink href="/contacto" variant="primary" size="sm" class="mr-4"
-        >{t('hero.mainCTA')}</ButtonLink
+        >{t('home.hero.mainCTA')}</ButtonLink
       >
       <!-- divider -->
       <div class="bg-border h-12 w-px"></div>
