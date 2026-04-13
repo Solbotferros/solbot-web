@@ -41,7 +41,7 @@ const titleSizeClasses: Record<NonNullable<Props['titleTag']>, string> = {
 const TitleTag = titleTag;
 ---
 
-<div id={id} class={`section-title ${align ? alignClasses[align] : ''} ${className}`}>
+<div id={id} class={`mb-8 ${align ? alignClasses[align] : ''} ${className}`}>
   <TitleTag
     class={`${titleSizeClasses[titleTag]} font-bold leading-tight text-balance ${classTitle}`}
   >
