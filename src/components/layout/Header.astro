@@ -9,19 +9,23 @@ import { useTranslations, type Language } from '@lib/i18n/utils';
 const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
-<header class="bg-bg/80 sticky top-0 right-0 left-0 z-100 p-4 pb-0 backdrop-blur-xl">
-  <div
-    class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-xl"
-  >
-    <LogoWithText size="sm" />
-    <div class="flex items-center gap-6">
-      <ButtonLink href="/contacto" variant="primary" size="sm" class="mr-4"
-        >{t('home.hero.mainCTA')}</ButtonLink
-      >
-      <!-- divider -->
-      <div class="bg-border h-12 w-px"></div>
-      <LanguageSelector />
-      <ThemeToggle />
+<header class="sticky top-0 z-100">
+  <div class="bg-bg/80 p-4 pb-0 backdrop-blur-xl">
+    <div
+      class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-xl"
+    >
+      <LogoWithText size="sm" />
+
+      <div class="flex items-center gap-6">
+        <ButtonLink href="/contacto" variant="primary" size="sm" class="mr-4">
+          {t('home.hero.mainCTA')}
+        </ButtonLink>
+
+        <div class="bg-border h-12 w-px"></div>
+
+        <LanguageSelector />
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 </header>
