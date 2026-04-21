@@ -1,0 +1,32 @@
+---
+import LegalPage from '@views/LegalPage.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+// Genera /es/legal/* y /en/legal/* en build
+export async function getStaticPaths() {
+  const pages = await getCollection('legal', ({ id }) => id.startsWith('en/'));
+
+  return pages.map((page: CollectionEntry<'legal'>) => {
+    let [_, slug] = page.id.split('/');
+
+    return {
+      params: { slug },
+      props: { page },
+    };
+  });
+}
+
+type Props = {
+  page: CollectionEntry<'legal'>;
+};
+
+const { page } = Astro.props;
+
+// Render MDX como componente
+const { Content } = await render(page);
+
+// Metadatos vienen del frontmatter
+const { title, description, updatedAt } = page.data;
+---
+
+<LegalPage title={title} description={description} updatedAt={updatedAt} Content={Content} />
