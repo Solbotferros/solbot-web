@@ -4,9 +4,11 @@ import ButtonLink from '@components/shared/ButtonLink.astro';
 import LanguageSelector from '@components/shared/LanguageSelector.astro';
 import ThemeToggle from '@components/shared/ThemeToggle.astro';
 
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
-const { t } = useTranslations(Astro.currentLocale as Language);
+const currentLocale = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(currentLocale);
+const { t } = useTranslations(currentLocale);
 ---
 
 <header class="sticky top-0 z-100">
@@ -14,10 +16,12 @@ const { t } = useTranslations(Astro.currentLocale as Language);
     <div
       class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-xl"
     >
-      <LogoWithText size="sm" />
+      <a href={trPath('/')}>
+        <LogoWithText size="sm" />
+      </a>
 
       <div class="flex items-center gap-6">
-        <ButtonLink href="/contacto" variant="primary" size="sm" class="mr-4">
+        <ButtonLink href={trPath('/contacto')} variant="primary" size="sm" class="mr-4">
           {t('home.hero.mainCTA')}
         </ButtonLink>
 
