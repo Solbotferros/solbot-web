@@ -1,0 +1,17 @@
+---
+import LegalLayout from '@layouts/LegalLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  updatedAt?: Date;
+  id?: string;
+  Content: any; // componente MDX renderizado
+}
+
+const { title, description, updatedAt, Content } = Astro.props;
+---
+
+<LegalLayout title={title} description={description} updatedAt={updatedAt}>
+  <Content />
+</LegalLayout>
