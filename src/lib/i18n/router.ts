@@ -1,3 +1,4 @@
+import { routeSegmentsByGroup } from './segments/segments';
 import type { RouteSegments } from './types';
 
 /**
@@ -17,28 +18,16 @@ export const routingConfig = {
  */
 export const routeSegments: RouteSegments = {
   es: {
-    // servicios: "servicios",
-    // obra: "obra",
-    legal: 'legal',
-    // proyectos: "proyectos",
-    privacidad: 'privacidad',
-    // "aviso-legal": "aviso-legal",
+    ...routeSegmentsByGroup.common.es,
+    ...routeSegmentsByGroup.legal.es,
   },
   ca: {
-    // servicios: "servei",
-    // obra: "obra",
-    legal: 'legal',
-    // proyectos: "projectes",
-    privacidad: 'privacitat',
-    // "aviso-legal": "avis-legal",
+    ...routeSegmentsByGroup.common.ca,
+    ...routeSegmentsByGroup.legal.ca,
   },
   en: {
-    // servicios: "services",
-    // obra: "work",
-    legal: 'legal',
-    // proyectos: "projects",
-    privacidad: 'privacy',
-    // "aviso-legal": "legal-notice",
+    ...routeSegmentsByGroup.common.en,
+    ...routeSegmentsByGroup.legal.en,
   },
 };
 /**
