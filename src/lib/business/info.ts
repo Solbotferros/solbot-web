@@ -1,4 +1,6 @@
 const businessInfo = {
+  //TODO: Revisar el CIF/NIF correcto de la empresa
+  taxId: 'REVISAR-12345678A',
   name: 'Solbot Ferros, S.L.',
   description:
     'Empresa especializada en carpinteria metálica, ofreciendo soluciones de alta calidad para proyectos residenciales y comerciales.',
