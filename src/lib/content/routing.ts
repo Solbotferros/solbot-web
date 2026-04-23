@@ -1,7 +1,7 @@
 import { createLocaleRecord } from '@lib/i18n/locale-record';
 import type { RouteSegments } from '@lib/i18n/types';
 import { getCollection, type CollectionKey } from 'astro:content';
-import { parseLocalizedEntryId } from './entries';
+import { getEntryKey, getEntryLang, getEntrySlug } from './entries';
 
 export async function generateCollectionRouteSegments(
   collection: CollectionKey,
@@ -11,10 +11,11 @@ export async function generateCollectionRouteSegments(
   const segments = createLocaleRecord<Record<string, string>>(() => ({}));
 
   for (const entry of entries) {
-    const { key, lang } = parseLocalizedEntryId(entry.id);
+    const key = getEntryKey(entry);
+    const lang = getEntryLang(entry);
+    const slug = getEntrySlug(entry);
 
-    const data = entry.data as { localizedSlug?: string };
-    segments[lang][key] = data.localizedSlug ?? key;
+    segments[lang][key] = slug;
   }
 
   return segments;
