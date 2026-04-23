@@ -10,6 +10,8 @@ export const commonTranslations = {
     time: {
       published: 'Publicado',
       lastUpdated: 'Última actualización',
+      readingTime: 'Tiempo de lectura',
+      minuteShort: 'min',
     },
   },
 
@@ -24,6 +26,8 @@ export const commonTranslations = {
     time: {
       published: 'Publicat',
       lastUpdated: 'Última actualització',
+      readingTime: 'Temps de lectura',
+      minutesShort: 'min',
     },
   },
 
@@ -38,6 +42,8 @@ export const commonTranslations = {
     time: {
       published: 'Published',
       lastUpdated: 'Last updated',
+      readingTime: 'Reading time',
+      minutesShort: 'min',
     },
   },
 } as const;

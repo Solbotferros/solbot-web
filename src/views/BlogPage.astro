@@ -10,10 +10,20 @@ interface Props {
   coverImage?: any;
   coverAlt?: string;
   Content: any;
+  readingTime?: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, coverImage, coverAlt, Content } =
-  Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  tags,
+  coverImage,
+  coverAlt,
+  Content,
+  readingTime,
+} = Astro.props;
 ---
 
 <BlogLayout
@@ -24,6 +34,7 @@ const { title, description, pubDate, updatedDate, tags, coverImage, coverAlt, Co
   tags={tags}
   coverImage={coverImage}
   coverAlt={coverAlt}
+  readingTime={readingTime}
 >
   <Content />
 </BlogLayout>
