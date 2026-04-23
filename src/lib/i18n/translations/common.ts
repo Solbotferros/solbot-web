@@ -8,6 +8,7 @@ export const commonTranslations = {
       'aria-label': 'Selecciona el idioma',
     },
     time: {
+      published: 'Publicado',
       lastUpdated: 'Última actualización',
     },
   },
@@ -21,6 +22,7 @@ export const commonTranslations = {
       'aria-label': "Selecciona l'idioma",
     },
     time: {
+      published: 'Publicat',
       lastUpdated: 'Última actualització',
     },
   },
@@ -34,6 +36,7 @@ export const commonTranslations = {
       'aria-label': 'Select language',
     },
     time: {
+      published: 'Published',
       lastUpdated: 'Last updated',
     },
   },
