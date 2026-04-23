@@ -1,7 +1,6 @@
-// src/lib/i18n/router.ts
+import { initRouteSegments } from './generated-segments/init';
+import { getRouteSegmentsSync, getSegmentToKeySync } from './generated-segments/store';
 import { defaultLang } from './locales';
-import { initRouteSegments } from './segments/init';
-import { getRouteSegmentsSync, getSegmentToKeySync } from './segments/store';
 
 export async function ensureRouterReady() {
   await initRouteSegments();

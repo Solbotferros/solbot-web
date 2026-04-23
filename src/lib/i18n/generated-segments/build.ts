@@ -2,7 +2,7 @@ import { generateCollectionRouteSegments } from '@lib/content/routing';
 import { createLocaleRecord } from '../locale-record';
 import { locales } from '../locales';
 import type { Language, RouteSegments } from '../types';
-import { routeSegmentsByGroup } from './segments';
+import { routeSegmentsByGroup } from '../manual-segments';
 
 const localizedCollections = ['legal'] as const;
 
