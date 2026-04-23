@@ -1,7 +1,7 @@
 import { createLocaleRecord } from '@lib/i18n/locale-record';
 import type { RouteSegments } from '@lib/i18n/types';
 import { getCollection, type CollectionKey } from 'astro:content';
-import { parseLocalizedEntryId } from './ids';
+import { parseLocalizedEntryId } from './entries';
 
 export async function generateCollectionRouteSegments(
   collection: CollectionKey,
