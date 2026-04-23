@@ -3,7 +3,8 @@
  */
 
 import { defaultLang } from './locales';
-import { routeSegments, routingConfig, segmentToKey } from './router';
+import { getRouteSegments, getSegmentToKey } from './router';
+import { routingConfig } from './routing-config';
 import { translations } from './translations/translations';
 import type { TranslationKeys, TranslationNodeKeys } from './types';
 import { type Language } from './types';
@@ -52,6 +53,7 @@ export function useTranslations(lang: keyof typeof translations) {
  * Ejemplo: stripLangPrefix('/es/servicios') -> { lang: 'es', rest: '/servicios' }
  */
 function stripLangPrefix(pathname: string): { lang?: string; rest: string } {
+  const routeSegments = getRouteSegments();
   const parts = pathname.split('/').filter(Boolean);
   const maybeLang = parts[0];
   if (maybeLang && maybeLang in routeSegments) {
@@ -70,6 +72,9 @@ function stripLangPrefix(pathname: string): { lang?: string; rest: string } {
  * Ejemplo: translatePathname('/es/servicios?id=1#section', 'en') -> '/en/services?id=1#section'
  */
 export function translatePathname(pathname: string, to: Language): string {
+  const routeSegments = getRouteSegments();
+  const segmentToKey = getSegmentToKey();
+
   // Separar y preservar fragment y query string
   let [pathAndQuery, ...hashParts] = pathname.split('#');
   const hashFragment = hashParts.length > 0 ? '#' + hashParts.join('#') : '';
