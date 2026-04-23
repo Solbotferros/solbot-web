@@ -1,0 +1,96 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const { t: trUI } = useTranslations(Astro.currentLocale as Language);
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  coverImage?: any;
+  coverAlt?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  tags = [],
+  coverImage,
+  coverAlt = title,
+} = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <article class="mx-auto mt-16 max-w-4xl px-8 sm:px-12 lg:px-16">
+    <header class="mb-10">
+      <div class="text-text-muted mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <p>
+          {trUI('time.published')}:{' '}
+          {
+            pubDate.toLocaleDateString(Astro.currentLocale, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </p>
+
+        {
+          updatedDate && (
+            <p>
+              {trUI('time.lastUpdated')}:{' '}
+              {updatedDate.toLocaleDateString(Astro.currentLocale, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </p>
+          )
+        }
+      </div>
+
+      <h1 class="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+        {title}
+      </h1>
+
+      {
+        description && (
+          <p class="text-text-muted mt-4 max-w-2xl text-base leading-7 sm:text-lg">{description}</p>
+        )
+      }
+
+      {
+        tags.length > 0 && (
+          <div class="mt-6 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span class="border-border bg-surface text-text-muted rounded-full border px-3 py-1 text-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      coverImage && (
+        <div class="border-border bg-surface mb-10 overflow-hidden rounded-2xl border">
+          <Image src={coverImage} alt={coverAlt} class="h-auto w-full object-cover" />
+        </div>
+      )
+    }
+
+    <main
+      class="prose prose-blog prose-headings:tracking-tight prose-headings:font-semibold prose-h2:mt-14 prose-h2:mb-5 prose-h3:mt-10 prose-h3:mb-4 prose-p:leading-8 prose-li:leading-8 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic prose-pre:rounded-2xl prose-pre:px-5 prose-pre:py-4 prose-img:rounded-2xl max-w-none"
+    >
+      <slot />
+    </main>
+  </article>
+</Layout>

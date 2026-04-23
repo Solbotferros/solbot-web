@@ -1,0 +1,29 @@
+---
+import BlogLayout from '@layouts/BlogLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  coverImage?: any;
+  coverAlt?: string;
+  Content: any;
+}
+
+const { title, description, pubDate, updatedDate, tags, coverImage, coverAlt, Content } =
+  Astro.props;
+---
+
+<BlogLayout
+  title={title}
+  description={description}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  tags={tags}
+  coverImage={coverImage}
+  coverAlt={coverAlt}
+>
+  <Content />
+</BlogLayout>
