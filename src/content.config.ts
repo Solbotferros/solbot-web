@@ -11,6 +11,7 @@ const legal = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
+    localizedSlug: z.string().optional(),
     updatedAt: z.coerce.date().optional(),
   }),
 });
