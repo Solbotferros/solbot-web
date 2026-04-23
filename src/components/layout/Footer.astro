@@ -1,18 +1,18 @@
 ---
-import { parseCollectionId } from '@lib/content/utils';
+import { getEntrySlug } from '@lib/content/entries';
 import { useTranslatedPath, type Language } from '@lib/i18n/utils';
 import { getCollection } from 'astro:content';
 
 const currentLocale = Astro.currentLocale as Language;
 const trPath = useTranslatedPath(currentLocale);
-const legals = await getCollection('legal', ({ id }) => id.startsWith(`${currentLocale}/`));
+const legals = await getCollection('legal', ({ id }) => id.endsWith(`/${currentLocale}`));
 ---
 
 <footer>
   <ul class="flex gap-4">
     {
       legals.map((legal) => {
-        const { slug } = parseCollectionId(legal.id);
+        const slug = getEntrySlug(legal);
         return (
           <li>
             <a href={trPath(`${currentLocale}/legal/${slug}`)}>{legal.data.title}</a>
