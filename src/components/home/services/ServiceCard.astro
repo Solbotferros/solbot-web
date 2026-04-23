@@ -1,4 +1,5 @@
 ---
+import Pill from '@components/shared/Pill.astro';
 import type { ServiceCardContent } from '@lib/business/services';
 
 interface Props extends ServiceCardContent {
@@ -22,7 +23,9 @@ const Component = href ? 'a' : 'article';
   <ul class="mt-4 flex flex-wrap gap-2" aria-label={`Etiquetas de ${title}`}>
     {
       tags.map((tag) => (
-        <li class="bg-surface-accent rounded-full px-3 py-1 text-xs font-medium">{tag}</li>
+        <Pill as="li" variant="soft" tone="accent" size="xs" class="font-medium">
+          {tag}
+        </Pill>
       ))
     }
   </ul>

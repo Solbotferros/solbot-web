@@ -1,0 +1,48 @@
+---
+export interface Props {
+  as?: 'span' | 'li';
+  variant?: 'soft' | 'outlined';
+  tone?: 'neutral' | 'accent';
+  size?: 'xs' | 'sm';
+  class?: string;
+}
+
+const {
+  as = 'span',
+  variant = 'soft',
+  tone = 'neutral',
+  size = 'sm',
+  class: className = '',
+}: Props = Astro.props;
+
+const toneClasses = {
+  neutral: {
+    soft: 'bg-surface text-text-muted',
+    outlined: 'border-border bg-surface text-text-muted border',
+  },
+  accent: {
+    soft: 'bg-surface-accent text-text',
+    outlined: 'border-border bg-surface-accent text-text border',
+  },
+};
+
+const sizeClasses = {
+  xs: 'px-3 py-1 text-xs',
+  sm: 'px-3 py-1 text-sm',
+};
+
+const classes = [
+  'inline-flex items-center rounded-full whitespace-nowrap',
+  toneClasses[tone][variant],
+  sizeClasses[size],
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const Tag = as;
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>
