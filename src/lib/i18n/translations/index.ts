@@ -1,7 +1,7 @@
 import { blogTranslations } from './blog';
 import { commonTranslations } from './common';
 import { homeTranslations } from './home';
-import { whyUsTranslations } from './whyus';
+import { whyUsTranslations } from './whyUs';
 
 export const translations = {
   es: {
