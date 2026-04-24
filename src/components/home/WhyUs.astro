@@ -1,7 +1,41 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
+import { translations } from '@lib/i18n/translations';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+import businessInfo from '@lib/business/info';
+
+const { tn } = useTranslations(Astro.currentLocale as Language);
+
+type WhyUsSection = typeof translations.es.whyUs;
+
+const section = tn<WhyUsSection>('whyUs');
 ---
 
-<section class="mx-auto max-w-4xl">
-  <SectionTitle title="¿Por qué elegirnos?" />
+<section class="mx-auto grid max-w-6xl gap-12 px-8 md:grid-cols-[0.85fr_1.15fr] md:items-start">
+  <div class="md:sticky md:top-36">
+    <p class="text-primary mb-3 text-sm font-semibold tracking-wide uppercase">
+      {businessInfo.shortName}
+    </p>
+
+    <SectionTitle title={section.title} subtitle={section.subtitle} />
+  </div>
+
+  <div class="space-y-8">
+    {
+      section.items.map((item, index) => (
+        <article class="border-border grid gap-4 border-b pb-8 last:border-b-0 last:pb-0 sm:grid-cols-[3rem_1fr]">
+          <div class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full text-sm leading-none font-bold">
+            {String(index + 1).padStart(2, '0')}
+          </div>
+
+          <div>
+            <h3 class="text-text text-xl font-semibold">{item.title}</h3>
+
+            <p class="text-text-muted mt-2 text-base leading-7">{item.description}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
 </section>
