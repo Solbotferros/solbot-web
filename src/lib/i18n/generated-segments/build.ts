@@ -1,10 +1,10 @@
 import { generateCollectionRouteSegments } from '@lib/content/routing';
 import { createLocaleRecord } from '../locale-record';
 import { locales } from '../locales';
-import type { Language, RouteSegments } from '../types';
 import { routeSegmentsByGroup } from '../manual-segments';
+import type { Language, RouteSegments } from '../types';
 
-const localizedCollections = ['legal'] as const;
+const localizedCollections = ['legal', 'blog'] as const;
 
 function getManualRouteSegments(): Record<Language, Record<string, string>> {
   const manual = createLocaleRecord<Record<string, string>>(() => ({}));
