@@ -15,7 +15,7 @@ const legals = await getCollection('legal', ({ id }) => id.endsWith(`/${currentL
         const slug = getEntrySlug(legal);
         return (
           <li>
-            <a href={trPath(`${currentLocale}/legal/${slug}`)}>{legal.data.title}</a>
+            <a href={trPath(`/legal/${slug}`)}>{legal.data.title}</a>
           </li>
         );
       })
