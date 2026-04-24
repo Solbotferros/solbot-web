@@ -1,7 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro';
 
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { formatLongDate, useTranslations, type Language } from '@lib/i18n/utils';
 
 const { t: trUI } = useTranslations(Astro.currentLocale as Language);
 
@@ -22,12 +22,7 @@ const { title, description, updatedAt } = Astro.props;
       {
         updatedAt && (
           <p class="text-text/60 mt-2 text-sm">
-            {trUI('time.lastUpdated')}:{' '}
-            {updatedAt.toLocaleDateString(Astro.currentLocale, {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+            {trUI('time.lastUpdated')}: {formatLongDate(updatedAt, Astro.currentLocale as Language)}
           </p>
         )
       }

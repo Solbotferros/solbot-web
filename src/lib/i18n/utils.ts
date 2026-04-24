@@ -11,6 +11,12 @@ import { type Language } from './types';
 
 const { prefixDefaultLocale } = routingConfig;
 
+const longDateFormatOptions: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+
 export type { Language };
 
 /**
@@ -130,4 +136,11 @@ export function translatePathname(pathname: string, to: Language): string {
  */
 export function useTranslatedPath(lang: Language) {
   return (path: string) => translatePathname(path, lang);
+}
+
+/**
+ * Formatea una fecha en formato largo localizado (día mes año)
+ */
+export function formatLongDate(date: Date, locale: Language): string {
+  return date.toLocaleDateString(locale, longDateFormatOptions);
 }

@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
 import BlogCta from '@components/blog/BlogCta.astro';
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { formatLongDate, useTranslations, type Language } from '@lib/i18n/utils';
 
 const { t: trUI } = useTranslations(Astro.currentLocale as Language);
 
@@ -35,16 +35,11 @@ const {
   cta,
 } = Astro.props;
 
-const formatDate = (date: Date) =>
-  date.toLocaleDateString(Astro.currentLocale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-const formattedPubDate = formatDate(pubDate);
+const formattedPubDate = formatLongDate(pubDate, Astro.currentLocale as Language);
 const formattedUpdatedDate =
-  updatedDate && updatedDate.getTime() > pubDate.getTime() ? formatDate(updatedDate) : null;
+  updatedDate && updatedDate.getTime() > pubDate.getTime()
+    ? formatLongDate(updatedDate, Astro.currentLocale as Language)
+    : null;
 ---
 
 <Layout title={title} description={description}>
