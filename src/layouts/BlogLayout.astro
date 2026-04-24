@@ -17,6 +17,10 @@ interface Props {
   coverImage?: any;
   coverAlt?: string;
   readingTime?: number;
+  cta?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 const {
@@ -28,6 +32,7 @@ const {
   coverImage,
   coverAlt = title,
   readingTime,
+  cta,
 } = Astro.props;
 
 const formatDate = (date: Date) =>
@@ -101,6 +106,6 @@ const formattedUpdatedDate =
       <slot />
     </main>
 
-    <BlogCta />
+    <BlogCta title={`${cta?.title}`} description={`${cta?.description}`} />
   </article>
 </Layout>

@@ -39,6 +39,13 @@ const blog = defineCollection({
       coverImage: image().optional(),
       coverAlt: z.string().optional(),
 
+      cta: z
+        .object({
+          title: z.string().optional(),
+          description: z.string().optional(),
+        })
+        .optional(),
+
       seoTitle: z.string().optional(),
       canonical: z.url().optional(),
       noindex: z.boolean().default(false),

@@ -11,6 +11,10 @@ interface Props {
   coverAlt?: string;
   Content: any;
   readingTime?: number;
+  cta?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 const {
@@ -23,6 +27,7 @@ const {
   coverAlt,
   Content,
   readingTime,
+  cta,
 } = Astro.props;
 ---
 
@@ -35,6 +40,7 @@ const {
   coverImage={coverImage}
   coverAlt={coverAlt}
   readingTime={readingTime}
+  cta={cta}
 >
   <Content />
 </BlogLayout>
