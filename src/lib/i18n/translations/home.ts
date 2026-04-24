@@ -13,6 +13,11 @@ export const homeTranslations = {
         secondaryCTA: 'Ver proyectos',
       },
 
+      blog: {
+        title: 'Consejos y guías',
+        viewAll: 'Ver todos los artículos',
+      },
+
       services: {
         title: 'Servicios de carpintería metálica en Barcelona',
         description:
@@ -63,14 +68,19 @@ export const homeTranslations = {
     home: {
       title: 'Ferreria i estructures metàl·liques a mida a Barcelona',
       description:
-        'Fabricació i instal·lació d’estructures metàl·liques, portes, reixes, baranes i mobiliari a mida per a habitatges, negocis i indústria a Barcelona, Maresme i Vallès.',
+        "Fabricació i instal·lació d'estructures metàl·liques, portes, reixes, baranes i mobiliari a mida per a habitatges, negocis i indústria a Barcelona, Maresme i Vallès.",
 
       hero: {
         title: 'Ferreria i estructures metàl·liques a mida a Barcelona',
         description:
-          'Fabricació i instal·lació d’estructures metàl·liques, portes i mobiliari a mida per a habitatges i negocis a Barcelona, Maresme i Vallès. Materials duradors i acabats professionals.',
+          "Fabricació i instal·lació d'estructures metàl·liques, portes i mobiliari a mida per a habitatges i negocis a Barcelona, Maresme i Vallès. Materials duradors i acabats professionals.",
         mainCTA: 'Demana pressupost',
         secondaryCTA: 'Veure projectes',
+      },
+
+      blog: {
+        title: 'Consells i guies',
+        viewAll: 'Veure tots els articles',
       },
 
       services: {
@@ -81,7 +91,7 @@ export const homeTranslations = {
           metal_structures: {
             title: 'Estructures metàl·liques',
             description:
-              'Disseny, fabricació i instal·lació d’estructures metàl·liques a mida per a projectes residencials, comercials i industrials.',
+              "Disseny, fabricació i instal·lació d'estructures metàl·liques a mida per a projectes residencials, comercials i industrials.",
             tags: ['Reforços estructurals', 'Escales metàl·liques', 'Plataformes i suports'],
           },
           metalwork: {
@@ -100,7 +110,7 @@ export const homeTranslations = {
             title: 'Portes i tancaments',
             description:
               'Portes metàl·liques, tanques i tancaments per a accessos, parcel·les, negocis, naus i zones privades.',
-            tags: ['Portes d’accés', 'Tancaments', 'Tanques i reixes'],
+            tags: ["Portes d'accés", 'Tancaments', 'Tanques i reixes'],
           },
           pergolas_and_outdoors: {
             title: 'Pèrgoles i exteriors',
@@ -111,7 +121,7 @@ export const homeTranslations = {
           welding_and_repairs: {
             title: 'Soldadura i reparacions',
             description:
-              'Serveis de soldadura professional i reparació d’estructures metàl·liques danyades, oxidades o que requereixen reforç.',
+              "Serveis de soldadura professional i reparació d'estructures metàl·liques danyades, oxidades o que requereixen reforç.",
             tags: ['MIG/MAG i TIG', 'Reparacions', 'Servei urgent'],
           },
         },
@@ -131,6 +141,11 @@ export const homeTranslations = {
           'Design, fabrication and installation of metal structures, gates and bespoke furniture for homes and businesses in Barcelona, Maresme and Vallès. Durable materials and professional finishes.',
         mainCTA: 'Request a quote',
         secondaryCTA: 'View projects',
+      },
+
+      blog: {
+        title: 'Tips and guides',
+        viewAll: 'View all articles',
       },
 
       services: {
