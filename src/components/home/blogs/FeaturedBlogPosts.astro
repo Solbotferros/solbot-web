@@ -1,0 +1,81 @@
+---
+import { getEntryLang, getEntrySlug } from '@lib/content/entries';
+import type { Language } from '@lib/i18n/types';
+import { useTranslations } from '@lib/i18n/utils';
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  lang: Language;
+  limit?: number;
+}
+
+const { t: trUI } = useTranslations(Astro.currentLocale as Language);
+
+const { lang, limit = 3 } = Astro.props;
+
+const posts = await getCollection('blog', (entry) => {
+  return !entry.data.draft && entry.data.featured && getEntryLang(entry) === lang;
+});
+
+const featuredPosts = posts
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, limit);
+
+const getPostUrl = (post: CollectionEntry<'blog'>) => {
+  return `/${lang}/blog/${getEntrySlug(post)}`;
+};
+---
+
+{
+  featuredPosts.length > 0 && (
+    <div class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(min(100%,19rem),22rem))] gap-6">
+      {featuredPosts.map((post, i) => (
+        <a
+          href={getPostUrl(post)}
+          class="group border-border bg-surface hover:border-border-strong hover:bg-surface-hover relative block overflow-visible rounded-2xl border transition duration-300"
+        >
+          {i === 0 && (
+            <span class="border-border bg-primary text-on-primary absolute -top-2 -right-2 z-20 rounded-full border px-4 py-1.5 text-xs font-semibold shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[-4deg]">
+              {trUI('blog.new')}
+            </span>
+          )}
+          {post.data.coverImage && (
+            <div class="overflow-hidden rounded-t-2xl">
+              <Image
+                src={post.data.coverImage}
+                alt={post.data.coverAlt ?? post.data.title}
+                class="aspect-16/10 w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+          )}
+
+          <div class="p-6">
+            <p class="text-text-soft text-sm">
+              {post.data.pubDate.toLocaleDateString(lang, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </p>
+
+            <h3 class="text-text group-hover:text-primary mt-3 text-xl leading-snug font-semibold tracking-tight transition">
+              {post.data.title}
+            </h3>
+
+            <p class="text-text-muted mt-3 line-clamp-3 text-sm leading-6">
+              {post.data.description}
+            </p>
+
+            <span class="text-primary mt-5 inline-flex items-center text-sm font-semibold">
+              {trUI('blog.readArticle')}
+              <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  )
+}
