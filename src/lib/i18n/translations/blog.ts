@@ -10,6 +10,7 @@ export const blogTranslations = {
         phoneHint: 'También puedes llamarnos al',
       },
       readArticle: 'Leer artículo',
+      new: 'Nuevo',
     },
   },
   ca: {
@@ -23,6 +24,7 @@ export const blogTranslations = {
         phoneHint: 'També pots trucar-nos al',
       },
       readArticle: 'Llegir article',
+      new: 'Nou',
     },
   },
   en: {
@@ -35,6 +37,7 @@ export const blogTranslations = {
         phoneHint: 'You can also call us at',
       },
       readArticle: 'Read article',
+      new: 'New',
     },
   },
 } as const;
