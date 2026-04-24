@@ -57,8 +57,10 @@
     --color-brand: oklch(0.72 0.16 88);
     --color-brand-soft: oklch(from var(--color-brand) calc(l + 0.16) calc(c * 0.35) h);
     --color-brand-muted: oklch(from var(--color-brand) calc(l + 0.08) calc(c * 0.55) h);
-    --color-brand-strong: oklch(from var(--color-brand) calc(l - 0.1) calc(c * 0.95) h);
-    --color-brand-emphasis: oklch(from var(--color-brand) calc(l - 0.18) calc(c * 0.75) h);
+
+    /* Hover/active menos apagados */
+    --color-brand-strong: oklch(from var(--color-brand) calc(l + 0.035) calc(c * 1.03) h);
+    --color-brand-emphasis: oklch(from var(--color-brand) calc(l - 0.035) calc(c * 1.02) h);
 
     /* Neutrals */
     --color-neutral-base: oklch(0.965 0.012 82);
@@ -111,7 +113,7 @@
     */
     --color-brand: oklch(0.78 0.15 88);
     --color-brand-soft: oklch(from var(--color-brand) calc(l - 0.42) calc(c * 0.35) h);
-    --color-brand-muted: oklch(from var(--color-brand) calc(l - 0.28) calc(c * 0.5) h);
+    --color-brand-muted: oklch(from var(--color-brand) calc(l - 0.22) calc(c * 0.55) h);
     --color-brand-strong: oklch(from var(--color-brand) calc(l + 0.06) calc(c * 0.95) h);
     --color-brand-emphasis: oklch(from var(--color-brand) calc(l + 0.12) calc(c * 0.8) h);
 
