@@ -1,0 +1,48 @@
+---
+import { getEntrySlug } from '@lib/content/entries';
+import { calculateReadingTime } from '@lib/content/reading-time';
+import BlogPage from '@views/BlogPage.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+// Genera páginas en build
+export async function getStaticPaths() {
+  const pages = await getCollection('blog', ({ id }) => id.endsWith('/es'));
+
+  return pages.map((page: CollectionEntry<'blog'>) => {
+    const slug = getEntrySlug(page);
+
+    return {
+      params: { slug },
+      props: { page },
+    };
+  });
+}
+
+type Props = {
+  page: CollectionEntry<'blog'>;
+};
+
+const { page } = Astro.props;
+
+// Render MDX como componente
+const { Content } = await render(page);
+
+// Calcular reading time
+const readingTime = calculateReadingTime(page.body ?? '').minutes;
+
+// Metadatos vienen del frontmatter
+const { title, description, pubDate, updatedDate, tags, coverImage, coverAlt, cta } = page.data;
+---
+
+<BlogPage
+  title={title}
+  description={description}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  tags={tags}
+  coverImage={coverImage}
+  coverAlt={coverAlt}
+  cta={cta}
+  Content={Content}
+  readingTime={readingTime}
+/>
