@@ -61,19 +61,19 @@
     --color-brand-emphasis: oklch(from var(--color-brand) calc(l - 0.18) calc(c * 0.75) h);
 
     /* Neutrals */
-    --color-neutral-base: oklch(0.975 0.004 85);
-    --color-neutral-strong: oklch(0.22 0.006 85);
+    --color-neutral-base: oklch(0.965 0.012 82);
+    --color-neutral-strong: oklch(0.22 0.012 80);
 
     /*
-      ΔL suaves en light
+      delta L suaves en light
       bg -> bg-subtle -> surface-hover
     */
     --color-bg: var(--color-neutral-base);
-    --color-bg-subtle: oklch(from var(--color-bg) calc(l - 0.03) c h);
-    --color-surface: oklch(0.995 0.002 85);
-    --color-surface-hover: oklch(from var(--color-surface) calc(l - 0.03) c h);
-    --color-surface-elevated: oklch(1 0 0);
-    --color-surface-accent: var(--color-brand-soft);
+    --color-bg-subtle: oklch(from var(--color-bg) calc(l - 0.035) calc(c * 1.2) h);
+    --color-surface: oklch(0.985 0.008 82);
+    --color-surface-hover: oklch(from var(--color-surface) calc(l - 0.035) calc(c * 1.2) h);
+    --color-surface-elevated: oklch(0.995 0.006 82);
+    --color-surface-accent: color-mix(in oklab, var(--color-brand) 22%, var(--color-surface));
 
     --color-text: var(--color-neutral-strong);
     --color-text-muted: oklch(from var(--color-text) calc(l + 0.22) calc(c * 0.55) h);
@@ -84,8 +84,8 @@
     --color-primary-active: var(--color-brand-emphasis);
     --color-accent: var(--color-brand-muted);
 
-    --color-border: oklch(from var(--color-bg) calc(l - 0.1) 0.01 h);
-    --color-border-strong: oklch(from var(--color-bg) calc(l - 0.16) 0.012 h);
+    --color-border: oklch(from var(--color-bg) calc(l - 0.12) 0.018 h);
+    --color-border-strong: oklch(from var(--color-bg) calc(l - 0.2) 0.02 h);
 
     --color-muted: var(--color-bg-subtle);
 
@@ -116,19 +116,19 @@
     --color-brand-emphasis: oklch(from var(--color-brand) calc(l + 0.12) calc(c * 0.8) h);
 
     /* Neutrals */
-    --color-neutral-base: oklch(0.16 0.006 85);
-    --color-neutral-strong: oklch(0.94 0.004 85);
+    --color-neutral-base: oklch(0.19 0.014 82);
+    --color-neutral-strong: oklch(0.93 0.01 82);
 
     /*
       delta de luminancia aproximadamente el doble que en light
       más separación entre capas para que dark respire bien
     */
     --color-bg: var(--color-neutral-base);
-    --color-bg-subtle: oklch(from var(--color-bg) calc(l + 0.06) c h);
-    --color-surface: oklch(from var(--color-bg) calc(l + 0.08) c h);
-    --color-surface-hover: oklch(from var(--color-surface) calc(l + 0.06) c h);
-    --color-surface-elevated: oklch(from var(--color-surface) calc(l + 0.08) c h);
-    --color-surface-accent: var(--color-brand-muted);
+    --color-bg-subtle: oklch(from var(--color-bg) calc(l + 0.065) calc(c * 1.1) h);
+    --color-surface: oklch(from var(--color-bg) calc(l + 0.095) calc(c * 1.15) h);
+    --color-surface-hover: oklch(from var(--color-bg) calc(l + 0.14) calc(c * 1.2) h);
+    --color-surface-elevated: oklch(from var(--color-bg) calc(l + 0.17) calc(c * 1.2) h);
+    --color-surface-accent: color-mix(in oklab, var(--color-brand) 18%, var(--color-surface));
 
     --color-text: var(--color-neutral-strong);
     --color-text-muted: oklch(from var(--color-text) calc(l - 0.16) calc(c * 0.6) h);
@@ -142,8 +142,8 @@
     --color-primary-active: var(--color-brand-emphasis);
     --color-accent: oklch(from var(--color-brand) calc(l - 0.06) calc(c * 0.9) h);
 
-    --color-border: oklch(from var(--color-bg) calc(l + 0.12) 0.01 h);
-    --color-border-strong: oklch(from var(--color-bg) calc(l + 0.18) 0.012 h);
+    --color-border: oklch(from var(--color-bg) calc(l + 0.14) 0.018 h);
+    --color-border-strong: oklch(from var(--color-bg) calc(l + 0.23) 0.022 h);
 
     --color-muted: var(--color-bg-subtle);
 
