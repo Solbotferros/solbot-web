@@ -5,7 +5,7 @@
 import { defaultLang } from './locales';
 import { getRouteSegments, getSegmentToKey } from './router';
 import { routingConfig } from './routing-config';
-import { translations } from './translations/translations';
+import { translations } from './translations';
 import type { TranslationKeys, TranslationNodeKeys } from './types';
 import { type Language } from './types';
 

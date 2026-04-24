@@ -5,7 +5,7 @@ import SectionTitle from '@components/shared/SectionTitle.astro';
 import type { ServiceCardContent } from '@lib/business/services';
 import { services } from '@lib/business/services';
 
-import { translations } from '@lib/i18n/translations/translations';
+import { translations } from '@lib/i18n/translations';
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
 const { tn } = useTranslations(Astro.currentLocale as Language);

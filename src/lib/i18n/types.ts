@@ -5,8 +5,8 @@
  */
 
 import type { languages } from './locales';
+import type { translations } from './translations';
 import { homeTranslations } from './translations/home';
-import type { translations } from './translations/translations';
 
 export type HomeServicesSection = typeof homeTranslations.es.home.services;
 
