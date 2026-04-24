@@ -1,10 +1,11 @@
 import { generateCollectionRouteSegments } from '@lib/content/routing';
+import type { CollectionKey } from 'astro:content';
 import { createLocaleRecord } from '../locale-record';
 import { locales } from '../locales';
 import { routeSegmentsByGroup } from '../manual-segments';
 import type { Language, RouteSegments } from '../types';
 
-const localizedCollections = ['legal', 'blog'] as const;
+const localizedCollections = ['legal', 'blog'] as const satisfies readonly CollectionKey[];
 
 function getManualRouteSegments(): Record<Language, Record<string, string>> {
   const manual = createLocaleRecord<Record<string, string>>(() => ({}));
