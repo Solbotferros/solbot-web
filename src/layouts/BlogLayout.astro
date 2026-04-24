@@ -3,6 +3,7 @@ import Pill from '@components/shared/Pill.astro';
 import Layout from '@layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
+import BlogCta from '@components/blog/BlogCta.astro';
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
 const { t: trUI } = useTranslations(Astro.currentLocale as Language);
@@ -99,5 +100,7 @@ const formattedUpdatedDate =
     >
       <slot />
     </main>
+
+    <BlogCta />
   </article>
 </Layout>
