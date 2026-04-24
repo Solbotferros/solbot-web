@@ -4,7 +4,7 @@ localizedSlug: 'escaleras-metalicas-viviendas-tendencias'
 description: 'Descubre qué diseños, acabados y combinaciones de materiales están marcando tendencia en escaleras metálicas a medida.'
 
 pubDate: '2026-04-21'
-updatedDate: '2026-04-21'
+updatedDate: '2026-04-22'
 
 draft: false
 featured: true
@@ -18,7 +18,11 @@ tags:
   - barcelona
 
 coverImage: './cover.png'
-coverAlt: 'Escalera metálica de interior con estructura negra y peldaños de madera'
+coverAlt: 'Escalera metálica de interior con estructura negra'
+
+cta:
+  title: 'Pide presupuesto para tu escalera metálica a medida'
+  description: 'Cuéntanos tu idea y te asesoramos con la mejor solución para tu vivienda, sin compromiso.'
 
 seoTitle: 'Tendencias en escaleras metálicas para viviendas | Solbot Ferros'
 noindex: false
@@ -100,5 +104,3 @@ En Solbot Ferros fabricamos escaleras metálicas a medida desde nuestro taller e
 Ofrecemos nuestros servicios en el Maresme, Barcelona y Vallès Oriental y Occidental, realizando proyectos de escaleras metálicas a medida en locales comerciales y viviendas particulares en reformas y obra nueva.
 
 Si estás valorando instalar una escalera metálica en tu vivienda, podemos ayudarte a definir la mejor solución según tu espacio y tu presupuesto.
-
-📞 **603 21 15 94** · ✉️ **solbotferros@gmail.com** · 📷 **@solbot.ferros**
