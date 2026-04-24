@@ -9,6 +9,7 @@ export const blogTranslations = {
         primary: 'Pedir presupuesto',
         phoneHint: 'También puedes llamarnos al',
       },
+      readArticle: 'Leer artículo',
     },
   },
   ca: {
@@ -21,6 +22,7 @@ export const blogTranslations = {
         primary: 'Demanar pressupost',
         phoneHint: 'També pots trucar-nos al',
       },
+      readArticle: 'Llegir article',
     },
   },
   en: {
@@ -32,6 +34,7 @@ export const blogTranslations = {
         primary: 'Request a quote',
         phoneHint: 'You can also call us at',
       },
+      readArticle: 'Read article',
     },
   },
 } as const;
