@@ -1,0 +1,12 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import type { Language } from '@lib/i18n/types';
+import FeaturedBlogPosts from './FeaturedBlogPosts.astro';
+
+const lang = Astro.currentLocale as Language;
+---
+
+<section class="mx-auto max-w-4xl">
+  <SectionTitle title="Nuestro Blog" />
+  <FeaturedBlogPosts lang={lang} />
+</section>
