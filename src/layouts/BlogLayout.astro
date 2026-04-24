@@ -28,37 +28,36 @@ const {
   coverAlt = title,
   readingTime,
 } = Astro.props;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString(Astro.currentLocale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+const formattedPubDate = formatDate(pubDate);
+const formattedUpdatedDate =
+  updatedDate && updatedDate.getTime() > pubDate.getTime() ? formatDate(updatedDate) : null;
 ---
 
 <Layout title={title} description={description}>
   <article class="mx-auto mt-16 max-w-4xl px-8 sm:px-12 lg:px-16">
     <header class="mb-10">
-      <div class="text-text-muted mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+      <div class="text-text-muted mb-6 text-sm">
         <p>
-          {trUI('time.published')}:{' '}
-          {
-            pubDate.toLocaleDateString(Astro.currentLocale, {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </p>
-
-        <p>
-          {trUI('time.readingTime')}: {readingTime}
-          {trUI('time.minuteShort')}
+          {trUI('time.published')}
+          <span class="text-text font-medium">{formattedPubDate}</span>
+          {' · '}
+          {trUI('time.readingTime')}
+          <span class="text-text font-medium">{readingTime} {trUI('time.minuteShort')}</span>
         </p>
 
         {
-          updatedDate && (
-            <p>
-              {trUI('time.lastUpdated')}:{' '}
-              {updatedDate.toLocaleDateString(Astro.currentLocale, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+          formattedUpdatedDate && (
+            <p class="mt-1">
+              {trUI('time.lastUpdated')}{' '}
+              <span class="text-text font-medium">{formattedUpdatedDate}</span>
             </p>
           )
         }
