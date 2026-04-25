@@ -1,7 +1,41 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
+import { sectors, type SectorContent } from '@lib/business/sectors';
+import { translations } from '@lib/i18n/translations';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+import { sectorIcons } from '@lib/ui/icons';
+
+const { tn } = useTranslations(Astro.currentLocale as Language);
+
+type SectorsSection = typeof translations.es.sectors;
+
+const section = tn<SectorsSection>('sectors');
 ---
 
-<section class="mx-auto max-w-4xl">
-  <SectionTitle title="Sectores" />
+<section class="mx-auto max-w-6xl px-8">
+  <header class="max-w-2xl">
+    <SectionTitle title={section.title} subtitle={section.subtitle} />
+  </header>
+
+  <div class="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+    {
+      sectors.map((sector) => {
+        const content = section.items[sector.key] as SectorContent;
+        const Icon = sectorIcons[sector.key] ?? null;
+        return (
+          <article class="flex items-start gap-4">
+            <div class="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-full">
+              {Icon && <Icon aria-hidden="true" class="size-6" />}
+            </div>
+
+            <div>
+              <h3 class="text-text text-lg font-semibold">{content.title}</h3>
+
+              <p class="text-text-muted mt-2 text-sm leading-6">{content.description}</p>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
 </section>
