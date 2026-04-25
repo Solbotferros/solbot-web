@@ -14,4 +14,14 @@ export function getSegmentToKey() {
   return getSegmentToKeySync();
 }
 
+export async function getRouteSegmentsAsync() {
+  await ensureRouterReady();
+  return getRouteSegmentsSync();
+}
+
+export async function getSegmentToKeyAsync() {
+  await ensureRouterReady();
+  return getSegmentToKeySync();
+}
+
 export { defaultLang };
