@@ -17,7 +17,7 @@ tags:
   - disseny
   - barcelona
 
-coverImage: './cover.png'
+coverImage: './cover.webp'
 coverAlt: 'Escala metàl·lica d’interior amb estructura negra'
 
 cta:

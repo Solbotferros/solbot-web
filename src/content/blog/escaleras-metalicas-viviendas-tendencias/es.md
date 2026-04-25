@@ -17,7 +17,7 @@ tags:
   - diseño
   - barcelona
 
-coverImage: './cover.png'
+coverImage: './cover.webp'
 coverAlt: 'Escalera metálica de interior con estructura negra'
 
 cta:

@@ -17,7 +17,7 @@ tags:
   - design
   - barcelona
 
-coverImage: './cover.png'
+coverImage: './cover.webp'
 coverAlt: 'Indoor metal staircase with black structure'
 
 cta:
