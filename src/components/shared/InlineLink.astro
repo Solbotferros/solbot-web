@@ -1,0 +1,57 @@
+---
+interface Props {
+  href?: string;
+  as?: 'a' | 'span';
+  id?: string;
+  class?: string;
+}
+
+const { href, as = href ? 'a' : 'span', id, class: className = '' } = Astro.props;
+
+const Tag = as;
+---
+
+<Tag id={id} href={as === 'a' ? href : undefined} class={`inline-link ${className}`}>
+  <span><slot /></span>
+  <span aria-hidden="true" class="inline-link-arrow">→</span>
+</Tag>
+
+<style>
+  .inline-link {
+    position: relative;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .inline-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.15rem;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 180ms ease;
+  }
+
+  .inline-link-arrow {
+    transition: transform 180ms ease;
+  }
+
+  .inline-link:hover::after,
+  :global(.group:hover) .inline-link::after,
+  .inline-link:focus-visible::after {
+    width: 100%;
+  }
+
+  .inline-link:hover .inline-link-arrow,
+  :global(.group:hover) .inline-link-arrow,
+  .inline-link:focus-visible .inline-link-arrow {
+    transform: translateX(0.25rem);
+  }
+</style>

@@ -1,4 +1,5 @@
 ---
+import InlineLink from '@components/shared/InlineLink.astro';
 import { getEntryLang, getEntrySlug } from '@lib/content/entries';
 import type { Language } from '@lib/i18n/types';
 import { formatLongDate, useTranslations } from '@lib/i18n/utils';
@@ -61,12 +62,7 @@ const getPostUrl = (post: CollectionEntry<'blog'>) => {
               {post.data.description}
             </p>
 
-            <span class="text-primary mt-5 inline-flex items-center text-sm font-semibold">
-              {trUI('blog.readArticle')}
-              <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </span>
+            <InlineLink class="mt-4">{trUI('blog.readArticle')}</InlineLink>
           </div>
         </a>
       ))}

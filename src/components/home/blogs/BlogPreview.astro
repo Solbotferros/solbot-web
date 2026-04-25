@@ -1,4 +1,5 @@
 ---
+import InlineLink from '@components/shared/InlineLink.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import type { Language } from '@lib/i18n/types';
 import { useTranslatedPath, useTranslations } from '@lib/i18n/utils';
@@ -13,11 +14,8 @@ const lang = Astro.currentLocale as Language;
   <SectionTitle title={trUI('home.blog.title')} />
   <FeaturedBlogPosts lang={lang} />
   <div class="mt-10 text-center">
-    <a
-      href={trPath('/blog')}
-      class="text-primary hover:text-primary-hover inline-flex items-center gap-1 text-sm font-medium transition"
-    >
-      {trUI('home.blog.viewAll')} →
-    </a>
+    <InlineLink href={trPath('/blog')}>
+      {trUI('home.blog.viewAll')}
+    </InlineLink>
   </div>
 </section>
