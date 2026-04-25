@@ -11,6 +11,10 @@ import ServiceAreas from '@components/home/ServiceAreas.astro';
 import Services from '@components/home/services/Services.astro';
 import WhyUs from '@components/home/WhyUs.astro';
 
+// Ensures the router is ready and route segments are built before rendering the components
+import { ensureRouterReady } from '@lib/i18n/router';
+await ensureRouterReady();
+
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
 const { t } = useTranslations(Astro.currentLocale as Language);
