@@ -1,6 +1,5 @@
 ---
-import SunIcon from '@components/icons/SunIcon.astro';
-import MoonIcon from '@components/icons/MoonIcon.astro';
+import { Sun, Moon } from '@lucide/astro';
 
 import { useTranslations, type Language } from '@lib/i18n/utils';
 
@@ -15,7 +14,7 @@ const { t } = useTranslations(Astro.currentLocale as Language);
     aria-label={t('theme.aria-light')}
     aria-pressed="false"
   >
-    <SunIcon />
+    <Sun />
   </button>
 
   <button
@@ -25,7 +24,7 @@ const { t } = useTranslations(Astro.currentLocale as Language);
     aria-label={t('theme.aria-dark')}
     aria-pressed="false"
   >
-    <MoonIcon />
+    <Moon />
   </button>
 </div>
 
