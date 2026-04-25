@@ -52,7 +52,44 @@ const blog = defineCollection({
     }),
 });
 
+const projects = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      localizedSlug: z.string(),
+
+      location: z.string().optional(),
+      sector: z.enum([
+        'industry',
+        'architecture_and_renovations',
+        'private_clients',
+        'hospitality_and_events',
+        'agriculture',
+      ]),
+      service: z.string().optional(),
+
+      cover: image(),
+      coverAlt: z.string(),
+
+      gallery: z
+        .array(
+          z.object({
+            image: image(),
+            alt: z.string(),
+          }),
+        )
+        .default([]),
+
+      homePreview: z.boolean().default(false),
+      featured: z.boolean().default(false),
+      order: z.number().default(999),
+    }),
+});
+
 export const collections = {
   legal,
   blog,
+  projects,
 };
