@@ -2,17 +2,15 @@
 import Icon from './Icon.astro';
 
 interface Props {
-  size?: string | number;
   class?: string;
   title?: string;
   ariaHidden?: boolean;
 }
 
-const { size = 24, class: className = '', title, ariaHidden } = Astro.props;
+const { class: className = '', title, ariaHidden } = Astro.props;
 ---
 
 <Icon
-  size={size}
   class={className}
   title={title}
   viewBox="0 0 24 24"
