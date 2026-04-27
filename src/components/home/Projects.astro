@@ -1,7 +1,142 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
+import { getEntrySlug } from '@lib/content/entries';
+import type { translations } from '@lib/i18n/translations';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import InlineLink from '../shared/InlineLink.astro';
+
+// Get the current language from Astro's locale
+const lang = Astro.currentLocale as Language;
+
+// Define the type for the projects section translations
+type ProjectSection = typeof translations.es.projects;
+const { tn } = useTranslations(lang);
+const section = tn<ProjectSection>('projects');
+
+// Fetch projects that are marked for home preview and match the current locale
+const homeProjects = await getCollection(
+  'projects',
+  (project) => project.data.homePreview === true && project.id.endsWith(`/${Astro.currentLocale}`),
+);
+
+// Sort projects by order and select the featured one or the first one as fallback
+homeProjects.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)).slice(0, 3);
+const featured = homeProjects.find((project) => project.data.featured) ?? homeProjects[0];
+
+// Helper function to generate project URL based on its slug and current language
+const getProjectUrl = (project: CollectionEntry<'projects'>) => {
+  return `/${lang}/projects/${getEntrySlug(project)}`;
+};
 ---
 
-<section class="mx-auto max-w-4xl">
-  <SectionTitle title="Proyectos" />
-</section>
+{
+  homeProjects.length > 0 && featured && (
+    <section class="mx-auto max-w-6xl px-8">
+      <header class="max-w-2xl">
+        <SectionTitle title={section.title} subtitle={section.subtitle} />
+      </header>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-[1.45fr_0.75fr]">
+        <a
+          class="border-border group bg-surface overflow-hidden rounded-3xl border"
+          href={getProjectUrl(featured)}
+        >
+          <img
+            id="project-image"
+            src={featured.data.cover.src}
+            alt={featured.data.coverAlt}
+            class="aspect-16/10 w-full object-cover"
+          />
+
+          <div class="p-6">
+            {featured.data.location && (
+              <p id="project-location" class="text-primary text-sm font-medium">
+                {featured.data.location}
+              </p>
+            )}
+
+            <h3 id="project-title" class="text-text mt-2 text-2xl font-bold">
+              {featured.data.title}
+            </h3>
+
+            <p id="project-description" class="text-text-muted mt-3 text-base leading-7">
+              {featured.data.description}
+            </p>
+
+            <InlineLink id="project-link" class="mt-5">
+              {section.cta}
+            </InlineLink>
+          </div>
+        </a>
+
+        <div class="flex gap-4 overflow-x-auto pb-2 lg:max-h-136 lg:flex-col lg:overflow-x-visible lg:overflow-y-auto lg:pr-2">
+          {homeProjects.map((project, index) => (
+            <button
+              type="button"
+              class="project-preview group border-border hover:border-primary/40 data-[active=true]:border-primary flex min-w-72 gap-4 border-l-2 py-3 pl-4 text-left transition lg:min-w-0"
+              data-active={project.id === featured.id ? 'true' : 'false'}
+              data-image={project.data.cover.src}
+              data-alt={project.data.coverAlt}
+              data-title={project.data.title}
+              data-location={project.data.location ?? ''}
+              data-description={project.data.description}
+              data-href={getProjectUrl(project)}
+            >
+              <Image
+                src={project.data.cover}
+                alt={project.data.coverAlt}
+                class="size-20 rounded-xl object-cover"
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+
+              <span>
+                <span class="text-text block text-sm font-semibold">{project.data.title}</span>
+
+                {project.data.location && (
+                  <span class="text-text-muted mt-1 block text-xs">{project.data.location}</span>
+                )}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const previews = document.querySelectorAll<HTMLButtonElement>('.project-preview');
+
+  const image = document.querySelector<HTMLImageElement>('#project-image');
+  const title = document.querySelector<HTMLElement>('#project-title');
+  const location = document.querySelector<HTMLElement>('#project-location');
+  const description = document.querySelector<HTMLElement>('#project-description');
+  const link = document.querySelector<HTMLAnchorElement>('#project-link');
+
+  previews.forEach((preview) => {
+    const updateProject = () => {
+      if (!image || !title || !description || !link) return;
+
+      previews.forEach((item) => (item.dataset.active = 'false'));
+      preview.dataset.active = 'true';
+
+      image.src = preview.dataset.image ?? '';
+      image.alt = preview.dataset.alt ?? '';
+      title.textContent = preview.dataset.title ?? '';
+      description.textContent = preview.dataset.description ?? '';
+      link.href = preview.dataset.href ?? '#';
+
+      if (location) {
+        location.textContent = preview.dataset.location ?? '';
+      }
+    };
+
+    preview.addEventListener('click', updateProject);
+
+    if (window.matchMedia('(hover: hover)').matches) {
+      preview.addEventListener('mouseenter', updateProject);
+    }
+  });
+</script>

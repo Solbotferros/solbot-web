@@ -1,6 +1,7 @@
 import { blogTranslations } from './blog';
 import { commonTranslations } from './common';
 import { homeTranslations } from './home';
+import { projectsTranslations } from './projects';
 import { sectorsTranslations } from './sectors';
 import { whyUsTranslations } from './whyUs';
 
@@ -11,6 +12,7 @@ export const translations = {
     ...blogTranslations.es,
     ...whyUsTranslations.es,
     ...sectorsTranslations.es,
+    ...projectsTranslations.es,
   },
   ca: {
     ...commonTranslations.ca,
@@ -18,6 +20,7 @@ export const translations = {
     ...blogTranslations.ca,
     ...whyUsTranslations.ca,
     ...sectorsTranslations.ca,
+    ...projectsTranslations.ca,
   },
   en: {
     ...commonTranslations.en,
@@ -25,5 +28,6 @@ export const translations = {
     ...blogTranslations.en,
     ...whyUsTranslations.en,
     ...sectorsTranslations.en,
+    ...projectsTranslations.en,
   },
 } as const;
