@@ -18,8 +18,8 @@ interface Props {
 }
 
 const {
-  title = trUI('blog.cta.title'),
-  description = trUI('blog.cta.description'),
+  title = trUI('contactCta.title'),
+  description = trUI('contactCta.description'),
   href = `/${Astro.currentLocale}/contacto`,
 } = Astro.props;
 
@@ -31,7 +31,7 @@ const whatsappLink = formatWhatsappLink(businessInfo.phone);
 
 <section class="border-border bg-surface-accent mt-16 rounded-2xl border p-6 sm:p-8">
   <p class="text-text-muted text-sm font-medium">
-    {trUI('blog.cta.eyebrow')}
+    {trUI('contactCta.eyebrow')}
   </p>
 
   <h2 class="text-text mt-2 text-2xl font-semibold tracking-tight">
@@ -47,7 +47,7 @@ const whatsappLink = formatWhatsappLink(businessInfo.phone);
       href={href}
       class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold"
     >
-      {trUI('blog.cta.primary')}
+      {trUI('contactCta.primary')}
     </a>
 
     <a
@@ -60,7 +60,7 @@ const whatsappLink = formatWhatsappLink(businessInfo.phone);
   </div>
 
   <p class="text-text-muted mt-4 text-sm">
-    {trUI('blog.cta.phoneHint')}
+    {trUI('contactCta.phoneHint')}
     {' '}
     <a href={phoneHref} class="text-text font-medium hover:underline">
       {formattedPhone}
