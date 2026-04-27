@@ -3,7 +3,7 @@ import Pill from '@components/shared/Pill.astro';
 import Layout from '@layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-import BlogCta from '@components/blog/BlogCta.astro';
+import ContactCta from '@components/shared/ContactCta.astro';
 import { formatLongDate, useTranslations, type Language } from '@lib/i18n/utils';
 
 const { t: trUI } = useTranslations(Astro.currentLocale as Language);
@@ -101,6 +101,6 @@ const formattedUpdatedDate =
       <slot />
     </main>
 
-    <BlogCta title={`${cta?.title}`} description={`${cta?.description}`} />
+    <ContactCta title={`${cta?.title}`} description={`${cta?.description}`} />
   </article>
 </Layout>
