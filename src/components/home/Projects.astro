@@ -47,7 +47,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
             id="project-image"
             src={featured.data.cover.src}
             alt={featured.data.coverAlt}
-            class="aspect-16/10 w-full object-cover"
+            class="aspect-video w-full object-cover"
           />
 
           <div class="p-6">
@@ -70,36 +70,40 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
             </InlineLink>
           </div>
         </a>
+        <div class="scroll-fade relative min-w-0 lg:static">
+          <div class="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto pr-8 pb-3 lg:max-h-136 lg:flex-col lg:overflow-x-visible lg:overflow-y-auto lg:pr-2">
+            {homeProjects.map((project, index) => (
+              <button
+                type="button"
+                class="project-preview group border-border hover:border-primary/40 data-[active=true]:border-primary flex min-w-[20rem] snap-start gap-4 border-l-2 py-3 pl-4 text-left transition lg:min-w-0"
+                data-active={project.id === featured.id ? 'true' : 'false'}
+                data-image={project.data.cover.src}
+                data-alt={project.data.coverAlt}
+                data-title={project.data.title}
+                data-location={project.data.location ?? ''}
+                data-description={project.data.description}
+                data-href={getProjectUrl(project)}
+              >
+                <Image
+                  src={project.data.cover}
+                  alt={project.data.coverAlt}
+                  class="size-20 rounded-xl object-cover"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
 
-        <div class="flex gap-4 overflow-x-auto pb-2 lg:max-h-136 lg:flex-col lg:overflow-x-visible lg:overflow-y-auto lg:pr-2">
-          {homeProjects.map((project, index) => (
-            <button
-              type="button"
-              class="project-preview group border-border hover:border-primary/40 data-[active=true]:border-primary flex min-w-72 gap-4 border-l-2 py-3 pl-4 text-left transition lg:min-w-0"
-              data-active={project.id === featured.id ? 'true' : 'false'}
-              data-image={project.data.cover.src}
-              data-alt={project.data.coverAlt}
-              data-title={project.data.title}
-              data-location={project.data.location ?? ''}
-              data-description={project.data.description}
-              data-href={getProjectUrl(project)}
-            >
-              <Image
-                src={project.data.cover}
-                alt={project.data.coverAlt}
-                class="size-20 rounded-xl object-cover"
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
+                <span>
+                  <span class="text-text block text-sm font-semibold">{project.data.title}</span>
 
-              <span>
-                <span class="text-text block text-sm font-semibold">{project.data.title}</span>
-
-                {project.data.location && (
-                  <span class="text-text-muted mt-1 block text-xs">{project.data.location}</span>
-                )}
-              </span>
-            </button>
-          ))}
+                  {project.data.location && (
+                    <span class="text-text-muted mt-1 block text-xs">{project.data.location}</span>
+                  )}
+                </span>
+              </button>
+            ))}
+          </div>
+          <div class="border-border/60 mt-8 flex border-t pt-4 pr-4">
+            <InlineLink href={`/${lang}/projects`}>Ver todos los proyectos</InlineLink>
+          </div>
         </div>
       </div>
     </section>
@@ -140,3 +144,22 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
     }
   });
 </script>
+
+<style>
+  .scroll-fade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3rem;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--color-bg));
+  }
+
+  @media (min-width: 1024px) {
+    .scroll-fade::after {
+      display: none;
+    }
+  }
+</style>
