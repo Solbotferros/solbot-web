@@ -1,0 +1,27 @@
+---
+import mapDark from '@assets/map/service-dark.png';
+import mapLight from '@assets/map/service-light.png';
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// TODO: Change to SVG map with dynamic areas if possible, for better performance and accessibility
+---
+
+<div class="border-border bg-surface relative overflow-hidden rounded-3xl border">
+  <div
+    class="from-primary/10 pointer-events-none absolute inset-0 bg-linear-to-br via-transparent to-transparent"
+  >
+  </div>
+  <div class="block dark:hidden">
+    <Image src={mapLight} alt={title} class="h-auto w-full" />
+  </div>
+
+  <div class="hidden dark:block">
+    <Image src={mapDark} alt={title} class="h-auto w-full" />
+  </div>
+</div>
