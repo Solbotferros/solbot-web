@@ -2,6 +2,7 @@ import { blogTranslations } from './blog';
 import { heroTranslations } from './hero';
 import { projectsTranslations } from './projects';
 import { sectorsTranslations } from './sectors';
+import { serviceAreasTranslations } from './serviceAreas';
 import { servicesTranslations } from './services';
 import { whyUsTranslations } from './whyUs';
 
@@ -18,6 +19,7 @@ export const homeTranslations = {
       ...projectsTranslations.es,
       ...sectorsTranslations.es,
       ...whyUsTranslations.es,
+      ...serviceAreasTranslations.es,
     },
   },
 
@@ -33,6 +35,7 @@ export const homeTranslations = {
       ...projectsTranslations.ca,
       ...sectorsTranslations.ca,
       ...whyUsTranslations.ca,
+      ...serviceAreasTranslations.ca,
     },
   },
 
@@ -48,6 +51,7 @@ export const homeTranslations = {
       ...projectsTranslations.en,
       ...sectorsTranslations.en,
       ...whyUsTranslations.en,
+      ...serviceAreasTranslations.en,
     },
   },
 } as const;
