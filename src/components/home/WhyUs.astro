@@ -7,9 +7,9 @@ import businessInfo from '@lib/business/info';
 
 const { tn } = useTranslations(Astro.currentLocale as Language);
 
-type WhyUsSection = typeof translations.es.whyUs;
+type WhyUsSection = typeof translations.es.home.whyUs;
 
-const section = tn<WhyUsSection>('whyUs');
+const section = tn<WhyUsSection>('home.whyUs');
 ---
 
 <section class="mx-auto grid max-w-6xl gap-12 px-8 md:grid-cols-[0.85fr_1.15fr] md:items-start">

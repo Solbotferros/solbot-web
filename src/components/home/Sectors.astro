@@ -7,9 +7,9 @@ import { sectorIcons } from '@lib/ui/icons';
 
 const { tn } = useTranslations(Astro.currentLocale as Language);
 
-type SectorsSection = typeof translations.es.sectors;
+type SectorsSection = typeof translations.es.home.sectors;
 
-const section = tn<SectorsSection>('sectors');
+const section = tn<SectorsSection>('home.sectors');
 ---
 
 <section class="mx-auto max-w-6xl px-8">

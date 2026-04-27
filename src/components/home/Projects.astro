@@ -11,9 +11,9 @@ import InlineLink from '../shared/InlineLink.astro';
 const lang = Astro.currentLocale as Language;
 
 // Define the type for the projects section translations
-type ProjectSection = typeof translations.es.projects;
+type ProjectSection = typeof translations.es.home.projects;
 const { tn } = useTranslations(lang);
-const section = tn<ProjectSection>('projects');
+const section = tn<ProjectSection>('home.projects');
 
 // Fetch projects that are marked for home preview and match the current locale
 const homeProjects = await getCollection(
