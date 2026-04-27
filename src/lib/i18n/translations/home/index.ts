@@ -2,7 +2,7 @@ import { blogTranslations } from './blog';
 import { heroTranslations } from './hero';
 import { projectsTranslations } from './projects';
 import { sectorsTranslations } from './sectors';
-import { serviceAreasTranslations } from './serviceAreas';
+import { serviceAreasTranslations } from './serviceArea';
 import { servicesTranslations } from './services';
 import { whyUsTranslations } from './whyUs';
 

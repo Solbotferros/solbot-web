@@ -5,6 +5,7 @@ export const serviceAreasTranslations = {
       subtitle:
         'Realizamos trabajos de herrería, carpintería metálica y soldadura en Barcelona, Maresme, Vallès y otras zonas cercanas según las necesidades del proyecto.',
       note: 'Nos desplazamos según el tipo de trabajo y las características del proyecto.',
+      mapTitle: 'Áreas de servicio',
       areas: [
         'Barcelona',
         'Barcelonès',
@@ -21,6 +22,7 @@ export const serviceAreasTranslations = {
       subtitle:
         'Realitzem treballs de ferreria, fusteria metàl·lica i soldadura a Barcelona, Maresme, Vallès i altres zones properes segons les necessitats del projecte.',
       note: 'Ens desplacem segons el tipus de treball i les característiques del projecte.',
+      mapTitle: 'Àrees de servei',
       areas: [
         'Barcelona',
         'Barcelonès',
@@ -37,6 +39,7 @@ export const serviceAreasTranslations = {
       subtitle:
         'We provide ironworking, metal carpentry, and welding services in Barcelona, Maresme, Vallès, and other nearby areas based on project requirements.',
       note: 'We travel according to the type of work and the characteristics of the project.',
+      mapTitle: 'Service Areas',
       areas: [
         'Barcelona',
         'Barcelonès',
