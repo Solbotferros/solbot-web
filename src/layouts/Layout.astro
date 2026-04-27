@@ -12,6 +12,9 @@ const { title, description } = Astro.props;
 
 import { locales, defaultLang } from '@lib/i18n/locales';
 
+import { ensureRouterReady } from '@lib/i18n/router';
+await ensureRouterReady();
+
 const lang = Astro.currentLocale as Language;
 
 const fullTitle = title ? `${title} | Solbot Ferros` : 'Solbot Ferros';
