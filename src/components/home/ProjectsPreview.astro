@@ -1,8 +1,9 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import { getEntrySlug } from '@lib/content/entries';
-import type { translations } from '@lib/i18n/translations';
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { formatProjectLocation } from '@lib/content/location';
+import { translations } from '@lib/i18n/translations';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { Image } from 'astro:assets';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import InlineLink from '../shared/InlineLink.astro';
@@ -14,6 +15,8 @@ const lang = Astro.currentLocale as Language;
 type ProjectSection = typeof translations.es.home.projects;
 const { tn } = useTranslations(lang);
 const section = tn<ProjectSection>('home.projects');
+
+const trPath = useTranslatedPath(lang);
 
 // Fetch projects that are marked for home preview and match the current locale
 const homeProjects = await getCollection(
@@ -27,7 +30,7 @@ const featured = homeProjects.find((project) => project.data.featured) ?? homePr
 
 // Helper function to generate project URL based on its slug and current language
 const getProjectUrl = (project: CollectionEntry<'projects'>) => {
-  return `/${lang}/projects/${getEntrySlug(project)}`;
+  return trPath(`/${lang}/projects/${getEntrySlug(project)}`);
 };
 ---
 
@@ -53,7 +56,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
           <div class="p-6">
             {featured.data.location && (
               <p id="project-location" class="text-primary text-sm font-medium">
-                {featured.data.location}
+                {formatProjectLocation(featured.data.location)}
               </p>
             )}
 
@@ -80,7 +83,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
                 data-image={project.data.cover.src}
                 data-alt={project.data.coverAlt}
                 data-title={project.data.title}
-                data-location={project.data.location ?? ''}
+                data-location={formatProjectLocation(project.data.location)}
                 data-description={project.data.description}
                 data-href={getProjectUrl(project)}
               >
@@ -95,14 +98,16 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
                   <span class="text-text block text-sm font-semibold">{project.data.title}</span>
 
                   {project.data.location && (
-                    <span class="text-text-muted mt-1 block text-xs">{project.data.location}</span>
+                    <span class="text-text-muted mt-1 block text-xs">
+                      {formatProjectLocation(project.data.location)}
+                    </span>
                   )}
                 </span>
               </button>
             ))}
           </div>
           <div class="border-border/60 mt-8 flex border-t pt-4 pr-4">
-            <InlineLink href={`/${lang}/projects`}>{section.ctaAll}</InlineLink>
+            <InlineLink href={trPath(`/${lang}/projects`)}>{section.ctaAll}</InlineLink>
           </div>
         </div>
       </div>
