@@ -19,13 +19,16 @@ const section = tn<ProjectSection>('home.projects');
 const trPath = useTranslatedPath(lang);
 
 // Fetch projects that are marked for home preview and match the current locale
-const homeProjects = await getCollection(
-  'projects',
-  (project) => project.data.homePreview === true && project.id.endsWith(`/${Astro.currentLocale}`),
-);
+const homeProjects = (
+  await getCollection(
+    'projects',
+    (project) =>
+      project.data.homePreview === true && project.id.endsWith(`/${Astro.currentLocale}`),
+  )
+)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+  .slice(0, 5);
 
-// Sort projects by order and select the featured one or the first one as fallback
-homeProjects.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)).slice(0, 3);
 const featured = homeProjects.find((project) => project.data.featured) ?? homeProjects[0];
 
 // Helper function to generate project URL based on its slug and current language
@@ -90,7 +93,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
                 <Image
                   src={project.data.cover}
                   alt={project.data.coverAlt}
-                  class="size-20 rounded-xl object-cover"
+                  class="aspect-9/12 w-20 rounded-xl object-cover"
                   loading={index === 0 ? 'eager' : 'lazy'}
                 />
 
