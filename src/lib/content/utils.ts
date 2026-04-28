@@ -1,4 +1,3 @@
-// src/lib/content/utils.ts
 export function parseCollectionId(id: string) {
   const [lang, ...rest] = id.split('/');
 
