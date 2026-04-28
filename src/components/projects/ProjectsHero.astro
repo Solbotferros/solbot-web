@@ -1,0 +1,31 @@
+---
+import Pill from '@components/shared/Pill.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { translations } from '@lib/i18n/translations';
+import type { Language } from '@lib/i18n/types';
+import { useTranslations } from '@lib/i18n/utils';
+
+const lang = Astro.currentLocale as Language;
+const { t, tn } = useTranslations(lang);
+
+type SectorItems = typeof translations.es.home.sectors.items;
+const sectors = tn<SectorItems>('home.sectors.items');
+---
+
+<section class="mx-auto max-w-6xl px-4 pt-12 pb-6 md:pt-20 md:pb-10">
+  <div class="max-w-4xl">
+    <p class="text-primary mb-4 text-sm font-semibold tracking-[0.18em] uppercase">
+      {t('projects.hero.eyebrow')}
+    </p>
+
+    <SectionTitle titleTag="h1" title={t('projects.hero.title')} />
+
+    <p class="text-text-muted mt-6 max-w-2xl text-base leading-7 md:text-lg">
+      {t('projects.hero.description')}
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {Object.values(sectors).map((sector) => <Pill variant="outlined">{sector.title}</Pill>)}
+    </div>
+  </div>
+</section>

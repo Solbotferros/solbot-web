@@ -1,0 +1,106 @@
+---
+import InlineLink from '@components/shared/InlineLink.astro';
+import { getEntrySlug } from '@lib/content/entries';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+import { type CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: Array<CollectionEntry<'projects'>>;
+}
+const lang = Astro.currentLocale as Language;
+
+const { t } = useTranslations(lang);
+const trPath = useTranslatedPath(lang);
+
+const { projects } = Astro.props;
+
+const featured = projects.filter((p) => p.data.featured);
+const regular = projects.filter((p) => !p.data.featured);
+---
+
+<section class="mx-auto max-w-6xl space-y-24 px-4 py-12">
+  <div class="space-y-14">
+    {
+      featured.map((project, index) => {
+        const slug = getEntrySlug(project);
+        const reversed = index % 2 !== 0;
+
+        return (
+          <article
+            class:list={[
+              'grid items-center gap-8 md:grid-cols-12',
+              reversed ? 'md:[&>*:first-child]:order-2' : '',
+            ]}
+          >
+            <a
+              href={trPath(`projects/${slug}/`)}
+              class="group overflow-hidden rounded-3xl md:col-span-7"
+            >
+              <img
+                src={project.data.cover.src}
+                alt={project.data.coverAlt}
+                class="aspect-16/10 w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            </a>
+
+            <div class="md:col-span-5">
+              <p class="text-primary mb-3 text-xs font-semibold tracking-wide uppercase">
+                {project.data.location?.name ?? project.data.location} · {project.data.service}
+              </p>
+
+              <h2 class="text-3xl leading-tight font-semibold">
+                <a href={trPath(`projects/${slug}/`)}>{project.data.title}</a>
+              </h2>
+
+              <p class="text-text-muted mt-4">{project.data.description}</p>
+
+              <InlineLink href={trPath(`projects/${slug}/`)} class="mt-6">
+                {t('projects.viewProject')}
+              </InlineLink>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  {
+    regular.length > 0 && (
+      <div>
+        <h2 class="mb-8 text-2xl font-semibold">{t('projects.moreProjects')}</h2>
+
+        <div class="columns-1 gap-5 sm:columns-2 lg:columns-3">
+          {regular.map((project) => {
+            const slug = getEntrySlug(project);
+
+            return (
+              <a
+                href={trPath(`projects/${slug}/`)}
+                class="group bg-muted mb-5 block break-inside-avoid overflow-hidden rounded-3xl"
+              >
+                <div class="relative">
+                  <img
+                    src={project.data.cover.src}
+                    alt={project.data.coverAlt}
+                    class="aspect-4/3 max-h-65 w-full object-cover transition duration-500 group-hover:scale-105 sm:aspect-auto sm:max-h-none"
+                  />
+
+                  <div class="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
+
+                  <div class="absolute bottom-0 p-5 text-white">
+                    <p class="mb-2 text-[0.65rem] font-semibold tracking-wide uppercase opacity-80">
+                      {project.data.location?.name ?? project.data.location} ·{' '}
+                      {project.data.service}
+                    </p>
+
+                    <h3 class="text-lg leading-tight font-semibold">{project.data.title}</h3>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    )
+  }
+</section>
