@@ -63,7 +63,14 @@ const projects = defineCollection({
       description: z.string(),
       localizedSlug: z.string(),
 
-      location: z.string().optional(),
+      location: z
+        .object({
+          name: z.string(),
+          province: z.string().optional(),
+          area: z.string().optional(),
+          slug: z.string(),
+        })
+        .optional(),
       sector: z.enum([
         'industry',
         'architecture_and_renovations',
