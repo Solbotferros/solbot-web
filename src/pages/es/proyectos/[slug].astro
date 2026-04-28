@@ -1,0 +1,37 @@
+---
+import { getEntrySlug } from '@lib/content/entries';
+import { calculateReadingTime } from '@lib/content/reading-time';
+import ProjectDetailPage from '@views/ProjectDetailPage.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+// Genera páginas en build
+export async function getStaticPaths() {
+  const pages = await getCollection('projects', ({ id }) => id.endsWith('/es'));
+
+  return pages.map((page: CollectionEntry<'projects'>) => {
+    const slug = getEntrySlug(page);
+
+    return {
+      params: { slug },
+      props: { page },
+    };
+  });
+}
+
+type Props = {
+  page: CollectionEntry<'projects'>;
+};
+
+const { page } = Astro.props;
+
+// Render MDX como componente
+const { Content } = await render(page);
+
+// Calcular reading time
+const readingTime = calculateReadingTime(page.body ?? '').minutes;
+
+// Metadatos vienen del frontmatter
+const { title, description, coverAlt } = page.data;
+---
+
+<ProjectDetailPage title={title} Content={Content} />

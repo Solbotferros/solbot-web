@@ -54,25 +54,28 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
             id="project-image"
             src={featured.data.cover.src}
             alt={featured.data.coverAlt}
-            class="aspect-video w-full object-cover"
+            class="aspect-video max-h-84 w-full object-cover md:max-h-none"
           />
 
-          <div class="p-6">
+          <div class="flex min-h-68 flex-col p-5 sm:p-6">
             {featured.data.location && (
               <p id="project-location" class="text-primary text-sm font-medium">
                 {formatProjectLocation(featured.data.location)}
               </p>
             )}
 
-            <h3 id="project-title" class="text-text mt-2 text-2xl font-bold">
+            <h3 id="project-title" class="text-text mt-2 line-clamp-2 text-2xl font-bold">
               {featured.data.title}
             </h3>
 
-            <p id="project-description" class="text-text-muted mt-3 text-base leading-7">
+            <p
+              id="project-description"
+              class="text-text-muted mt-3 line-clamp-3 text-base leading-7"
+            >
               {featured.data.description}
             </p>
 
-            <InlineLink class="mt-5">{section.cta}</InlineLink>
+            <InlineLink class="mt-auto pt-5">{section.cta}</InlineLink>
           </div>
         </a>
         <div class="scroll-fade relative min-w-0 lg:static">

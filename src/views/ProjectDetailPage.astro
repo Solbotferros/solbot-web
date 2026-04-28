@@ -1,0 +1,16 @@
+---
+interface Props {
+  // Aquí puedes definir las props que necesites, por ejemplo:
+  // project: CollectionEntry<'projects'>;
+  title: string;
+  Content: any; // El componente MDX renderizado
+}
+
+const { slug } = Astro.params;
+---
+
+<secion>
+  <p class="text-text-muted text-center text-sm">
+    Página de proyecto: {slug}
+  </p>
+</secion>
