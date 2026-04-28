@@ -46,6 +46,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
 
       <div class="mt-12 grid gap-6 lg:grid-cols-[1.45fr_0.75fr]">
         <a
+          id="project-link"
           class="border-border group bg-surface overflow-hidden rounded-3xl border"
           href={getProjectUrl(featured)}
         >
@@ -71,9 +72,7 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
               {featured.data.description}
             </p>
 
-            <InlineLink id="project-link" class="mt-5">
-              {section.cta}
-            </InlineLink>
+            <InlineLink class="mt-5">{section.cta}</InlineLink>
           </div>
         </a>
         <div class="scroll-fade relative min-w-0 lg:static">
