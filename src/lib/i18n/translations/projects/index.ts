@@ -9,6 +9,9 @@ export const projectsTranslations = {
       },
       viewProject: 'Ver proyecto',
       moreProjects: 'Otros proyectos realizados',
+      relatedProjects: 'Más trabajos similares',
+      viewAll: 'Ver todos los proyectos',
+      gallery: 'Galería del proyecto',
     },
   },
   ca: {
@@ -21,6 +24,9 @@ export const projectsTranslations = {
       },
       viewProject: 'Veure projecte',
       moreProjects: 'Altres projectes realitzats',
+      relatedProjects: 'Més treballs similars',
+      viewAll: 'Veure tots els projectes',
+      gallery: 'Galeria del projecte',
     },
   },
   en: {
@@ -33,6 +39,9 @@ export const projectsTranslations = {
       },
       viewProject: 'View project',
       moreProjects: 'More projects',
+      relatedProjects: 'More similar projects',
+      viewAll: 'View all projects',
+      gallery: 'Project gallery',
     },
   },
 };
