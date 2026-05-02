@@ -1,5 +1,5 @@
 # Language-based redirects (and default to Spanish)
 /  /es  302!  Language=es
 /  /en  302!  Language=en
-/  /de  302!  Language=de
+/  /ca  302!  Language=ca
 /  /es  302!
