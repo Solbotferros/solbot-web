@@ -1,4 +1,4 @@
 export const routingConfig = {
   prefixDefaultLocale: true,
-  redirectToDefaultLocale: true,
+  redirectToDefaultLocale: false,
 };
