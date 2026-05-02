@@ -1,16 +1,174 @@
 ---
+import ContactCta from '@components/shared/ContactCta.astro';
+import Layout from '@layouts/Layout.astro';
+import { getEntrySlug } from '@lib/content/entries';
+import type { translations } from '@lib/i18n/translations';
+import type { Language } from '@lib/i18n/types';
+import { useTranslatedPath, useTranslations } from '@lib/i18n/utils';
+
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { ensureRouterReady } from '@lib/i18n/router';
+ensureRouterReady();
+
 interface Props {
-  // Aquí puedes definir las props que necesites, por ejemplo:
-  // project: CollectionEntry<'projects'>;
-  title: string;
+  project: CollectionEntry<'projects'>;
   Content: any; // El componente MDX renderizado
 }
 
-const { slug } = Astro.params;
+const lang = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(lang);
+const { tn, t } = useTranslations(lang);
+type SectorsSection = typeof translations.es.home.sectors;
+const sectorsTranslations = tn<SectorsSection>('home.sectors');
+
+const { project, Content } = Astro.props;
+const { title, location, service, sector, cover, coverAlt, description, gallery } = project.data;
+
+const allProjects = await getCollection(
+  'projects',
+  (entry) => entry.id.endsWith(`/${Astro.currentLocale}`) && entry.id !== project.id,
+);
+
+const relatedProjects = allProjects
+  .filter((entry) => entry.data.sector === sector || entry.data.service === service)
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
+  .slice(0, 3);
+
+const getProjectUrl = (project: CollectionEntry<'projects'>) => {
+  return trPath(`/${lang}/projects/${getEntrySlug(project)}`);
+};
 ---
 
-<secion>
-  <p class="text-text-muted text-center text-sm">
-    Página de proyecto: {slug}
-  </p>
-</secion>
+<Layout title={title} description={description}>
+  <article>
+    <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 md:pt-24 md:pb-16">
+      <header class="max-w-5xl">
+        {
+          location && (
+            <p class="text-primary mb-4 text-sm font-semibold tracking-[0.18em] uppercase">
+              {location?.name} · {service}
+            </p>
+          )
+        }
+
+        <SectionTitle titleTag="h1" title={title} subtitle={description} />
+      </header>
+    </section>
+
+    <section class="mx-auto grid max-w-6xl gap-10 px-4 pb-20 md:grid-cols-[1.05fr_0.95fr] md:pb-24">
+      <aside class="md:sticky md:top-36 md:self-start">
+        <dl class="border-border mb-5 grid grid-cols-3 gap-4 border-y py-4 text-sm">
+          {
+            location && (
+              <div>
+                <dt class="text-text-muted text-xs">Ubicación</dt>
+                <dd class="text-text mt-1 font-medium">{location?.name}</dd>
+              </div>
+            )
+          }
+
+          {
+            service && (
+              <div>
+                <dt class="text-text-muted text-xs">Servicio</dt>
+                <dd class="text-text mt-1 font-medium">{service}</dd>
+              </div>
+            )
+          }
+
+          <div>
+            <dt class="text-text-muted text-xs">Sector</dt>
+            <dd class="text-text mt-1 font-medium">
+              {sectorsTranslations.items[sector].title}
+            </dd>
+          </div>
+        </dl>
+
+        <Image
+          src={cover}
+          alt={coverAlt}
+          class="aspect-4/3 max-h-170 w-full rounded-3xl object-cover"
+          loading="eager"
+        />
+      </aside>
+
+      <div class="prose prose-content-text max-w-none md:pt-1">
+        <Content />
+      </div>
+    </section>
+
+    {
+      gallery.length > 0 && (
+        <section class="mx-auto max-w-6xl px-4 pb-20">
+          <SectionTitle titleTag="h2" title={t('projects.gallery')} />
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            {gallery.map((item) => (
+              <Image
+                src={item.image}
+                alt={item.alt}
+                class="aspect-4/3 w-full rounded-3xl object-cover"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="mx-auto max-w-6xl px-4 pb-20">
+      <div class="border-border border-t pt-10">
+        <div class="mb-8 flex items-end justify-between gap-6">
+          <SectionTitle titleTag="h2" title={t('projects.relatedProjects')} />
+
+          <a
+            href={trPath(`projects/`)}
+            class="text-primary text-sm font-semibold transition hover:opacity-70"
+          >
+            {t('projects.viewAll')} →
+          </a>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            relatedProjects.map((project) => {
+              return (
+                <a
+                  href={getProjectUrl(project)}
+                  class="group bg-muted block overflow-hidden rounded-3xl"
+                >
+                  <div class="relative">
+                    <img
+                      src={project.data.cover.src}
+                      alt={project.data.coverAlt}
+                      class="aspect-4/3 w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+
+                    <div class="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
+
+                    <div class="absolute bottom-0 p-5 text-white">
+                      <p class="mb-2 text-[0.65rem] font-semibold tracking-wide uppercase opacity-80">
+                        {project.data.location?.name ?? project.data.location} ·{' '}
+                        {project.data.service}
+                      </p>
+
+                      <h3 class="text-lg leading-tight font-semibold">{project.data.title}</h3>
+                    </div>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+
+    <div class="mx-auto max-w-6xl px-4 pb-20">
+      <ContactCta />
+    </div>
+  </article>
+</Layout>
