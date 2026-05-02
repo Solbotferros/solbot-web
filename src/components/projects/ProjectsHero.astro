@@ -18,11 +18,12 @@ const sectors = tn<SectorItems>('home.sectors.items');
       {t('projects.hero.eyebrow')}
     </p>
 
-    <SectionTitle titleTag="h1" title={t('projects.hero.title')} />
-
-    <p class="text-text-muted mt-6 max-w-2xl text-base leading-7 md:text-lg">
-      {t('projects.hero.description')}
-    </p>
+    <SectionTitle
+      titleTag="h1"
+      title={t('projects.hero.title')}
+      subtitle={t('projects.hero.description')}
+      classSubtitle="max-w-lg lg:max-w-none"
+    />
 
     <div class="mt-6 flex flex-wrap gap-2">
       {Object.values(sectors).map((sector) => <Pill variant="outlined">{sector.title}</Pill>)}

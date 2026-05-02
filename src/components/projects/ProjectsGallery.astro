@@ -1,5 +1,6 @@
 ---
 import InlineLink from '@components/shared/InlineLink.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
 import { getEntrySlug } from '@lib/content/entries';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { type CollectionEntry } from 'astro:content';
@@ -48,9 +49,9 @@ const regular = projects.filter((p) => !p.data.featured);
                 {project.data.location?.name ?? project.data.location} · {project.data.service}
               </p>
 
-              <h2 class="text-3xl leading-tight font-semibold">
+              <h3 class="text-3xl leading-tight font-semibold">
                 <a href={trPath(`projects/${slug}/`)}>{project.data.title}</a>
-              </h2>
+              </h3>
 
               <p class="text-text-muted mt-4">{project.data.description}</p>
 
@@ -67,7 +68,7 @@ const regular = projects.filter((p) => !p.data.featured);
   {
     regular.length > 0 && (
       <div>
-        <h2 class="mb-8 text-2xl font-semibold">{t('projects.moreProjects')}</h2>
+        <SectionTitle titleTag="h2" title={t('projects.moreProjects')} />
 
         <div class="columns-1 gap-5 sm:columns-2 lg:columns-3">
           {regular.map((project) => {
