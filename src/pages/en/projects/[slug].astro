@@ -5,7 +5,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 // Genera páginas en build
 export async function getStaticPaths() {
-  const projects = await getCollection('projects', ({ id }) => id.endsWith('/es'));
+  const projects = await getCollection('projects', ({ id }) => id.endsWith('/en'));
 
   return projects.map((project: CollectionEntry<'projects'>) => {
     const slug = getEntrySlug(project);
