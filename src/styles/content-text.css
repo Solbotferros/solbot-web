@@ -1,4 +1,4 @@
-@utility prose-blog {
+@utility prose-content-text {
   --tw-prose-body: color-mix(in oklab, var(--color-text) 92%, var(--color-text-muted));
   --tw-prose-headings: var(--color-text);
   --tw-prose-bold: var(--color-text);

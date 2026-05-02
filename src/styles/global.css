@@ -4,7 +4,7 @@
 @import './fonts.css';
 @import './theme.css';
 @import './legal.css';
-@import './blog.css';
+@import './content-text.css';
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
