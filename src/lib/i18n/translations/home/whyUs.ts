@@ -6,9 +6,14 @@ export const whyUsTranslations = {
         'Calidad, experiencia y soluciones a medida en cada proyecto de carpintería metálica.',
       items: [
         {
-          title: 'Materiales de calidad y acabados duraderos',
+          title: 'Sin intermediarios',
           description:
-            'Trabajamos con hierro y acero de calidad, aplicando tratamientos y acabados profesionales para conseguir piezas resistentes y duraderas.',
+            'Todo el proceso y la garantía quedan en manos de Solbot Ferros. Contacto directo con oficina y operarios.',
+        },
+        {
+          title: 'Plazos realistas',
+          description:
+            'Solo aceptamos compromisos viables y trabajamos para cumplirlos sin retrasos ni improvisaciones.',
         },
         {
           title: 'Fabricación totalmente a medida',
@@ -16,19 +21,19 @@ export const whyUsTranslations = {
             'Diseñamos y fabricamos cada proyecto según el espacio, el uso previsto y las necesidades reales del cliente.',
         },
         {
-          title: 'Servicio rápido y trabajos urgentes',
+          title: 'Experiencia en obra y taller',
           description:
-            'Atendemos reparaciones, modificaciones y trabajos de soldadura urgente en Barcelona, Maresme y Vallès.',
-        },
-        {
-          title: 'Experiencia en distintos sectores',
-          description:
-            'Trabajamos para viviendas, negocios, industria, reformas, hostelería y proyectos técnicos, adaptándonos a cada contexto.',
+            'Operarios con años de experiencia, comprometidos con cada proyecto y con resultados de calidad.',
         },
         {
           title: 'Asesoramiento desde el inicio',
           description:
-            'Te ayudamos a elegir materiales, acabados y soluciones constructivas para que el resultado sea funcional, seguro y estético.',
+            'Te ayudamos a elegir materiales, diseño y acabados para conseguir un resultado funcional, seguro y duradero.',
+        },
+        {
+          title: 'Servicio rápido y trabajos urgentes',
+          description:
+            'Atendemos reparaciones, modificaciones y trabajos de soldadura urgente en Barcelona, Maresme y Vallès.',
         },
       ],
     },
@@ -39,9 +44,14 @@ export const whyUsTranslations = {
       subtitle: 'Qualitat, experiència i solucions a mida en cada projecte de fusteria metàl·lica.',
       items: [
         {
-          title: 'Materials de qualitat i acabats duradors',
+          title: 'Sense intermediaris',
           description:
-            'Treballem amb ferro i acer de qualitat, aplicant tractaments i acabats professionals per aconseguir peces resistents i duradores.',
+            'Tot el procés i la garantia queden en mans de Solbot Ferros. Contacte directe amb oficina i operaris.',
+        },
+        {
+          title: 'Terminis realistes',
+          description:
+            'Només acceptem compromisos viables i treballem per complir-los sense retards ni improvisacions.',
         },
         {
           title: 'Fabricació totalment a mida',
@@ -49,19 +59,19 @@ export const whyUsTranslations = {
             "Dissenyem i fabriquem cada projecte segons l'espai, l'ús previst i les necessitats reals del client.",
         },
         {
-          title: 'Servei ràpid i treballs urgents',
+          title: 'Experiència en obra i taller',
           description:
-            'Atendemos reparacions, modificacions i treballs de soldadura urgent a Barcelona, Maresme i Vallès.',
-        },
-        {
-          title: 'Experiència en diferents sectors',
-          description:
-            'Treballem per a habitatges, negocis, indústria, reformes, hostaleria i projectes tècnics, adaptant-nos a cada context.',
+            'Operaris amb anys d’experiència, compromesos amb cada projecte i amb resultats de qualitat.',
         },
         {
           title: 'Assessorament des del principi',
           description:
-            "T'ajudem a escollir materials, acabats i solucions constructives perquè el resultat sigui funcional, segur i estètic.",
+            "T'ajudem a escollir materials, disseny i acabats perquè el resultat sigui funcional, segur i durador.",
+        },
+        {
+          title: 'Servei ràpid i treballs urgents',
+          description:
+            'Atenem reparacions, modificacions i treballs de soldadura urgent a Barcelona, Maresme i Vallès.',
         },
       ],
     },
@@ -72,9 +82,14 @@ export const whyUsTranslations = {
       subtitle: 'Quality, experience and tailored solutions in every metalwork project.',
       items: [
         {
-          title: 'Quality materials and durable finishes',
+          title: 'No intermediaries',
           description:
-            'We work with quality iron and steel, applying professional treatments and finishes to achieve resistant and durable pieces.',
+            'The entire process and guarantee are handled directly by Solbot Ferros. Direct contact with both office staff and installers.',
+        },
+        {
+          title: 'Realistic deadlines',
+          description:
+            'We only commit to achievable timelines and work to meet them without delays or last-minute improvisation.',
         },
         {
           title: 'Fully custom fabrication',
@@ -82,19 +97,19 @@ export const whyUsTranslations = {
             'We design and fabricate each project according to the space, intended use and real needs of the client.',
         },
         {
+          title: 'Workshop and on-site experience',
+          description:
+            'Experienced metalworkers committed to delivering high-quality results on every project.',
+        },
+        {
+          title: 'Technical advice from the start',
+          description:
+            'We help you choose materials, design and finishes to achieve a safe, functional and long-lasting result.',
+        },
+        {
           title: 'Fast service and urgent work',
           description:
-            'We attend repairs, modifications and urgent welding work in Barcelona, Maresme and Vallès.',
-        },
-        {
-          title: 'Experience in different sectors',
-          description:
-            'We work for homes, businesses, industry, renovations, hospitality and technical projects, adapting to each context.',
-        },
-        {
-          title: 'Advice from the start',
-          description:
-            'We help you choose materials, finishes and constructive solutions so that the result is functional, safe and aesthetic.',
+            'We handle repairs, modifications and urgent welding work in Barcelona, Maresme and Vallès.',
         },
       ],
     },
