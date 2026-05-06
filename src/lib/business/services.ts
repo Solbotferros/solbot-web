@@ -1,52 +1,45 @@
-export type ServiceKey =
-  | 'metal_structures'
-  | 'metalwork'
-  | 'grilles_and_railings'
-  | 'gates_and_enclosures'
-  | 'pergolas_and_outdoors'
-  | 'welding_and_repairs';
+import MetalworkImage from '@assets/services/carpinteria-metalica.webp';
+import MetalStructuresImage from '@assets/services/estructuras-metalicas.webp';
+import MetalFurnitureImage from '@assets/services/mobiliario-metalico.webp';
+import WeldingImage from '@assets/services/soldadura.webp';
+
+export type ServiceKey = 'welding' | 'metal_structures' | 'metalwork' | 'metal_furniture';
 
 export interface BusinessService {
   key: ServiceKey;
   slug: string;
   featured?: boolean;
+  image: ImageMetadata;
 }
 
 export interface ServiceCardContent {
   readonly title: string;
   readonly description: string;
-  readonly tags: readonly string[];
 }
 
 export const services: BusinessService[] = [
   {
+    key: 'welding',
+    slug: 'soldadura-barcelona',
+    featured: true,
+    image: WeldingImage,
+  },
+  {
     key: 'metal_structures',
     slug: 'estructuras-metalicas-barcelona',
     featured: true,
+    image: MetalStructuresImage,
   },
   {
     key: 'metalwork',
     slug: 'carpinteria-metalica-barcelona',
     featured: true,
+    image: MetalworkImage,
   },
   {
-    key: 'grilles_and_railings',
-    slug: 'rejas-y-barandillas-metalicas-barcelona',
+    key: 'metal_furniture',
+    slug: 'mobiliario-metalico-barcelona',
     featured: true,
-  },
-  {
-    key: 'gates_and_enclosures',
-    slug: 'puertas-y-cerramientos-metalicos-barcelona',
-    featured: true,
-  },
-  {
-    key: 'pergolas_and_outdoors',
-    slug: 'pergolas-y-estructuras-exteriores-metalicas-barcelona',
-    featured: true,
-  },
-  {
-    key: 'welding_and_repairs',
-    slug: 'soldadura-y-reparaciones-metalicas-barcelona',
-    featured: true,
+    image: MetalFurnitureImage,
   },
 ] as const;
