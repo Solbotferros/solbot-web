@@ -2,35 +2,30 @@
 import ServiceImageCard from '@components/home/services/ServiceCard.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 
-import type { ServiceCardContent } from '@lib/business/services';
-import { services } from '@lib/business/services';
+// import { services } from '@lib/business/services';
 
-import { translations } from '@lib/i18n/translations';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+import { getCollection } from 'astro:content';
 
 const lang = Astro.currentLocale as Language;
-const { tn } = useTranslations(lang);
+const { t } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);
 
-type HomeServicesSection = typeof translations.es.home.services;
-
-const section = tn<HomeServicesSection>('home.services');
+const services = await getCollection('services');
 ---
 
 <section class="mx-auto max-w-6xl px-8">
-  <SectionTitle title={section.title} subtitle={section.description} />
+  <SectionTitle title={t('home.services.title')} subtitle={t('home.services.description')} />
 
   <div class="mt-12 grid gap-6 md:grid-cols-2">
     {
       services.map((service) => {
-        const content = section.items[service.key] as ServiceCardContent;
-
         return (
           <ServiceImageCard
-            title={content.title}
-            description={content.description}
-            href={trPath(`/${service.slug}`)}
-            image={service.image}
+            title={service.data.title}
+            description={service.data.description}
+            href={trPath(`/servicios/${service.data.localizedSlug}`)}
+            image={service.data.coverImage}
           />
         );
       })
