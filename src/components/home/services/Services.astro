@@ -1,5 +1,5 @@
 ---
-import ServiceCard from '@components/home/services/ServiceCard.astro';
+import ServiceImageCard from '@components/home/services/ServiceCard.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 
 import type { ServiceCardContent } from '@lib/business/services';
@@ -18,17 +18,17 @@ const section = tn<HomeServicesSection>('home.services');
 <section class="mx-auto max-w-6xl px-8">
   <SectionTitle title={section.title} subtitle={section.description} />
 
-  <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-12 grid gap-6 md:grid-cols-2">
     {
       services.map((service) => {
         const content = section.items[service.key] as ServiceCardContent;
 
         return (
-          <ServiceCard
+          <ServiceImageCard
             title={content.title}
             description={content.description}
-            tags={content.tags}
             href={`/${service.slug}`}
+            image={service.image}
           />
         );
       })

@@ -1,32 +1,84 @@
 ---
-import Pill from '@components/shared/Pill.astro';
-import type { ServiceCardContent } from '@lib/business/services';
+import { ArrowUpRight } from '@lucide/astro';
+import { Image } from 'astro:assets';
 
-interface Props extends ServiceCardContent {
-  href?: string;
-}
+type Props = {
+  title: string;
+  description: string;
+  href: string;
+  image: ImageMetadata;
+};
 
-const { title, description, tags, href } = Astro.props;
-const Component = href ? 'a' : 'article';
+const { title, description, href, image } = Astro.props;
 ---
 
-<Component
-  href={href}
-  class="group focus-visible:ring-accent border-border bg-surface block rounded-2xl border p-6 transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
->
-  <h3 class="text-lg font-semibold">{title}</h3>
+<a href={href} class="group relative block overflow-visible">
+  <article
+    class="service-card border-border relative min-h-80 overflow-hidden shadow-sm transition duration-300 group-hover:shadow-xl md:min-h-95"
+  >
+    <Image
+      src={image}
+      alt={title}
+      class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+      loading="lazy"
+    />
 
-  <p class="text-text/80 mt-2 text-sm leading-6">
-    {description}
-  </p>
+    <div class="absolute inset-0 bg-black/45 transition duration-300 group-hover:bg-black/60"></div>
 
-  <ul class="mt-4 flex flex-wrap gap-2" aria-label={`Etiquetas de ${title}`}>
-    {
-      tags.map((tag) => (
-        <Pill as="li" variant="soft" tone="accent" size="xs" class="font-medium">
-          {tag}
-        </Pill>
-      ))
-    }
-  </ul>
-</Component>
+    <div class="absolute inset-x-0 bottom-0 p-6 pr-28 text-white md:p-8 md:pr-32">
+      <h3 class="text-3xl leading-tight font-bold md:text-4xl">
+        {title}
+      </h3>
+
+      <p class="mt-3 max-w-xl text-sm leading-relaxed text-white/80 md:text-base">
+        {description}
+      </p>
+    </div>
+  </article>
+
+  <span
+    class="bg-surface text-text border-border group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary absolute right-6.5 bottom-6.5 z-20 flex h-14 w-14 translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full border text-2xl font-bold shadow-[0_12px_30px_rgb(0_0_0/0.14)] transition-colors duration-300"
+    aria-hidden="true"
+  >
+    <ArrowUpRight class="h-6 w-6" />
+  </span>
+</a>
+
+<style>
+  .service-card {
+    --card-radius: 1.5rem;
+    --cutout-size: 2.75rem;
+
+    border-radius: var(--card-radius);
+    background: var(--color-bg);
+
+    --_m: /calc(2 * var(--card-radius)) calc(2 * var(--card-radius))
+      radial-gradient(white 70%, transparent 72%) no-repeat;
+
+    -webkit-mask:
+      right 0 bottom calc(var(--cutout-size) + var(--card-radius)) var(--_m),
+      right calc(var(--cutout-size) + var(--card-radius)) bottom 0 var(--_m),
+      radial-gradient(var(--cutout-size) at 100% 100%, transparent 99%, white 101%)
+        calc(-1 * var(--card-radius)) calc(-1 * var(--card-radius)) no-repeat,
+      conic-gradient(
+        from 90deg at calc(100% - var(--cutout-size) - 2 * var(--card-radius))
+          calc(100% - var(--cutout-size) - 2 * var(--card-radius)),
+        transparent 25%,
+        white 0
+      );
+
+    mask:
+      right 0 bottom calc(var(--cutout-size) + var(--card-radius)) var(--_m),
+      right calc(var(--cutout-size) + var(--card-radius)) bottom 0 var(--_m),
+      radial-gradient(var(--cutout-size) at 100% 100%, transparent 99%, white 101%)
+        calc(-1 * var(--card-radius)) calc(-1 * var(--card-radius)) no-repeat,
+      conic-gradient(
+        from 90deg at calc(100% - var(--cutout-size) - 2 * var(--card-radius))
+          calc(100% - var(--cutout-size) - 2 * var(--card-radius)),
+        transparent 25%,
+        white 0
+      );
+
+    mask-mode: alpha;
+  }
+</style>
