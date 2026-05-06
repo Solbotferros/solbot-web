@@ -47,15 +47,17 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
       <div class="mt-12 grid gap-6 lg:grid-cols-[1.45fr_0.75fr]">
         <a
           id="project-link"
-          class="border-border group bg-surface overflow-hidden rounded-3xl border"
+          class="border-border group bg-surface hover:bg-surface-hover overflow-hidden rounded-3xl border"
           href={getProjectUrl(featured)}
         >
-          <img
-            id="project-image"
-            src={featured.data.cover.src}
-            alt={featured.data.coverAlt}
-            class="aspect-video max-h-84 w-full object-cover md:max-h-none"
-          />
+          <div class="overflow-hidden">
+            <img
+              id="project-image"
+              src={featured.data.cover.src}
+              alt={featured.data.coverAlt}
+              class="aspect-video max-h-84 w-full object-cover duration-500 group-hover:scale-105 md:max-h-none"
+            />
+          </div>
 
           <div class="flex min-h-68 flex-col p-5 sm:p-6">
             {featured.data.location && (
