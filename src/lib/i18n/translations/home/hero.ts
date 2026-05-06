@@ -1,27 +1,30 @@
 export const heroTranslations = {
   es: {
     hero: {
-      title: 'Herrería y estructuras metálicas a medida en Barcelona',
+      eyebrow: 'Especialistas en carpintería metálica y soldadura',
+      title: 'Estructuras metálicas a medida en Barcelona',
       description:
-        'Fabricación e instalación de estructuras metálicas, puertas y mobiliario a medida para viviendas y negocios en Barcelona, Maresme y Vallès. Materiales duraderos y acabados profesionales.',
+        'Diseño, fabricación e instalación de estructuras metálicas, trabajos de soldadura y carpintería metálica para viviendas y negocios en Barcelona, Maresme y Vallès. Sin intermediarios, todo el proceso con Solbot Ferros.',
       mainCTA: 'Pide tu presupuesto',
       secondaryCTA: 'Ver proyectos',
     },
   },
   ca: {
     hero: {
-      title: 'Ferreria i estructures metàl·liques a mida a Barcelona',
+      eyebrow: 'Especialistes en fusteria metàl·lica i soldadura',
+      title: 'Estructures metàl·liques a mida a Barcelona',
       description:
-        "Fabricació i instal·lació d'estructures metàl·liques, portes i mobiliari a mida per a habitatges i negocis a Barcelona, Maresme i Vallès. Materials duradors i acabats professionals.",
+        "Disseny, fabricació i instal·lació d'estructures metàl·liques, treballs de soldadura i fusteria metàl·lica per a habitatges i negocis a Barcelona, Maresme i Vallès. Sense intermediaris, tot el procés amb Solbot Ferros.",
       mainCTA: 'Demana pressupost',
       secondaryCTA: 'Veure projectes',
     },
   },
   en: {
     hero: {
-      title: 'Custom metalwork and metal structures in Barcelona',
+      eyebrow: 'Metalwork and welding specialists',
+      title: 'Custom metal structures in Barcelona',
       description:
-        'Design, fabrication and installation of metal structures, gates and bespoke furniture for homes and businesses in Barcelona, Maresme and Vallès. Durable materials and professional finishes.',
+        'Design, fabrication and installation of metal structures, welding services and metalwork for homes and businesses in Barcelona, Maresme and Vallès. No intermediaries — the entire process handled by Solbot Ferros.',
       mainCTA: 'Request a quote',
       secondaryCTA: 'View projects',
     },
