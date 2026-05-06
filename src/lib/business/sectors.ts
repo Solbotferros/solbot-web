@@ -1,7 +1,8 @@
 export type SectorKey =
-  | 'industry'
-  | 'architecture_and_renovations'
+  | 'metalwork'
   | 'private_clients'
+  | 'architecture_and_renovations'
+  | 'industry'
   | 'hospitality_and_events'
   | 'agriculture';
 
@@ -17,7 +18,11 @@ export interface SectorContent {
 
 export const sectors: BusinessSector[] = [
   {
-    key: 'industry',
+    key: 'metalwork',
+    featured: true,
+  },
+  {
+    key: 'private_clients',
     featured: true,
   },
   {
@@ -25,7 +30,7 @@ export const sectors: BusinessSector[] = [
     featured: true,
   },
   {
-    key: 'private_clients',
+    key: 'industry',
     featured: true,
   },
   {
