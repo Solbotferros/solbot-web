@@ -98,8 +98,80 @@ const projects = defineCollection({
     }),
 });
 
+const services = defineCollection({
+  loader: glob({
+    base: './src/content/services',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: ({ image }) =>
+    z
+      .object({
+        type: z.enum(['service', 'service-location']),
+
+        serviceKey: z.enum(['welding', 'metal_structures', 'metalwork', 'metal_furniture']),
+
+        locationKey: z.enum(['barcelona', 'maresme', 'valles', 'vilassar', 'mataro']).optional(),
+
+        title: z.string(),
+        description: z.string(),
+        localizedSlug: z.string(),
+
+        featured: z.boolean().default(false),
+        order: z.number().default(999),
+        draft: z.boolean().default(false),
+
+        coverImage: image(),
+        coverAlt: z.string(),
+
+        intro: z.string().optional(),
+
+        highlights: z
+          .array(
+            z.object({
+              title: z.string(),
+              description: z.string(),
+            }),
+          )
+          .default([]),
+
+        items: z.array(z.string()).default([]),
+
+        relatedProjectServices: z.array(z.string()).default([]),
+        relatedLocations: z.array(z.string()).default([]),
+
+        cta: z
+          .object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+          })
+          .optional(),
+
+        seoTitle: z.string().optional(),
+        canonical: z.url().optional(),
+        noindex: z.boolean().default(false),
+      })
+      .superRefine((data, ctx) => {
+        if (data.type === 'service-location' && !data.locationKey) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['locationKey'],
+            message: 'locationKey is required when type is service-location',
+          });
+        }
+
+        if (data.type === 'service' && data.locationKey) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['locationKey'],
+            message: 'locationKey should only be used for service-location pages',
+          });
+        }
+      }),
+});
+
 export const collections = {
   legal,
   blog,
   projects,
+  services,
 };
