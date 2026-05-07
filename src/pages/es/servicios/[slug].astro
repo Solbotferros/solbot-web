@@ -1,0 +1,33 @@
+---
+import { getEntrySlug } from '@lib/content/entries';
+import ServicePage from '@views/ServicePage.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+// Genera páginas en build
+export async function getStaticPaths() {
+  const services = await getCollection('services', ({ id }) => id.endsWith('/es'));
+
+  return services.map((service: CollectionEntry<'services'>) => {
+    const slug = getEntrySlug(service);
+
+    return {
+      params: { slug },
+      props: { service },
+    };
+  });
+}
+
+type Props = {
+  service: CollectionEntry<'services'>;
+};
+
+const { service } = Astro.props;
+
+// Render MDX como componente
+const { Content } = await render(service);
+
+// Metadatos vienen del frontmatter
+const { title, coverAlt } = service.data;
+---
+
+<ServicePage service={service} Content={Content} />
