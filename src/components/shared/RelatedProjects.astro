@@ -4,6 +4,7 @@ import { getEntrySlug } from '@lib/content/entries';
 import { useTranslatedPath, type Language } from '@lib/i18n/utils';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import InlineLink from './InlineLink.astro';
 
 type ProjectEntry = CollectionEntry<'projects'>;
 
@@ -33,9 +34,9 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
     <div class="mb-8 flex items-end justify-between gap-6">
       <SectionTitle titleTag="h2" title={title} />
 
-      <a href={viewAllHref} class="text-primary text-sm font-semibold transition hover:opacity-70">
-        {viewAllLabel} →
-      </a>
+      <InlineLink href={viewAllHref}>
+        {viewAllLabel}
+      </InlineLink>
     </div>
 
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
