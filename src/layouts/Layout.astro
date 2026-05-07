@@ -17,7 +17,10 @@ await ensureRouterReady();
 
 const lang = Astro.currentLocale as Language;
 
-const fullTitle = title ? `${title} | Solbot Ferros` : 'Solbot Ferros';
+// Add Solbot Ferros only if it is not included in the title to avoid redundancy in SEO titles
+const fullTitle = title.includes('Solbot Ferros')
+  ? title
+  : `${title} ${title ? '|' : ''} Solbot Ferros`;
 
 // SEO for multilingual sites: Generate alternate URLs for each locale
 const currentPath = Astro.url.pathname;
