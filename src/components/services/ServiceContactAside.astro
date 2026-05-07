@@ -1,0 +1,61 @@
+---
+import WhatsappIcon from '@components/icons/WhatsappIcon.astro';
+import businessInfo from '@lib/business/info';
+import {
+  formatSpanishPhone,
+  formatWhatsappLink,
+  getPhoneDisplay,
+  getPhoneHref,
+} from '@lib/business/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+  href?: string;
+}
+
+const {
+  title = '¿Necesitas ayuda con tu proyecto?',
+  description = 'Explícanos qué necesitas, medidas aproximadas y localidad. Te orientamos sin compromiso.',
+  href = `/${Astro.currentLocale}/contacto`,
+} = Astro.props;
+
+const phoneHref = getPhoneHref(businessInfo.phone);
+const phoneDisplay = getPhoneDisplay(businessInfo.phone);
+const formattedPhone = formatSpanishPhone(phoneDisplay);
+const whatsappLink = formatWhatsappLink(businessInfo.phone);
+---
+
+<aside class="border-border bg-surface rounded-2xl border p-6">
+  <h2 class="text-text text-xl font-semibold tracking-tight">
+    {title}
+  </h2>
+
+  <p class="text-text-muted mt-3 text-sm leading-6">
+    {description}
+  </p>
+
+  <div class="mt-6 flex flex-col gap-3">
+    <a
+      href={href}
+      class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold transition-colors"
+    >
+      Pedir presupuesto
+    </a>
+
+    <a
+      href={whatsappLink}
+      class="border-border bg-surface text-text hover:bg-surface-hover inline-flex h-11 items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors"
+    >
+      <WhatsappIcon aria-hidden="true" class="block size-5 shrink-0" />
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <p class="text-text-muted mt-5 text-sm leading-relaxed">
+    También puedes llamarnos al{' '}
+    <a href={phoneHref} class="text-text font-medium hover:underline">
+      {formattedPhone}
+    </a>
+  </p>
+</aside>

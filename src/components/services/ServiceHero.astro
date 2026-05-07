@@ -1,0 +1,61 @@
+---
+import ButtonLink from '@components/shared/ButtonLink.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { Image } from 'astro:assets';
+
+type Props = {
+  title: string;
+  description: string;
+  coverImage?: ImageMetadata;
+  coverAlt?: string;
+};
+
+const { title, description, coverImage, coverAlt } = Astro.props;
+---
+
+<section class="relative -mt-28 overflow-hidden bg-black text-white">
+  <div class="relative min-h-170 overflow-hidden md:min-h-180">
+    {
+      coverImage && (
+        <Image
+          src={coverImage}
+          alt={coverAlt ?? title}
+          class="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+        />
+      )
+    }
+
+    <div
+      class="absolute inset-0 bg-[linear-gradient(90deg,rgb(0_0_0/0.88)_0%,rgb(0_0_0/0.70)_34%,rgb(0_0_0/0.34)_68%,rgb(0_0_0/0.08)_100%)]"
+    >
+    </div>
+
+    <div
+      class="relative z-10 mx-auto flex min-h-170 max-w-6xl items-end px-8 pt-56 pb-24 sm:px-12 md:min-h-180 lg:px-16"
+    >
+      <div class="max-w-2xl">
+        <SectionTitle
+          title={title}
+          subtitle={description}
+          classTitle="text-white text-5xl md:text-6xl"
+          classSubtitle="text-white/85"
+        />
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <ButtonLink href="#contacto" variant="primary" class="text-center">
+            Pide tu presupuesto
+          </ButtonLink>
+
+          <ButtonLink
+            href="#trabajos"
+            variant="outline"
+            class="border-white/30 bg-white/5 text-center text-white/85 backdrop-blur-sm hover:bg-white/10"
+          >
+            Ver trabajos habituales
+          </ButtonLink>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

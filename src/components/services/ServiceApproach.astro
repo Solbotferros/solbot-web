@@ -1,0 +1,40 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+
+type Highlight = {
+  title: string;
+  description: string;
+};
+
+type Props = {
+  approach: {
+    title: string;
+    items: readonly Highlight[];
+  };
+};
+
+const { approach } = Astro.props;
+const { title, items } = approach;
+---
+
+<section class="mx-auto">
+  <div class="max-w-3xl">
+    <SectionTitle title={title} titleTag="h2" />
+  </div>
+
+  <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
+    {
+      approach.items.map((item, index) => (
+        <article class="border-primary/35 border-l pl-5">
+          <p class="text-primary text-sm font-semibold tracking-wide">
+            {(index + 1).toString().padStart(2, '0')}
+          </p>
+
+          <h3 class="text-text mt-3 text-2xl leading-snug font-bold">{item.title}</h3>
+
+          <p class="text-text-muted mt-4 leading-7">{item.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
