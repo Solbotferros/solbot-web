@@ -125,18 +125,20 @@ const services = defineCollection({
 
         intro: z.string().optional(),
 
-        highlights: z
-          .array(
-            z.object({
-              title: z.string(),
-              description: z.string(),
-            }),
-          )
-          .default([]),
+        approach: z.object({
+          title: z.string(),
+          items: z
+            .array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+              }),
+            )
+            .optional()
+            .default([]),
+        }),
 
-        items: z.array(z.string()).default([]),
-
-        relatedProjectServices: z.array(z.string()).default([]),
+        relatedServices: z.array(z.string()).default([]),
         relatedLocations: z.array(z.string()).default([]),
 
         cta: z
