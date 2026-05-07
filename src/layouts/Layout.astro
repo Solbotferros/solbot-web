@@ -1,6 +1,7 @@
 ---
 import Footer from '@components/layout/Footer.astro';
 import Header from '@components/layout/Header.astro';
+import businessInfo from '@lib/business/info';
 
 import '@styles/global.css';
 
@@ -18,9 +19,9 @@ await ensureRouterReady();
 const lang = Astro.currentLocale as Language;
 
 // Add Solbot Ferros only if it is not included in the title to avoid redundancy in SEO titles
-const fullTitle = title.includes('Solbot Ferros')
+const fullTitle = title.includes(businessInfo.shortName)
   ? title
-  : `${title} ${title ? '|' : ''} Solbot Ferros`;
+  : `${title} ${title ? '|' : ''} ${businessInfo.shortName}`;
 
 // SEO for multilingual sites: Generate alternate URLs for each locale
 const currentPath = Astro.url.pathname;
