@@ -1,7 +1,7 @@
 ---
 import ContactCta from '@components/shared/ContactCta.astro';
+import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
-import { getEntrySlug } from '@lib/content/entries';
 import type { translations } from '@lib/i18n/translations';
 import type { Language } from '@lib/i18n/types';
 import { useTranslatedPath, useTranslations } from '@lib/i18n/utils';
@@ -37,10 +37,6 @@ const relatedProjects = allProjects
   .filter((entry) => entry.data.sector === sector || entry.data.service === service)
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
-
-const getProjectUrl = (project: CollectionEntry<'projects'>) => {
-  return trPath(`/${lang}/projects/${getEntrySlug(project)}`);
-};
 ---
 
 <Layout title={title} description={description}>
@@ -120,52 +116,12 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
       )
     }
 
-    <section class="mx-auto max-w-6xl px-4 pb-20">
-      <div class="border-border border-t pt-10">
-        <div class="mb-8 flex items-end justify-between gap-6">
-          <SectionTitle titleTag="h2" title={t('projects.relatedProjects')} />
-
-          <a
-            href={trPath(`projects/`)}
-            class="text-primary text-sm font-semibold transition hover:opacity-70"
-          >
-            {t('projects.viewAll')} →
-          </a>
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {
-            relatedProjects.map((project) => {
-              return (
-                <a
-                  href={getProjectUrl(project)}
-                  class="group bg-muted block overflow-hidden rounded-3xl"
-                >
-                  <div class="relative">
-                    <img
-                      src={project.data.cover.src}
-                      alt={project.data.coverAlt}
-                      class="aspect-4/3 w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-
-                    <div class="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
-
-                    <div class="absolute bottom-0 p-5 text-white">
-                      <p class="mb-2 text-[0.65rem] font-semibold tracking-wide uppercase opacity-80">
-                        {project.data.location?.name ?? project.data.location} ·{' '}
-                        {project.data.service}
-                      </p>
-
-                      <h3 class="text-lg leading-tight font-semibold">{project.data.title}</h3>
-                    </div>
-                  </div>
-                </a>
-              );
-            })
-          }
-        </div>
-      </div>
-    </section>
+    <RelatedProjects
+      title={t('projects.relatedProjects')}
+      projects={relatedProjects}
+      viewAllHref={trPath(`projects/`)}
+      viewAllLabel={t('projects.viewAll')}
+    />
 
     <div class="mx-auto max-w-6xl px-4 pb-20">
       <ContactCta />
