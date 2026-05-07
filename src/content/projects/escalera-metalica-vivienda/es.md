@@ -11,6 +11,7 @@ location:
 
 sector: 'private_clients'
 service: 'Escaleras metálicas'
+serviceKeys: ['metal_structures', 'metalwork', 'welding', 'metal_furniture']
 
 cover: './cover.webp'
 coverAlt: 'Escalera metálica interior fabricada a medida para una vivienda'

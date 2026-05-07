@@ -11,6 +11,7 @@ location:
 
 sector: 'private_clients'
 service: 'Barandillas metálicas'
+serviceKeys: ['metal_structures', 'metalwork']
 
 cover: './cover.jpeg'
 coverAlt: 'Barandilla metálica a medida instalada en balcón de vivienda en Cabrils con vistas al mar'

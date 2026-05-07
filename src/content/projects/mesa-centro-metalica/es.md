@@ -11,6 +11,7 @@ location:
 
 sector: 'private_clients'
 service: 'Muebles metálicos a medida'
+serviceKeys: ['metalwork', 'metal_furniture']
 
 cover: './cover.jpeg'
 coverAlt: 'Mesa de centro metálica a medida con tablero de madera en salón de vivienda'

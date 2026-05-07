@@ -11,6 +11,7 @@ location:
 
 sector: 'private_clients'
 service: 'Rejas metálicas'
+serviceKeys: ['metal_structures', 'metalwork']
 
 cover: './cover.png'
 coverAlt: 'Reja metálica abatible instalada en ventana interior de vivienda'

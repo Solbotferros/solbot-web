@@ -11,6 +11,7 @@ location:
 
 sector: 'architecture_and_renovations'
 service: 'Barandillas y rejas metálicas'
+serviceKeys: ['metal_structures', 'metalwork', 'welding']
 
 cover: './cover.jpeg'
 coverAlt: 'Fachada de edificio en Badalona con rejas y barandillas metálicas instaladas'

@@ -11,6 +11,7 @@ location:
 
 sector: 'private_clients'
 service: 'Cerramientos metálicos'
+serviceKeys: ['metal_structures', 'metalwork']
 
 cover: './cover.jpeg'
 coverAlt: 'Cerramiento metálico a medida con puertas para espacio de animales'

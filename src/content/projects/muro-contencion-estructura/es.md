@@ -11,6 +11,7 @@ location:
 
 sector: 'architecture_and_renovations'
 service: 'Estructuras metálicas'
+serviceKeys: ['metal_structures', 'welding']
 
 cover: './cover.jpeg'
 coverAlt: 'Estructura metálica instalada para refuerzo de muro de contención en terreno'

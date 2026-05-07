@@ -78,6 +78,10 @@ const projects = defineCollection({
         'hospitality_and_events',
         'agriculture',
       ]),
+      serviceKeys: z
+        .array(z.enum(['welding', 'metal_structures', 'metalwork', 'metal_furniture']))
+        .default([]),
+
       service: z.string().optional(),
 
       cover: image(),

@@ -11,6 +11,7 @@ location:
 
 sector: 'architecture_and_renovations'
 service: 'Estructuras metálicas'
+serviceKeys: ['metal_structures', 'welding']
 
 cover: './cover.jpeg'
 coverAlt: 'Vigas metálicas instaladas en techo de vivienda para refuerzo estructural'

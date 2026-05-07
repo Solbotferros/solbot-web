@@ -11,6 +11,7 @@ location:
 
 sector: 'architecture_and_renovations'
 service: 'Rejas metálicas'
+serviceKeys: ['metal_structures', 'metalwork']
 
 cover: './cover.jpeg'
 coverAlt: 'Reja metálica moderna instalada en fachada de vivienda en Barcelona'
