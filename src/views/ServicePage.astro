@@ -2,8 +2,14 @@
 import ServiceApproach from '@components/services/ServiceApproach.astro';
 import ServiceContactAside from '@components/services/ServiceContactAside.astro';
 import ServiceHero from '@components/services/ServiceHero.astro';
+import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
+import { ensureRouterReady } from '@lib/i18n/router';
+import { useTranslatedPath, type Language } from '@lib/i18n/utils';
 import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+ensureRouterReady();
 
 interface Props {
   service: CollectionEntry<'services'>;
@@ -13,6 +19,33 @@ interface Props {
 const { service, Content } = Astro.props;
 
 const { title, description, coverImage, coverAlt, approach, cta, seoTitle } = service.data;
+
+const lang = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(lang);
+
+const allProjects = await getCollection('projects', (entry) =>
+  entry.id.endsWith(`/${Astro.currentLocale}`),
+);
+
+const relatedServiceKeys = [service.data.serviceKey, ...(service.data.relatedServices ?? [])];
+
+const relatedProjects = allProjects
+  .map((project) => {
+    const score = project.data.serviceKeys.reduce((total, key) => {
+      if (key === service.data.serviceKey) return total + 3;
+      if (service.data.relatedServices?.includes(key)) return total + 1;
+      return total;
+    }, 0);
+
+    return { project, score };
+  })
+  .filter(({ score }) => score > 0)
+  .sort(
+    (a, b) =>
+      b.score - a.score || Number(b.project.data.featured) - Number(a.project.data.featured),
+  )
+  .slice(0, 3)
+  .map(({ project }) => project);
 ---
 
 <Layout title={seoTitle ?? title} description={description}>
@@ -45,5 +78,12 @@ const { title, description, coverImage, coverAlt, approach, cta, seoTitle } = se
         </aside>
       </div>
     </section>
+
+    <RelatedProjects
+      title="Trabajos realizados de este tipo"
+      projects={relatedProjects}
+      viewAllHref={trPath(`projects/`)}
+      viewAllLabel="Ver todos los proyectos"
+    />
   </main>
 </Layout>
