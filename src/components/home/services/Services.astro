@@ -12,6 +12,7 @@ const { t } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);
 
 const services = await getCollection('services', ({ id }) => id.endsWith(`/${lang}`));
+services.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <section class="mx-auto max-w-6xl px-8">
