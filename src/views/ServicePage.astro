@@ -4,11 +4,11 @@ import ServiceContactAside from '@components/services/ServiceContactAside.astro'
 import ServiceHero from '@components/services/ServiceHero.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
-import { ensureRouterReady } from '@lib/i18n/router';
-import { useTranslatedPath, type Language } from '@lib/i18n/utils';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
+import { ensureRouterReady } from '@lib/i18n/router';
 ensureRouterReady();
 
 interface Props {
@@ -22,6 +22,7 @@ const { title, description, coverImage, coverAlt, approach, cta, seoTitle } = se
 
 const lang = Astro.currentLocale as Language;
 const trPath = useTranslatedPath(lang);
+const { t } = useTranslations(lang);
 
 const allProjects = await getCollection('projects', (entry) =>
   entry.id.endsWith(`/${Astro.currentLocale}`),
@@ -79,11 +80,13 @@ const relatedProjects = allProjects
       </div>
     </section>
 
-    <RelatedProjects
-      title="Trabajos realizados de este tipo"
-      projects={relatedProjects}
-      viewAllHref={trPath(`projects/`)}
-      viewAllLabel="Ver todos los proyectos"
-    />
+    <div id="service-related-projects">
+      <RelatedProjects
+        title={t('services.relatedProjects')}
+        projects={relatedProjects}
+        viewAllHref={trPath(`projects/`)}
+        viewAllLabel={t('services.allProjects')}
+      />
+    </div>
   </main>
 </Layout>
