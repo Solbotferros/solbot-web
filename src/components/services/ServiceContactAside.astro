@@ -7,12 +7,15 @@ import {
   getPhoneDisplay,
   getPhoneHref,
 } from '@lib/business/utils';
+import { useTranslations, type Language } from '@lib/i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
   href?: string;
 }
+
+const { t } = useTranslations(Astro.currentLocale as Language);
 
 const {
   title = '¿Necesitas ayuda con tu proyecto?',
@@ -40,7 +43,7 @@ const whatsappLink = formatWhatsappLink(businessInfo.phone);
       href={href}
       class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold transition-colors"
     >
-      Pedir presupuesto
+      {t('contactCta.primary')}
     </a>
 
     <a
@@ -53,7 +56,8 @@ const whatsappLink = formatWhatsappLink(businessInfo.phone);
   </div>
 
   <p class="text-text-muted mt-5 text-sm leading-relaxed">
-    También puedes llamarnos al{' '}
+    {t('contactCta.phoneHint')}
+    {' '}
     <a href={phoneHref} class="text-text font-medium hover:underline">
       {formattedPhone}
     </a>

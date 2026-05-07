@@ -12,7 +12,7 @@ interface Props {
 
 const { service, Content } = Astro.props;
 
-const { title, description, coverImage, coverAlt, items, approach, cta, seoTitle } = service.data;
+const { title, description, coverImage, coverAlt, approach, cta, seoTitle } = service.data;
 ---
 
 <Layout title={seoTitle ?? title} description={description}>

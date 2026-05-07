@@ -1,6 +1,7 @@
 ---
 import ButtonLink from '@components/shared/ButtonLink.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
+import { useTranslations, type Language } from '@lib/i18n/utils';
 import { Image } from 'astro:assets';
 
 type Props = {
@@ -9,6 +10,8 @@ type Props = {
   coverImage?: ImageMetadata;
   coverAlt?: string;
 };
+
+const { t } = useTranslations(Astro.currentLocale as Language);
 
 const { title, description, coverImage, coverAlt } = Astro.props;
 ---
@@ -44,7 +47,7 @@ const { title, description, coverImage, coverAlt } = Astro.props;
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="#contacto" variant="primary" class="text-center">
-            Pide tu presupuesto
+            {t('services.primaryCta')}
           </ButtonLink>
 
           <ButtonLink
@@ -52,7 +55,7 @@ const { title, description, coverImage, coverAlt } = Astro.props;
             variant="outline"
             class="border-white/30 bg-white/5 text-center text-white/85 backdrop-blur-sm hover:bg-white/10"
           >
-            Ver trabajos habituales
+            {t('services.secondaryCta')}
           </ButtonLink>
         </div>
       </div>
