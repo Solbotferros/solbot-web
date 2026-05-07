@@ -11,7 +11,7 @@ const lang = Astro.currentLocale as Language;
 const { t } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);
 
-const services = await getCollection('services');
+const services = await getCollection('services', ({ id }) => id.endsWith(`/${lang}`));
 ---
 
 <section class="mx-auto max-w-6xl px-8">
