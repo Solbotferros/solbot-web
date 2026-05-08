@@ -1,0 +1,19 @@
+---
+import Layout from '@layouts/Layout.astro';
+
+import ContactHero from '@components/contact/ContactHero.astro';
+
+import ContactForm from '@components/contact/ContactForm.astro';
+import { ensureRouterReady } from '@lib/i18n/router';
+ensureRouterReady();
+---
+
+<Layout
+  title="Contacto y presupuestos"
+  description="Pide presupuesto para trabajos de carpintería metálica, estructuras metálicas y soldadura en Barcelona, Maresme y Vallès."
+>
+  <section>
+    <ContactHero />
+    <ContactForm />
+  </section>
+</Layout>
