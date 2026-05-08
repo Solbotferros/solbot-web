@@ -1,0 +1,508 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import type { Language } from '@lib/i18n/types';
+import { getCollection } from 'astro:content';
+import { X } from '@lucide/astro';
+
+const lang = Astro.currentLocale as Language;
+const services = await getCollection(
+  'services',
+  ({ id, data }) => id.endsWith(`/${lang}`) && data.type === 'service',
+);
+
+services.sort((a, b) => a.data.order - b.data.order);
+
+const accessOptions = [
+  'Fácil acceso',
+  'Hace falta escalera',
+  'Trabajo en altura',
+  'Interior',
+  'Exterior',
+  'No estoy seguro',
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 pb-20 md:pb-24">
+  <form class="border-border bg-surface rounded-3xl border p-6 md:p-8">
+    <div class="max-w-2xl">
+      <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
+        Solicitud de presupuesto
+      </p>
+
+      <SectionTitle
+        title="Explícanos qué necesitas"
+        subtitle="Cuanta más información nos envíes, más fácil será valorar el trabajo y orientarte con una solución ajustada."
+        titleTag="h2"
+        class="mb-4!"
+      />
+
+      <p class="text-text-muted text-sm">
+        <span class="text-red-600">*</span> Campos obligatorios
+      </p>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        <div class="grid gap-2">
+          <label for="name" class="required-label text-sm font-semibold">Nombre</label>
+
+          <input
+            id="name"
+            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            type="text"
+            name="name"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="grid gap-2">
+          <label for="location" class="required-label text-sm font-semibold">Localidad</label>
+
+          <input
+            id="location"
+            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            type="text"
+            name="location"
+            placeholder="Ej. Vilassar de Mar"
+            required
+          />
+        </div>
+
+        <div class="grid gap-2">
+          <label for="phone" class="required-label text-sm font-semibold">Teléfono</label>
+
+          <input
+            id="phone"
+            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            type="tel"
+            name="phone"
+            autocomplete="tel"
+            required
+          />
+        </div>
+
+        <div class="grid gap-2">
+          <label for="email" class="text-sm font-semibold">Email</label>
+
+          <input
+            id="email"
+            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            type="email"
+            name="email"
+            autocomplete="email"
+          />
+        </div>
+      </div>
+
+      <fieldset class="mt-8">
+        <legend class="required-label text-sm font-semibold">¿Qué necesitas?</legend>
+
+        <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            services.map((service) => (
+              <label
+                for={`service-${service.id}`}
+                class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 has-checked:ring-primary/20 hover:border-primary/60 flex h-full min-h-16 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-all has-checked:ring-2"
+              >
+                <input
+                  id={`service-${service.id}`}
+                  class="sr-only"
+                  type="radio"
+                  name="service"
+                  value={service.data.title}
+                  required
+                />
+
+                <span>{service.data.title}</span>
+              </label>
+            ))
+          }
+
+          <label
+            for="service-other"
+            class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 has-checked:ring-primary/20 hover:border-primary/60 flex h-full min-h-16 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-all has-checked:ring-2"
+          >
+            <input
+              id="service-other"
+              class="sr-only"
+              type="radio"
+              name="service"
+              value="Otro"
+              required
+              data-service-other-radio
+            />
+
+            <span>Otro</span>
+          </label>
+        </div>
+        <div id="service-other-field" class="mt-4 hidden">
+          <label for="service-other-text" class="required-label text-sm font-semibold">
+            Indica qué necesitas
+          </label>
+
+          <input
+            id="service-other-text"
+            class="border-border bg-background focus:border-primary mt-2 h-12 w-full rounded-xl border px-4 font-normal transition-colors outline-none"
+            type="text"
+            name="service_other"
+            placeholder="Ej. soporte metálico a medida"
+            disabled
+            data-service-other-input
+          />
+        </div>
+      </fieldset>
+
+      <div class="mt-8 grid items-start gap-5 md:grid-cols-2">
+        <div class="grid gap-2">
+          <label for="message" class="required-label text-sm font-semibold">
+            Describe brevemente el proyecto
+          </label>
+
+          <textarea
+            id="message"
+            class="border-border bg-background focus:border-primary field-sizing-content max-h-65 min-h-40 resize-none overflow-y-auto rounded-xl border px-4 py-3 font-normal transition-colors outline-none"
+            name="message"
+            placeholder="Cuéntanos qué necesitas, si es obra nueva, reparación, sustitución, etc."
+            required
+          >
+          </textarea>
+        </div>
+
+        <div class="grid gap-2">
+          <label for="measurements" class="text-sm font-semibold"> Medidas aproximadas </label>
+
+          <textarea
+            id="measurements"
+            class="border-border bg-background focus:border-primary field-sizing-content max-h-65 min-h-40 resize-none rounded-xl border px-4 py-3 font-normal transition-colors outline-none"
+            name="measurements"
+            placeholder="Ej. 3 m de ancho x 1,5 m de alto"
+          >
+          </textarea>
+        </div>
+      </div>
+
+      <fieldset class="mt-8">
+        <legend class="text-text text-sm font-semibold">Lugar de instalación</legend>
+
+        <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            accessOptions.map((option, index) => (
+              <label
+                for={`access-${index}`}
+                class="border-border bg-background hover:border-primary/60 flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors"
+              >
+                <input id={`access-${index}`} type="checkbox" name="access" value={option} />
+
+                <span>{option}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <div class="mt-8">
+        <label
+          for="files"
+          data-file-dropzone
+          class="border-border bg-background hover:border-primary/60 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-8 text-center transition-colors"
+        >
+          <span class="text-text text-base font-semibold"> Añade fotos o referencias </span>
+
+          <span class="text-text-muted mt-2 max-w-md text-sm leading-6">
+            Arrastra imágenes aquí o haz clic para seleccionarlas.
+          </span>
+
+          <span class="text-text-muted mt-1 text-xs"> Puedes subir hasta 6 imágenes. </span>
+
+          <span data-file-summary class="text-primary mt-4 hidden text-sm font-semibold"></span>
+        </label>
+
+        <input
+          id="files"
+          class="sr-only"
+          type="file"
+          name="files"
+          accept="image/*"
+          multiple
+          data-max-files="6"
+        />
+
+        <div data-file-list class="mt-4 grid gap-3 sm:grid-cols-2"></div>
+
+        <p data-file-error class="mt-2 hidden text-sm font-medium text-red-600"></p>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-text-muted text-sm leading-6">
+          Te responderemos lo antes posible para comentar detalles y próximos pasos.
+        </p>
+
+        <button
+          type="submit"
+          class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
+        >
+          Enviar solicitud
+        </button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<style>
+  .required-label::after {
+    content: ' *';
+    color: var(--color-red-600);
+  }
+
+  label,
+  legend {
+    color: hsl(from var(--color-text) h s l / 85%);
+  }
+</style>
+
+<script>
+  const serviceRadios = document.querySelectorAll<HTMLInputElement>('input[name="service"]');
+  const otherRadio = document.querySelector<HTMLInputElement>('[data-service-other-radio]');
+  const otherField = document.querySelector<HTMLElement>('#service-other-field');
+  const otherInput = document.querySelector<HTMLInputElement>('[data-service-other-input]');
+
+  const updateOtherField = () => {
+    const isOtherSelected = otherRadio?.checked ?? false;
+
+    otherField?.classList.toggle('hidden', !isOtherSelected);
+
+    if (otherInput) {
+      otherInput.disabled = !isOtherSelected;
+      otherInput.required = isOtherSelected;
+
+      if (!isOtherSelected) {
+        otherInput.value = '';
+      }
+    }
+  };
+
+  serviceRadios.forEach((radio) => {
+    radio.addEventListener('change', updateOtherField);
+  });
+
+  updateOtherField();
+
+  // Image upload feedback
+  const fileInput = document.querySelector<HTMLInputElement>('#files');
+  const fileDropzone = document.querySelector<HTMLElement>('[data-file-dropzone]');
+  const fileSummary = document.querySelector<HTMLElement>('[data-file-summary]');
+  const fileList = document.querySelector<HTMLElement>('[data-file-list]');
+  const fileError = document.querySelector<HTMLElement>('[data-file-error]');
+
+  const maxFiles = Number(fileInput?.dataset.maxFiles ?? 6);
+
+  let selectedFiles: File[] = [];
+
+  let previewUrls: string[] = [];
+
+  const clearPreviewUrls = () => {
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    previewUrls = [];
+  };
+
+  const syncFileInput = () => {
+    if (!fileInput) return;
+
+    const dataTransfer = new DataTransfer();
+
+    selectedFiles.forEach((file) => {
+      dataTransfer.items.add(file);
+    });
+
+    fileInput.files = dataTransfer.files;
+  };
+
+  const renderFileFeedback = () => {
+    const hasFiles = selectedFiles.length > 0;
+
+    fileDropzone?.classList.toggle('border-primary', hasFiles);
+    fileDropzone?.classList.toggle('bg-primary/10', hasFiles);
+
+    if (fileSummary) {
+      fileSummary.classList.toggle('hidden', !hasFiles);
+
+      fileSummary.textContent =
+        selectedFiles.length === 1
+          ? `1 imagen seleccionada de ${maxFiles}`
+          : `${selectedFiles.length} imágenes seleccionadas de ${maxFiles}`;
+    }
+
+    if (!fileList) return;
+
+    clearPreviewUrls();
+    fileList.innerHTML = '';
+
+    selectedFiles.forEach((file, index) => {
+      const url = URL.createObjectURL(file);
+      previewUrls.push(url);
+
+      const item = document.createElement('article');
+
+      item.className = 'border-border bg-background flex items-center gap-3 rounded-xl border p-3';
+
+      item.innerHTML = `
+        <img
+          src="${url}"
+          alt=""
+          class="size-16 shrink-0 rounded-lg object-cover"
+        />
+
+        <div class="min-w-0 flex-1">
+          <p class="text-text truncate text-sm font-semibold">${file.name}</p>
+
+          <p class="text-text-muted mt-1 text-xs">
+            ${(file.size / 1024 / 1024).toFixed(1)} MB
+          </p>
+        </div>
+
+        <button
+          type="button"
+          aria-label="Eliminar imagen"
+          class="text-red-500/80 hover:bg-red-500/10 inline-flex cursor-pointer size-9 shrink-0 items-center justify-center rounded-lg transition-colors"         
+          data-remove-file="${index}"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 6h18"/>
+            <path d="M8 6V4h8v2"/>
+            <path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/>
+            <path d="M14 11v6"/>
+          </svg>
+        </button>
+      `;
+
+      fileList.appendChild(item);
+    });
+  };
+
+  fileInput?.addEventListener('change', () => {
+    const incomingFiles = Array.from(fileInput.files ?? []);
+
+    const invalidFiles = incomingFiles.filter((file) => !file.type.startsWith('image/'));
+
+    const validFiles = incomingFiles.filter((file) => file.type.startsWith('image/'));
+
+    if (fileError) {
+      if (invalidFiles.length > 0) {
+        fileError.textContent =
+          invalidFiles.length === 1
+            ? '1 archivo no es una imagen válida.'
+            : `${invalidFiles.length} archivos no son imágenes válidas.`;
+
+        fileError.classList.remove('hidden');
+      } else {
+        fileError.classList.add('hidden');
+        fileError.textContent = '';
+      }
+    }
+
+    const nextFiles = [...selectedFiles, ...validFiles];
+
+    if (fileError && nextFiles.length > maxFiles) {
+      fileError.textContent = `Solo puedes subir hasta ${maxFiles} imágenes.`;
+      fileError.classList.remove('hidden');
+    }
+
+    selectedFiles = nextFiles
+      .filter(
+        (file, index, self) =>
+          index ===
+          self.findIndex(
+            (f) =>
+              f.name === file.name && f.size === file.size && f.lastModified === file.lastModified,
+          ),
+      )
+      .slice(0, maxFiles);
+
+    syncFileInput();
+    renderFileFeedback();
+  });
+
+  fileList?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest<HTMLButtonElement>('[data-remove-file]');
+
+    if (!button) return;
+
+    const index = Number(button.dataset.removeFile);
+
+    selectedFiles.splice(index, 1);
+
+    syncFileInput();
+    renderFileFeedback();
+  });
+
+  renderFileFeedback();
+
+  // Drag and drop
+  fileDropzone?.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    fileDropzone.classList.add('border-primary', 'bg-primary/10');
+  });
+
+  fileDropzone?.addEventListener('dragleave', () => {
+    const hasFiles = selectedFiles.length > 0;
+    fileDropzone.classList.toggle('border-primary', hasFiles);
+    fileDropzone.classList.toggle('bg-primary/10', hasFiles);
+  });
+
+  fileDropzone?.addEventListener('drop', (event) => {
+    event.preventDefault();
+
+    const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
+
+    const invalidFiles = droppedFiles.filter((file) => !file.type.startsWith('image/'));
+
+    const validFiles = droppedFiles.filter((file) => file.type.startsWith('image/'));
+
+    if (fileError) {
+      if (invalidFiles.length > 0) {
+        fileError.textContent =
+          invalidFiles.length === 1
+            ? '1 archivo no es una imagen válida.'
+            : `${invalidFiles.length} archivos no son imágenes válidas.`;
+
+        fileError.classList.remove('hidden');
+      } else {
+        fileError.classList.add('hidden');
+        fileError.textContent = '';
+      }
+    }
+
+    const nextFiles = [...selectedFiles, ...validFiles];
+
+    if (fileError && nextFiles.length > maxFiles) {
+      fileError.textContent = `Solo puedes subir hasta ${maxFiles} imágenes.`;
+      fileError.classList.remove('hidden');
+    }
+
+    selectedFiles = nextFiles
+      .filter(
+        (file, index, self) =>
+          index ===
+          self.findIndex(
+            (f) =>
+              f.name === file.name && f.size === file.size && f.lastModified === file.lastModified,
+          ),
+      )
+      .slice(0, maxFiles);
+
+    syncFileInput();
+    renderFileFeedback();
+  });
+</script>
