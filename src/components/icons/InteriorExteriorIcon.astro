@@ -1,0 +1,14 @@
+---
+import { Trees, Warehouse } from '@lucide/astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<span class={`relative inline-flex size-8 ${className}`} aria-hidden="true">
+  <Warehouse class="absolute bottom-0 left-0 size-5" />
+  <Trees class="absolute top-0 right-0 size-4" />
+</span>

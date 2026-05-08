@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  class?: string;
+  title?: string;
+  ariaHidden?: boolean;
+}
+
+const { class: className = '', title, ariaHidden } = Astro.props;
+---
+
+<Icon
+  class={className}
+  title={title}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth={1.5}
+  ariaHidden={ariaHidden}
+>
+  <line class="cls-1" x1="12" y1="19.67" x2="4.39" y2="19.67"></line><line
+    class="cls-1"
+    x1="13.29"
+    y1="14.89"
+    x2="5.64"
+    y2="14.89"></line><line class="cls-1" x1="14.53" y1="10.11" x2="7.22" y2="10.11"></line><line
+    class="cls-1"
+    x1="8.17"
+    y1="5.33"
+    x2="15.83"
+    y2="5.33"></line><polyline class="cls-1" points="3.39 23.5 9.13 1.5 16.78 1.5 11.04 23.5"
+  ></polyline><line class="cls-1" x1="20.61" y1="23.5" x2="15.83" y2="5.16"></line>
+</Icon>
