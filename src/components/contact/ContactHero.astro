@@ -1,0 +1,34 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { Check } from '@lucide/astro';
+
+const benefits = [
+  'Presupuesto sin compromiso',
+  'Fabricación a medida',
+  'Servicio rápido',
+  'Particulares y empresas',
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 pt-16 pb-10 md:pt-24 md:pb-16">
+  <div class="max-w-3xl">
+    <SectionTitle
+      title="Cuéntanos tu proyecto metálico"
+      subtitle="Diseñamos, fabricamos e instalamos estructuras metálicas, carpintería metálica y trabajos de soldadura para viviendas, negocios e industria en Barcelona, Maresme y Vallès."
+      titleTag="h1"
+    />
+
+    <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+      {
+        benefits.map((benefit) => (
+          <li class="text-text flex items-center gap-3 text-sm font-semibold">
+            <span class="bg-primary/15 text-primary inline-flex size-6 items-center justify-center rounded-full text-xs">
+              <Check class="size-3" />
+            </span>
+            {benefit}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
