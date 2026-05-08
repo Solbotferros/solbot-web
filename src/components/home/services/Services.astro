@@ -11,7 +11,10 @@ const lang = Astro.currentLocale as Language;
 const { t } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);
 
-const services = await getCollection('services', ({ id }) => id.endsWith(`/${lang}`));
+const services = await getCollection(
+  'services',
+  ({ id, data }) => id.endsWith(`/${lang}`) && data.type === 'service',
+);
 services.sort((a, b) => a.data.order - b.data.order);
 ---
 
