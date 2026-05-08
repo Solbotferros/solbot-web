@@ -17,5 +17,7 @@
   body {
     color: var(--color-text);
     background-color: var(--color-bg);
+    accent-color: var(--color-primary);
+    caret-color: hsl(from var(--color-primary) h s l / 70%);
   }
 }
