@@ -2,7 +2,13 @@
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import type { Language } from '@lib/i18n/types';
 import { getCollection } from 'astro:content';
-import { X } from '@lucide/astro';
+import { Warehouse, Wrench, Trees, CircleQuestionMark } from '@lucide/astro';
+import StairsIcon from '@components/icons/StairsIcon.astro';
+import OpenDoorIcon from '@components/icons/OpenDoorIcon.astro';
+import LadderIcon from '@components/icons/LadderIcon.astro';
+import ElevatorIcon from '@components/icons/ElevatorIcon.astro';
+import NarrowIcon from '@components/icons/NarrowIcon.astro';
+import InteriorExteriorIcon from '@components/icons/InteriorExteriorIcon.astro';
 
 const lang = Astro.currentLocale as Language;
 const services = await getCollection(
@@ -12,19 +18,66 @@ const services = await getCollection(
 
 services.sort((a, b) => a.data.order - b.data.order);
 
+const installationPlaceOptions = [
+  {
+    value: 'Interior',
+    label: 'Interior',
+    icon: Warehouse,
+  },
+  {
+    value: 'Exterior',
+    label: 'Exterior',
+    icon: Trees,
+  },
+  {
+    value: 'Interior/exterior',
+    label: 'Interior/exterior',
+    icon: InteriorExteriorIcon,
+  },
+  {
+    value: 'No estoy seguro',
+    label: 'No estoy seguro',
+    icon: CircleQuestionMark,
+  },
+];
+
 const accessOptions = [
-  'Fácil acceso',
-  'Hace falta escalera',
-  'Trabajo en altura',
-  'Interior',
-  'Exterior',
-  'No estoy seguro',
+  {
+    title: 'Acceso directo desde calle',
+    description: 'Se puede acceder fácilmente sin escaleras ni ascensor.',
+    icon: OpenDoorIcon,
+  },
+  {
+    title: 'Hay escaleras',
+    description: 'Es necesario subir o bajar escaleras para acceder.',
+    icon: StairsIcon,
+  },
+  {
+    title: 'Ascensor disponible',
+    description: 'Hay ascensor operativo para transportar materiales.',
+    icon: ElevatorIcon,
+  },
+  {
+    title: 'Trabajo en altura',
+    description: 'Es necesario trabajar a más de 2 metros de altura.',
+    icon: LadderIcon,
+  },
+  {
+    title: 'Zona estrecha o de difícil acceso',
+    description: 'El acceso es limitado o complicado para llevar los materiales.',
+    icon: NarrowIcon,
+  },
+  {
+    title: 'Retirar pieza existente',
+    description: 'Es necesario desmontar o retirar algo antes.',
+    icon: Wrench,
+  },
 ];
 ---
 
 <section class="mx-auto max-w-6xl px-4 pb-20 md:pb-24">
-  <form class="border-border bg-surface rounded-3xl border p-6 md:p-8">
-    <div class="max-w-2xl">
+  <form class="border-border bg-surface mx-auto max-w-6xl rounded-3xl border p-6 md:p-8">
+    <div>
       <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
         Solicitud de presupuesto
       </p>
@@ -46,7 +99,7 @@ const accessOptions = [
 
           <input
             id="name"
-            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            class="focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
             type="text"
             name="name"
             autocomplete="name"
@@ -59,7 +112,7 @@ const accessOptions = [
 
           <input
             id="location"
-            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            class="focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
             type="text"
             name="location"
             placeholder="Ej. Vilassar de Mar"
@@ -72,7 +125,7 @@ const accessOptions = [
 
           <input
             id="phone"
-            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            class="focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
             type="tel"
             name="phone"
             autocomplete="tel"
@@ -85,7 +138,7 @@ const accessOptions = [
 
           <input
             id="email"
-            class="border-border bg-background focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
+            class="focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
             type="email"
             name="email"
             autocomplete="email"
@@ -101,7 +154,7 @@ const accessOptions = [
             services.map((service) => (
               <label
                 for={`service-${service.id}`}
-                class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 has-checked:ring-primary/20 hover:border-primary/60 flex h-full min-h-16 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-all has-checked:ring-2"
+                class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 hover:border-primary/60 flex min-h-13 cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold transition-all"
               >
                 <input
                   id={`service-${service.id}`}
@@ -119,7 +172,7 @@ const accessOptions = [
 
           <label
             for="service-other"
-            class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 has-checked:ring-primary/20 hover:border-primary/60 flex h-full min-h-16 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-all has-checked:ring-2"
+            class="border-border bg-background has-checked:border-primary has-checked:bg-primary/10 hover:border-primary/60 flex min-h-13 cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold transition-all"
           >
             <input
               id="service-other"
@@ -141,7 +194,7 @@ const accessOptions = [
 
           <input
             id="service-other-text"
-            class="border-border bg-background focus:border-primary mt-2 h-12 w-full rounded-xl border px-4 font-normal transition-colors outline-none"
+            class="focus:border-primary mt-2 h-12 w-full rounded-xl border px-4 font-normal transition-colors outline-none"
             type="text"
             name="service_other"
             placeholder="Ej. soporte metálico a medida"
@@ -179,16 +232,68 @@ const accessOptions = [
       <fieldset class="mt-8">
         <legend class="text-text text-sm font-semibold">Lugar de instalación</legend>
 
-        <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <p class="text-text-muted mt-2 text-sm">
+          Esto nos ayuda a valorar el tipo de instalación y acceso al lugar.
+        </p>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            installationPlaceOptions.map((option, index) => (
+              <label
+                for={`installation-place-${index}`}
+                class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/10 hover:border-primary/60 flex min-h-13 cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold transition-all"
+              >
+                <input
+                  id={`installation-place-${index}`}
+                  class="sr-only"
+                  type="radio"
+                  name="installation_place"
+                  value={option.value}
+                />
+
+                <span class="flex items-center gap-3">
+                  <option.icon class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-6 shrink-0" />
+                  {option.label}
+                </span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <fieldset class="mt-8">
+        <legend class="text-text text-sm font-semibold"> Acceso y condiciones del lugar </legend>
+
+        <p class="text-text-muted mt-2 text-sm leading-6">
+          Marca las opciones que puedan afectar a la instalación o visita técnica.
+        </p>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {
             accessOptions.map((option, index) => (
               <label
                 for={`access-${index}`}
-                class="border-border bg-background hover:border-primary/60 flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors"
+                class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/5 hover:border-primary/60 flex min-h-28 cursor-pointer gap-4 rounded-2xl border p-5 transition-all"
+                aria-label="Acceso y condiciones del lugar: ${option.title} - ${option.description}"
               >
-                <input id={`access-${index}`} type="checkbox" name="access" value={option} />
+                <input
+                  id={`access-${index}`}
+                  type="checkbox"
+                  name="access"
+                  value={option.title}
+                  class="sr-only"
+                />
 
-                <span>{option}</span>
+                <option.icon
+                  class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-8 shrink-0"
+                  aria-hidden="true"
+                />
+
+                <div class="min-w-0">
+                  <p class="text-text text-base leading-5 font-semibold">{option.title}</p>
+
+                  <p class="text-text-muted mt-2 text-sm leading-6">{option.description}</p>
+                </div>
               </label>
             ))
           }
@@ -234,7 +339,7 @@ const accessOptions = [
 
         <button
           type="submit"
-          class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
+          class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] cursor-pointer items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
         >
           Enviar solicitud
         </button>
