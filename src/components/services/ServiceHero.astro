@@ -1,7 +1,7 @@
 ---
 import ButtonLink from '@components/shared/ButtonLink.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { Image } from 'astro:assets';
 
 type Props = {
@@ -11,7 +11,9 @@ type Props = {
   coverAlt?: string;
 };
 
-const { t } = useTranslations(Astro.currentLocale as Language);
+const lang = Astro.currentLocale as Language;
+const { t } = useTranslations(lang);
+const trPath = useTranslatedPath(lang);
 
 const { title, description, coverImage, coverAlt } = Astro.props;
 ---
@@ -46,12 +48,12 @@ const { title, description, coverImage, coverAlt } = Astro.props;
         />
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="#contacto" variant="primary" class="text-center">
+          <ButtonLink href={trPath('/contacto')} variant="primary" class="text-center">
             {t('services.primaryCta')}
           </ButtonLink>
 
           <ButtonLink
-            href="#trabajos"
+            href="#service-related-projects"
             variant="outline"
             class="border-white/30 bg-white/5 text-center text-white/85 backdrop-blur-sm hover:bg-white/10"
           >

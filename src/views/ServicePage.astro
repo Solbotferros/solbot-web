@@ -28,8 +28,6 @@ const allProjects = await getCollection('projects', (entry) =>
   entry.id.endsWith(`/${Astro.currentLocale}`),
 );
 
-const relatedServiceKeys = [service.data.serviceKey, ...(service.data.relatedServices ?? [])];
-
 const relatedProjects = allProjects
   .map((project) => {
     const score = project.data.serviceKeys.reduce((total, key) => {
@@ -58,15 +56,11 @@ const relatedProjects = allProjects
       coverAlt={coverAlt}
     />
 
-    <!-- <section class="mx-auto max-w-6xl px-8 py-16 sm:px-12 lg:px-16">
-      <ServiceIncluded items={items} />
-    </section> -->
-
     <div class="mx-auto max-w-6xl px-8 py-16 sm:px-12 lg:px-16">
       <ServiceApproach approach={approach} />
     </div>
 
-    <section class="mx-auto mt-24 max-w-3xl px-6 lg:max-w-6xl lg:px-12">
+    <section class="mx-auto max-w-3xl px-6 lg:max-w-6xl lg:px-12">
       <div class="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_380px]">
         <article class="min-w-0">
           <div class="prose prose-content-text max-w-none">
