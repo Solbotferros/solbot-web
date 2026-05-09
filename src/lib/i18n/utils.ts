@@ -150,7 +150,7 @@ export function formatLongDate(date: Date, locale: Language): string {
  * Ejemplo: interpolate('Hola {name}, tienes {count} mensajes', { name: 'Juan', count: 5 })
  *          -> 'Hola Juan, tienes 5 mensajes'
  */
-function interpolate(template: string, values: Record<string, string | number>) {
+export function interpolate(template: string, values: Record<string, string | number>) {
   return Object.entries(values).reduce(
     (result, [key, value]) => result.replaceAll(`{${key}}`, String(value)),
     template,
