@@ -144,3 +144,15 @@ export function useTranslatedPath(lang: Language) {
 export function formatLongDate(date: Date, locale: Language): string {
   return date.toLocaleDateString(locale, longDateFormatOptions);
 }
+
+/**
+ * Interpreta plantillas de texto con placeholders usando un objeto de valores
+ * Ejemplo: interpolate('Hola {name}, tienes {count} mensajes', { name: 'Juan', count: 5 })
+ *          -> 'Hola Juan, tienes 5 mensajes'
+ */
+function interpolate(template: string, values: Record<string, string | number>) {
+  return Object.entries(values).reduce(
+    (result, [key, value]) => result.replaceAll(`{${key}}`, String(value)),
+    template,
+  );
+}
