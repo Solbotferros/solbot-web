@@ -21,6 +21,17 @@ export const commonTranslations = {
       primary: 'Pedir presupuesto',
       phoneHint: 'También puedes llamarnos al',
     },
+    days: {
+      monday: 'Lunes',
+      tuesday: 'Martes',
+      wednesday: 'Miércoles',
+      thursday: 'Jueves',
+      friday: 'Viernes',
+      saturday: 'Sábado',
+      sunday: 'Domingo',
+    },
+    dayRangeConnector: 'a',
+    closed: 'Cerrado',
   },
 
   ca: {
@@ -44,6 +55,17 @@ export const commonTranslations = {
       primary: 'Demanar pressupost',
       phoneHint: 'També pots trucar-nos al',
     },
+    days: {
+      monday: 'Dilluns',
+      tuesday: 'Dimarts',
+      wednesday: 'Dimecres',
+      thursday: 'Dijous',
+      friday: 'Divendres',
+      saturday: 'Dissabte',
+      sunday: 'Diumenge',
+    },
+    dayRangeConnector: 'a',
+    closed: 'Tancat',
   },
 
   en: {
@@ -67,5 +89,16 @@ export const commonTranslations = {
       primary: 'Request a quote',
       phoneHint: 'You can also call us at',
     },
+    days: {
+      monday: 'Monday',
+      tuesday: 'Tuesday',
+      wednesday: 'Wednesday',
+      thursday: 'Thursday',
+      friday: 'Friday',
+      saturday: 'Saturday',
+      sunday: 'Sunday',
+    },
+    dayRangeConnector: 'to',
+    closed: 'Closed',
   },
 } as const;
