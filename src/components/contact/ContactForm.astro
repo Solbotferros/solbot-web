@@ -2,7 +2,7 @@
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import type { Language } from '@lib/i18n/types';
 import { getCollection } from 'astro:content';
-import { Warehouse, Wrench, Trees, CircleQuestionMark } from '@lucide/astro';
+import { Warehouse, Wrench, Trees, CircleQuestionMark, ImagePlus } from '@lucide/astro';
 import StairsIcon from '@components/icons/StairsIcon.astro';
 import OpenDoorIcon from '@components/icons/OpenDoorIcon.astro';
 import LadderIcon from '@components/icons/LadderIcon.astro';
@@ -306,6 +306,12 @@ const accessOptions = [
           data-file-dropzone
           class="border-border bg-background hover:border-primary/60 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-8 text-center transition-colors"
         >
+          <div
+            class="text-primary bg-primary/10 mb-4 inline-flex size-14 items-center justify-center rounded-2xl"
+          >
+            <ImagePlus class="size-7" />
+          </div>
+
           <span class="text-text text-base font-semibold"> Añade fotos o referencias </span>
 
           <span class="text-text-muted mt-2 max-w-md text-sm leading-6">
