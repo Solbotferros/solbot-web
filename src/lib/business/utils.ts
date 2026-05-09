@@ -17,3 +17,24 @@ export function formatWhatsappLink(phone: { prefix: string; number: string }, me
   }
   return `https://wa.me/${phone.prefix}${cleanNumber}`;
 }
+
+export const formatDayRange = (
+  days: string[],
+  dayLabels: Record<string, string>,
+  rangeSeparator: string,
+) => {
+  if (days.length === 1) {
+    return dayLabels[days[0] as keyof typeof dayLabels];
+  }
+
+  const firstDay = dayLabels[days[0] as keyof typeof dayLabels];
+  const lastDay = dayLabels[days[days.length - 1] as keyof typeof dayLabels];
+
+  return `${firstDay} ${rangeSeparator} ${lastDay}`;
+};
+
+export const formatIntervals = (intervals: { opens: string; closes: string }[], closed: string) => {
+  if (intervals.length === 0) return closed;
+
+  return intervals.map((interval) => `${interval.opens}-${interval.closes}`).join(' · ');
+};
