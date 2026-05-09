@@ -2,13 +2,10 @@
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import type { Language } from '@lib/i18n/types';
 import { getCollection } from 'astro:content';
-import { Warehouse, Wrench, Trees, CircleQuestionMark, ImagePlus } from '@lucide/astro';
-import StairsIcon from '@components/icons/StairsIcon.astro';
-import OpenDoorIcon from '@components/icons/OpenDoorIcon.astro';
-import LadderIcon from '@components/icons/LadderIcon.astro';
-import ElevatorIcon from '@components/icons/ElevatorIcon.astro';
-import NarrowIcon from '@components/icons/NarrowIcon.astro';
-import InteriorExteriorIcon from '@components/icons/InteriorExteriorIcon.astro';
+import { ImagePlus } from '@lucide/astro';
+import type { translations } from '@lib/i18n/translations';
+import { useTranslations, interpolate } from '@lib/i18n/utils';
+import { accessIcons, installationPlaceIcons } from '@lib/ui/icons';
 
 const lang = Astro.currentLocale as Language;
 const services = await getCollection(
@@ -18,84 +15,46 @@ const services = await getCollection(
 
 services.sort((a, b) => a.data.order - b.data.order);
 
-const installationPlaceOptions = [
-  {
-    value: 'Interior',
-    label: 'Interior',
-    icon: Warehouse,
-  },
-  {
-    value: 'Exterior',
-    label: 'Exterior',
-    icon: Trees,
-  },
-  {
-    value: 'Interior/exterior',
-    label: 'Interior/exterior',
-    icon: InteriorExteriorIcon,
-  },
-  {
-    value: 'No estoy seguro',
-    label: 'No estoy seguro',
-    icon: CircleQuestionMark,
-  },
-];
+type FormType = typeof translations.es.contact.form;
+const { tn } = useTranslations(lang);
+const formTranslations = tn<FormType>('contact.form');
 
-const accessOptions = [
-  {
-    title: 'Acceso directo desde calle',
-    description: 'Se puede acceder fácilmente sin escaleras ni ascensor.',
-    icon: OpenDoorIcon,
-  },
-  {
-    title: 'Hay escaleras',
-    description: 'Es necesario subir o bajar escaleras para acceder.',
-    icon: StairsIcon,
-  },
-  {
-    title: 'Ascensor disponible',
-    description: 'Hay ascensor operativo para transportar materiales.',
-    icon: ElevatorIcon,
-  },
-  {
-    title: 'Trabajo en altura',
-    description: 'Es necesario trabajar a más de 2 metros de altura.',
-    icon: LadderIcon,
-  },
-  {
-    title: 'Zona estrecha o de difícil acceso',
-    description: 'El acceso es limitado o complicado para llevar los materiales.',
-    icon: NarrowIcon,
-  },
-  {
-    title: 'Retirar pieza existente',
-    description: 'Es necesario desmontar o retirar algo antes.',
-    icon: Wrench,
-  },
-];
+const fileMessages = {
+  selectedOne: formTranslations.files.selectedOne,
+  selectedMany: formTranslations.files.selectedMany,
+  invalidOne: formTranslations.files.invalidOne,
+  invalidMany: formTranslations.files.invalidMany,
+  maxExceeded: formTranslations.files.maxExceeded,
+  removeImage: formTranslations.files.removeImage,
+};
+
+const MAX_IMAGES = 6;
 ---
 
 <section class="px-4 pb-20 md:pb-24">
   <form class="border-border bg-surface rounded-3xl border p-6 md:p-8">
     <div>
       <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
-        Solicitud de presupuesto
+        {formTranslations.eyebrow}
       </p>
 
       <SectionTitle
-        title="Explícanos qué necesitas"
-        subtitle="Cuanta más información nos envíes, más fácil será valorar el trabajo y orientarte con una solución ajustada."
+        title={formTranslations.title}
+        subtitle={formTranslations.subtitle}
         titleTag="h2"
         class="mb-4!"
       />
 
       <p class="text-text-muted text-sm">
-        <span class="text-red-600">*</span> Campos obligatorios
+        <span class="text-red-600">*</span>
+        {formTranslations.requiredFieldsNote}
       </p>
 
       <div class="mt-8 grid gap-5 md:grid-cols-2">
         <div class="grid gap-2">
-          <label for="name" class="required-label text-sm font-semibold">Nombre</label>
+          <label for="name" class="required-label text-sm font-semibold"
+            >{formTranslations.fields.name.label}</label
+          >
 
           <input
             id="name"
@@ -108,20 +67,24 @@ const accessOptions = [
         </div>
 
         <div class="grid gap-2">
-          <label for="location" class="required-label text-sm font-semibold">Localidad</label>
+          <label for="location" class="required-label text-sm font-semibold"
+            >{formTranslations.fields.location.label}</label
+          >
 
           <input
             id="location"
             class="focus:border-primary h-12 rounded-xl border px-4 font-normal transition-colors outline-none"
             type="text"
             name="location"
-            placeholder="Ej. Vilassar de Mar"
+            placeholder={formTranslations.fields.location.placeholder}
             required
           />
         </div>
 
         <div class="grid gap-2">
-          <label for="phone" class="required-label text-sm font-semibold">Teléfono</label>
+          <label for="phone" class="required-label text-sm font-semibold"
+            >{formTranslations.fields.phone.label}</label
+          >
 
           <input
             id="phone"
@@ -134,7 +97,9 @@ const accessOptions = [
         </div>
 
         <div class="grid gap-2">
-          <label for="email" class="text-sm font-semibold">Email</label>
+          <label for="email" class="text-sm font-semibold"
+            >{formTranslations.fields.email.label}</label
+          >
 
           <input
             id="email"
@@ -147,7 +112,9 @@ const accessOptions = [
       </div>
 
       <fieldset class="mt-8">
-        <legend class="required-label text-sm font-semibold">¿Qué necesitas?</legend>
+        <legend class="required-label text-sm font-semibold"
+          >{formTranslations.fields.service.label}</legend
+        >
 
         <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {
@@ -184,12 +151,12 @@ const accessOptions = [
               data-service-other-radio
             />
 
-            <span>Otro</span>
+            <span>{formTranslations.fields.service.other}</span>
           </label>
         </div>
         <div id="service-other-field" class="mt-4 hidden">
           <label for="service-other-text" class="required-label text-sm font-semibold">
-            Indica qué necesitas
+            {formTranslations.fields.service.otherLabel}
           </label>
 
           <input
@@ -197,7 +164,7 @@ const accessOptions = [
             class="focus:border-primary mt-2 h-12 w-full rounded-xl border px-4 font-normal transition-colors outline-none"
             type="text"
             name="service_other"
-            placeholder="Ej. soporte metálico a medida"
+            placeholder={formTranslations.fields.service.otherPlaceholder}
             disabled
             data-service-other-input
           />
@@ -207,95 +174,108 @@ const accessOptions = [
       <div class="mt-8 grid items-start gap-5 md:grid-cols-2">
         <div class="grid gap-2">
           <label for="message" class="required-label text-sm font-semibold">
-            Describe brevemente el proyecto
+            {formTranslations.fields.message.label}
           </label>
 
           <textarea
             id="message"
             class="border-border bg-background focus:border-primary field-sizing-content max-h-65 min-h-40 resize-none overflow-y-auto rounded-xl border px-4 py-3 font-normal transition-colors outline-none"
             name="message"
-            placeholder="Cuéntanos qué necesitas, si es obra nueva, reparación, sustitución, etc."
+            placeholder={formTranslations.fields.message.placeholder}
             required></textarea>
         </div>
 
         <div class="grid gap-2">
-          <label for="measurements" class="text-sm font-semibold"> Medidas aproximadas </label>
+          <label for="measurements" class="text-sm font-semibold">
+            {formTranslations.fields.measurements.label}
+          </label>
 
           <textarea
             id="measurements"
             class="border-border bg-background focus:border-primary field-sizing-content max-h-65 min-h-40 resize-none rounded-xl border px-4 py-3 font-normal transition-colors outline-none"
             name="measurements"
-            placeholder="Ej. 3 m de ancho x 1,5 m de alto"></textarea>
+            placeholder={formTranslations.fields.measurements.placeholder}></textarea>
         </div>
       </div>
 
       <fieldset class="mt-8">
-        <legend class="text-text text-sm font-semibold">Lugar de instalación</legend>
+        <legend class="text-text text-sm font-semibold">
+          {formTranslations.installationPlace.label}
+        </legend>
 
         <p class="text-text-muted mt-2 text-sm">
-          Esto nos ayuda a valorar el tipo de instalación y acceso al lugar.
+          {formTranslations.installationPlace.description}
         </p>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {
-            installationPlaceOptions.map((option, index) => (
-              <label
-                for={`installation-place-${index}`}
-                class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/10 hover:border-primary/60 flex min-h-13 cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold transition-all"
-              >
-                <input
-                  id={`installation-place-${index}`}
-                  class="sr-only"
-                  type="radio"
-                  name="installation_place"
-                  value={option.value}
-                />
+            formTranslations.installationPlace.options.map((option, index) => {
+              const Icon = installationPlaceIcons[option.key];
+              return (
+                <label
+                  for={`installation-place-${index}`}
+                  class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/10 hover:border-primary/60 flex min-h-13 cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-center text-sm font-semibold transition-all"
+                >
+                  <input
+                    id={`installation-place-${index}`}
+                    class="sr-only"
+                    type="radio"
+                    name="installation_place"
+                    value={option.value}
+                  />
 
-                <span class="flex items-center gap-3">
-                  <option.icon class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-6 shrink-0" />
-                  {option.label}
-                </span>
-              </label>
-            ))
+                  <span class="flex items-center gap-3">
+                    <Icon class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-6 shrink-0" />
+                    {option.label}
+                  </span>
+                </label>
+              );
+            })
           }
         </div>
       </fieldset>
 
       <fieldset class="mt-8">
-        <legend class="text-text text-sm font-semibold"> Acceso y condiciones del lugar </legend>
+        <legend class="text-text text-sm font-semibold">
+          {formTranslations.accessConditions.label}
+        </legend>
 
         <p class="text-text-muted mt-2 text-sm leading-6">
-          Marca las opciones que puedan afectar a la instalación o visita técnica.
+          {formTranslations.accessConditions.description}
         </p>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {
-            accessOptions.map((option, index) => (
-              <label
-                for={`access-${index}`}
-                class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/5 hover:border-primary/60 flex min-h-28 cursor-pointer gap-4 rounded-2xl border p-5 transition-all"
-                aria-label="Acceso y condiciones del lugar: ${option.title} - ${option.description}"
-              >
-                <input
-                  id={`access-${index}`}
-                  type="checkbox"
-                  name="access"
-                  value={option.title}
-                  class="sr-only"
-                />
+            formTranslations.accessConditions.options.map((option, index) => {
+              const Icon = accessIcons[option.key];
 
-                <option.icon
-                  class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-8 shrink-0"
-                  aria-hidden="true"
-                />
+              return (
+                <label
+                  for={`access-${index}`}
+                  class="group border-border bg-background has-checked:border-primary has-checked:bg-primary/5 hover:border-primary/60 flex min-h-28 cursor-pointer gap-4 rounded-2xl border p-5 transition-all"
+                  aria-label={`${formTranslations.accessConditions.label}: ${option.title} - ${option.description}`}
+                >
+                  <input
+                    id={`access-${index}`}
+                    type="checkbox"
+                    name="access"
+                    value={option.value}
+                    class="sr-only"
+                  />
 
-                <div class="min-w-0">
-                  <p class="text-text text-base leading-5 font-semibold">{option.title}</p>
+                  <Icon
+                    class="text-primary/80 group-hover:text-primary group-has-checked:text-primary size-8 shrink-0"
+                    aria-hidden="true"
+                  />
 
-                  <p class="text-text-muted mt-2 text-sm leading-6">{option.description}</p>
-                </div>
-              </label>
-            ))
+                  <div class="min-w-0">
+                    <p class="text-text text-base leading-5 font-semibold">{option.title}</p>
+
+                    <p class="text-text-muted mt-2 text-sm leading-6">{option.description}</p>
+                  </div>
+                </label>
+              );
+            })
           }
         </div>
       </fieldset>
@@ -304,7 +284,7 @@ const accessOptions = [
         <label
           for="files"
           data-file-dropzone
-          class="border-header-border bg-background hover:border-primary/60 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-8 text-center transition-colors"
+          class="border-header-border bg-background hover:border-primary/85 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-8 text-center transition-colors"
         >
           <div
             class="text-primary bg-primary/10 mb-4 inline-flex size-14 items-center justify-center rounded-2xl"
@@ -312,13 +292,17 @@ const accessOptions = [
             <ImagePlus class="size-6" />
           </div>
 
-          <span class="text-text text-base font-semibold"> Añade fotos o referencias </span>
-
-          <span class="text-text-muted mt-2 max-w-md text-sm leading-6">
-            Arrastra imágenes aquí o haz clic para seleccionarlas.
+          <span class="text-text text-base font-semibold">
+            {formTranslations.files.title}
           </span>
 
-          <span class="text-text-muted mt-1 text-xs"> Puedes subir hasta 6 imágenes. </span>
+          <span class="text-text-muted mt-2 max-w-md text-sm leading-6">
+            {formTranslations.files.description}
+          </span>
+
+          <span class="text-text-muted mt-1 text-xs">
+            {interpolate(formTranslations.files.maxImages, { max: MAX_IMAGES })}
+          </span>
 
           <span data-file-summary class="text-primary mt-4 hidden text-sm font-semibold"></span>
         </label>
@@ -330,7 +314,8 @@ const accessOptions = [
           name="files"
           accept="image/*"
           multiple
-          data-max-files="6"
+          data-max-files={MAX_IMAGES}
+          data-messages={JSON.stringify(fileMessages)}
         />
 
         <div data-file-list class="mt-4 grid gap-3 sm:grid-cols-2"></div>
@@ -340,14 +325,14 @@ const accessOptions = [
 
       <div class="mt-8 flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-text-muted text-sm leading-6">
-          Te responderemos lo antes posible para comentar detalles y próximos pasos.
+          {formTranslations.submit.note}
         </p>
 
         <button
           type="submit"
           class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] cursor-pointer items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
         >
-          Enviar solicitud
+          {formTranslations.submit.label}
         </button>
       </div>
     </div>
@@ -394,11 +379,28 @@ const accessOptions = [
   updateOtherField();
 
   // Image upload feedback
+
+  const interpolateClient = (template: string, values: Record<string, string | number>) => {
+    return Object.entries(values).reduce(
+      (result, [key, value]) => result.replaceAll(`{${key}}`, String(value)),
+      template,
+    );
+  };
+
   const fileInput = document.querySelector<HTMLInputElement>('#files');
   const fileDropzone = document.querySelector<HTMLElement>('[data-file-dropzone]');
   const fileSummary = document.querySelector<HTMLElement>('[data-file-summary]');
   const fileList = document.querySelector<HTMLElement>('[data-file-list]');
   const fileError = document.querySelector<HTMLElement>('[data-file-error]');
+
+  const fileMessages = JSON.parse(fileInput?.dataset.messages ?? '{}') as {
+    selectedOne: string;
+    selectedMany: string;
+    invalidOne: string;
+    invalidMany: string;
+    maxExceeded: string;
+    removeImage: string;
+  };
 
   const maxFiles = Number(fileInput?.dataset.maxFiles ?? 6);
 
@@ -434,8 +436,11 @@ const accessOptions = [
 
       fileSummary.textContent =
         selectedFiles.length === 1
-          ? `1 imagen seleccionada de ${maxFiles}`
-          : `${selectedFiles.length} imágenes seleccionadas de ${maxFiles}`;
+          ? interpolateClient(fileMessages.selectedOne, { max: maxFiles })
+          : interpolateClient(fileMessages.selectedMany, {
+              count: selectedFiles.length,
+              max: maxFiles,
+            });
     }
 
     if (!fileList) return;
@@ -468,7 +473,7 @@ const accessOptions = [
 
         <button
           type="button"
-          aria-label="Eliminar imagen"
+          aria-label="${fileMessages.removeImage}"
           class="text-red-500/80 hover:bg-red-500/10 inline-flex cursor-pointer size-9 shrink-0 items-center justify-center rounded-lg transition-colors"         
           data-remove-file="${index}"
         >
@@ -508,8 +513,8 @@ const accessOptions = [
       if (invalidFiles.length > 0) {
         fileError.textContent =
           invalidFiles.length === 1
-            ? '1 archivo no es una imagen válida.'
-            : `${invalidFiles.length} archivos no son imágenes válidas.`;
+            ? fileMessages.invalidOne
+            : interpolateClient(fileMessages.invalidMany, { count: invalidFiles.length });
 
         fileError.classList.remove('hidden');
       } else {
@@ -521,7 +526,9 @@ const accessOptions = [
     const nextFiles = [...selectedFiles, ...validFiles];
 
     if (fileError && nextFiles.length > maxFiles) {
-      fileError.textContent = `Solo puedes subir hasta ${maxFiles} imágenes.`;
+      fileError.textContent = interpolateClient(fileMessages.maxExceeded, {
+        max: maxFiles,
+      });
       fileError.classList.remove('hidden');
     }
 
@@ -581,8 +588,8 @@ const accessOptions = [
       if (invalidFiles.length > 0) {
         fileError.textContent =
           invalidFiles.length === 1
-            ? '1 archivo no es una imagen válida.'
-            : `${invalidFiles.length} archivos no son imágenes válidas.`;
+            ? fileMessages.invalidOne
+            : interpolateClient(fileMessages.invalidMany, { count: invalidFiles.length });
 
         fileError.classList.remove('hidden');
       } else {
@@ -594,7 +601,9 @@ const accessOptions = [
     const nextFiles = [...selectedFiles, ...validFiles];
 
     if (fileError && nextFiles.length > maxFiles) {
-      fileError.textContent = `Solo puedes subir hasta ${maxFiles} imágenes.`;
+      fileError.textContent = interpolateClient(fileMessages.maxExceeded, {
+        max: maxFiles,
+      });
       fileError.classList.remove('hidden');
     }
 
