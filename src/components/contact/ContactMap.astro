@@ -1,0 +1,81 @@
+---
+import 'leaflet/dist/leaflet.css';
+
+interface Props {
+  lat: number;
+  lng: number;
+  zoom?: number;
+  markerLabel?: string;
+}
+
+const { lat, lng, zoom = 16, markerLabel = '' } = Astro.props;
+const mapId = `map-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  id={mapId}
+  class="map-container h-full min-h-72 w-full"
+  data-lat={lat}
+  data-lng={lng}
+  data-zoom={zoom}
+  data-label={markerLabel}
+>
+</div>
+
+<script>
+  import L from 'leaflet';
+
+  function initMaps() {
+    const containers = document.querySelectorAll<HTMLElement>('.map-container');
+
+    containers.forEach((el) => {
+      if (el.dataset.initialized === 'true') return;
+
+      const { lat, lng, zoom, label } = el.dataset;
+
+      const latNum = Number(lat);
+      const lngNum = Number(lng);
+      const zoomNum = Number(zoom ?? 16);
+
+      if (!Number.isFinite(latNum) || !Number.isFinite(lngNum)) return;
+
+      const map = L.map(el, {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true,
+      }).setView([latNum, lngNum], zoomNum);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+
+      const markerIcon = L.divIcon({
+        className: 'leaflet-div-marker',
+        html: `
+          <svg viewBox="0 0 32 46" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16 1C8.268 1 2 7.268 2 15c0 10.5 12.5 28.5 13.1 29.3a1 1 0 0 0 1.6 0C17.3 43.5 30 25.5 30 15 30 7.268 23.732 1 16 1Z" fill="var(--color-primary)" stroke="var(--color-text)" stroke-width="1.5"/>
+            <circle cx="16" cy="15" r="5" fill="var(--color-background)"/>
+          </svg>
+        `,
+        iconSize: [24, 38],
+        iconAnchor: [16, 45],
+        popupAnchor: [0, -36],
+      });
+
+      const marker = L.marker([latNum, lngNum], { icon: markerIcon }).addTo(map);
+
+      if (label) {
+        marker.bindPopup(label);
+      }
+
+      el.dataset.initialized = 'true';
+
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 200);
+    });
+  }
+
+  initMaps();
+  document.addEventListener('astro:page-load', initMaps);
+</script>
