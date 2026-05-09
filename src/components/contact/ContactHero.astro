@@ -11,21 +11,24 @@ const benefits = [
 ---
 
 <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 md:pt-24 md:pb-16">
-  <div class="max-w-3xl">
-    <SectionTitle
-      title="Cuéntanos tu proyecto metálico"
-      subtitle="Diseñamos, fabricamos e instalamos estructuras metálicas, carpintería metálica y trabajos de soldadura para viviendas, negocios e industria en Barcelona, Maresme y Vallès."
-      titleTag="h1"
-    />
+  <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+    <div class="max-w-3xl">
+      <SectionTitle
+        title="Cuéntanos tu proyecto metálico"
+        subtitle="Diseñamos, fabricamos e instalamos estructuras metálicas, carpintería metálica y trabajos de soldadura para viviendas, negocios e industria en Barcelona, Maresme y Vallès."
+        titleTag="h1"
+      />
+    </div>
 
-    <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+    <ul class="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-1 lg:pt-0">
       {
         benefits.map((benefit) => (
           <li class="text-text flex items-center gap-3 text-sm font-semibold">
-            <span class="bg-primary/15 text-primary inline-flex size-6 items-center justify-center rounded-full text-xs">
+            <span class="bg-primary/15 text-primary inline-flex size-6 shrink-0 items-center justify-center rounded-full text-xs">
               <Check class="size-3" />
             </span>
-            {benefit}
+
+            <span>{benefit}</span>
           </li>
         ))
       }
