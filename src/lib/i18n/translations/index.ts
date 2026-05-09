@@ -13,6 +13,9 @@ import { projectsTranslations } from './projects';
 // Services translations
 import { servicesTranslations } from './services';
 
+// Contact translations
+import { contactTranslations } from './contact';
+
 export const translations = {
   es: {
     ...commonTranslations.es,
@@ -20,6 +23,7 @@ export const translations = {
     ...blogTranslations.es,
     ...projectsTranslations.es,
     ...servicesTranslations.es,
+    ...contactTranslations.es,
   },
   ca: {
     ...commonTranslations.ca,
@@ -27,6 +31,7 @@ export const translations = {
     ...blogTranslations.ca,
     ...projectsTranslations.ca,
     ...servicesTranslations.ca,
+    ...contactTranslations.ca,
   },
   en: {
     ...commonTranslations.en,
@@ -34,5 +39,6 @@ export const translations = {
     ...blogTranslations.en,
     ...projectsTranslations.en,
     ...servicesTranslations.en,
+    ...contactTranslations.en,
   },
 } as const;
