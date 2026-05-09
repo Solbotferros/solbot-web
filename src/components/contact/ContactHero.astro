@@ -1,28 +1,28 @@
 ---
 import SectionTitle from '@components/shared/SectionTitle.astro';
+import type { translations } from '@lib/i18n/translations';
+import type { Language } from '@lib/i18n/types';
+import { useTranslations } from '@lib/i18n/utils';
 import { Check } from '@lucide/astro';
 
-const benefits = [
-  'Presupuesto sin compromiso',
-  'Fabricación a medida',
-  'Servicio rápido',
-  'Particulares y empresas',
-];
+type ContactHeroSection = typeof translations.es.contact.hero;
+const { tn } = useTranslations(Astro.currentLocale as Language);
+const heroTranslations = tn<ContactHeroSection>('contact.hero');
 ---
 
 <section class="px-4 pt-16 pb-10 md:pt-24 md:pb-16">
   <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
     <div class="max-w-3xl">
       <SectionTitle
-        title="Cuéntanos tu proyecto metálico"
-        subtitle="Diseñamos, fabricamos e instalamos estructuras metálicas, carpintería metálica y trabajos de soldadura para viviendas, negocios e industria en Barcelona, Maresme y Vallès."
+        title={heroTranslations.title}
+        subtitle={heroTranslations.subtitle}
         titleTag="h1"
       />
     </div>
 
     <ul class="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-1 lg:pt-0">
       {
-        benefits.map((benefit) => (
+        heroTranslations.benefits.map((benefit) => (
           <li class="text-text flex items-center gap-3 text-sm font-semibold">
             <span class="bg-primary/15 text-primary inline-flex size-6 shrink-0 items-center justify-center rounded-full text-xs">
               <Check class="size-3" />

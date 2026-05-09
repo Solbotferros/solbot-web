@@ -5,47 +5,33 @@ import InlineLink from '@components/shared/InlineLink.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import businessInfo from '@lib/business/info';
 import {
+  formatDayRange,
+  formatIntervals,
   formatSpanishPhone,
   formatWhatsappLink,
   getPhoneDisplay,
   getPhoneHref,
 } from '@lib/business/utils';
+import type { translations } from '@lib/i18n/translations';
+import type { Language } from '@lib/i18n/types';
+import { useTranslations } from '@lib/i18n/utils';
 
 const phoneHref = getPhoneHref(businessInfo.phone);
 const phoneDisplay = getPhoneDisplay(businessInfo.phone);
 const formattedPhone = formatSpanishPhone(phoneDisplay);
 const whatsappLink = formatWhatsappLink(businessInfo.phone);
 
-const dayLabels = {
-  monday: 'Lunes',
-  tuesday: 'Martes',
-  wednesday: 'Miércoles',
-  thursday: 'Jueves',
-  friday: 'Viernes',
-  saturday: 'Sábado',
-  sunday: 'Domingo',
-};
+const { tn, t } = useTranslations(Astro.currentLocale as Language);
 
-const formatDayRange = (days: string[]) => {
-  if (days.length === 1) {
-    return dayLabels[days[0] as keyof typeof dayLabels];
-  }
+type infoType = typeof translations.es.contact.info;
+const infoTranslations = tn<infoType>('contact.info');
 
-  const firstDay = dayLabels[days[0] as keyof typeof dayLabels];
-  const lastDay = dayLabels[days[days.length - 1] as keyof typeof dayLabels];
-
-  return `${firstDay} a ${lastDay}`;
-};
-
-const formatIntervals = (intervals: { opens: string; closes: string }[]) => {
-  if (intervals.length === 0) return 'Cerrado';
-
-  return intervals.map((interval) => `${interval.opens}–${interval.closes}`).join(' · ');
-};
+type daysTranslations = typeof translations.es.days;
+const dayLabels = tn<daysTranslations>('days');
 
 const openingHours = businessInfo.openingHours.map((item) => ({
-  days: formatDayRange(item.days),
-  hours: formatIntervals(item.intervals),
+  days: formatDayRange(item.days, dayLabels, t('dayRangeConnector')),
+  hours: formatIntervals(item.intervals, t('closed')),
 }));
 ---
 
@@ -53,25 +39,25 @@ const openingHours = businessInfo.openingHours.map((item) => ({
   <div class="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
     <div>
       <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
-        Contacto directo
+        {infoTranslations.eyebrow}
       </p>
 
       <SectionTitle
         titleTag="h2"
-        title="Hablemos de tu proyecto"
-        subtitle="Llámanos, escríbenos por WhatsApp o envíanos un correo con fotos, medidas aproximadas y localidad."
+        title={infoTranslations.title}
+        subtitle={infoTranslations.subtitle}
       />
 
       <div class="mt-8 grid gap-5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
         <a href={phoneHref} class="group w-fit">
-          <p class="text-text-muted text-sm">Teléfono</p>
+          <p class="text-text-muted text-sm">{infoTranslations.phone}</p>
           <p class="text-text group-hover:text-primary mt-1 text-2xl font-bold transition-colors">
             {formattedPhone}
           </p>
         </a>
 
         <a href={whatsappLink} class="group w-fit">
-          <p class="text-text-muted text-sm">WhatsApp</p>
+          <p class="text-text-muted text-sm">{infoTranslations.whatsapp}</p>
           <p
             class="text-text group-hover:text-primary mt-1 flex items-center gap-2 text-2xl font-bold transition-colors"
           >
@@ -81,7 +67,7 @@ const openingHours = businessInfo.openingHours.map((item) => ({
         </a>
 
         <a href={`mailto:${businessInfo.email}`} class="group w-fit">
-          <p class="text-text-muted text-sm">Email</p>
+          <p class="text-text-muted text-sm">{infoTranslations.email}</p>
           <p class="text-text group-hover:text-primary mt-1 font-bold transition-colors">
             {businessInfo.email}
           </p>
@@ -93,7 +79,7 @@ const openingHours = businessInfo.openingHours.map((item) => ({
           rel="noopener noreferrer"
           class="group w-fit"
         >
-          <p class="text-text-muted text-sm">Instagram</p>
+          <p class="text-text-muted text-sm">{infoTranslations.instagram}</p>
           <p class="text-text group-hover:text-primary mt-1 font-bold transition-colors">
             @{businessInfo.socialMedia.instagram.username}
           </p>
@@ -115,7 +101,7 @@ const openingHours = businessInfo.openingHours.map((item) => ({
         class="mt-5 grid items-start gap-8 px-2 pb-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2"
       >
         <div class="grid gap-2">
-          <p class="text-text text-lg font-bold">Ubicación del taller</p>
+          <p class="text-text text-lg font-bold">{infoTranslations.locationTitle}</p>
 
           <a
             href={businessInfo.googleMapsUrl}
@@ -127,12 +113,12 @@ const openingHours = businessInfo.openingHours.map((item) => ({
           </a>
 
           <InlineLink href={businessInfo.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-            Ver en Google Maps
+            {infoTranslations.googleMapsCta}
           </InlineLink>
         </div>
 
         <div>
-          <p class="text-text text-lg font-bold">Horario</p>
+          <p class="text-text text-lg font-bold">{infoTranslations.openingHoursTitle}</p>
 
           <dl class="mt-2 grid gap-1 text-sm">
             {
