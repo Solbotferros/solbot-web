@@ -6,14 +6,37 @@ const businessInfo = {
   description:
     'Empresa especializada en carpinteria metálica, ofreciendo soluciones de alta calidad para proyectos residenciales y comerciales.',
   address: 'Calle inventada, 123, 28000 Madrid, España',
+  googleMapsUrl: 'https://maps.app.goo.gl/C96EQKSeDXYL3pyZ7',
+  lat: 41.52232337015609,
+  lng: 2.4256151966086894,
   phone: {
     prefix: '+34',
     number: '603211594',
   },
   email: 'solbotferros@gmail.com',
   socialMedia: {
-    instagram: 'https://www.instagram.com/solbot.ferros',
+    instagram: {
+      url: 'https://www.instagram.com/solbot.ferros',
+      username: 'solbot.ferros',
+    },
   },
+  openingHours: [
+    {
+      days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+      intervals: [
+        { opens: '08:00', closes: '13:30' },
+        { opens: '15:00', closes: '18:00' },
+      ],
+    },
+    {
+      days: ['saturday'],
+      intervals: [{ opens: '09:00', closes: '13:00' }],
+    },
+    {
+      days: ['sunday'],
+      intervals: [],
+    },
+  ],
 };
 
 export default businessInfo;
