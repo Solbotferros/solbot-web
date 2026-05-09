@@ -1,0 +1,151 @@
+---
+import ContactMap from '@components/contact/ContactMap.astro';
+import WhatsappIcon from '@components/icons/WhatsappIcon.astro';
+import InlineLink from '@components/shared/InlineLink.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import businessInfo from '@lib/business/info';
+import {
+  formatSpanishPhone,
+  formatWhatsappLink,
+  getPhoneDisplay,
+  getPhoneHref,
+} from '@lib/business/utils';
+
+const phoneHref = getPhoneHref(businessInfo.phone);
+const phoneDisplay = getPhoneDisplay(businessInfo.phone);
+const formattedPhone = formatSpanishPhone(phoneDisplay);
+const whatsappLink = formatWhatsappLink(businessInfo.phone);
+
+const dayLabels = {
+  monday: 'Lunes',
+  tuesday: 'Martes',
+  wednesday: 'Miércoles',
+  thursday: 'Jueves',
+  friday: 'Viernes',
+  saturday: 'Sábado',
+  sunday: 'Domingo',
+};
+
+const formatDayRange = (days: string[]) => {
+  if (days.length === 1) {
+    return dayLabels[days[0] as keyof typeof dayLabels];
+  }
+
+  const firstDay = dayLabels[days[0] as keyof typeof dayLabels];
+  const lastDay = dayLabels[days[days.length - 1] as keyof typeof dayLabels];
+
+  return `${firstDay} a ${lastDay}`;
+};
+
+const formatIntervals = (intervals: { opens: string; closes: string }[]) => {
+  if (intervals.length === 0) return 'Cerrado';
+
+  return intervals.map((interval) => `${interval.opens}–${interval.closes}`).join(' · ');
+};
+
+const openingHours = businessInfo.openingHours.map((item) => ({
+  days: formatDayRange(item.days),
+  hours: formatIntervals(item.intervals),
+}));
+---
+
+<section class="px-4 pb-32 md:pb-36">
+  <div class="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
+    <div>
+      <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
+        Contacto directo
+      </p>
+
+      <SectionTitle
+        titleTag="h2"
+        title="Hablemos de tu proyecto"
+        subtitle="Llámanos, escríbenos por WhatsApp o envíanos un correo con fotos, medidas aproximadas y localidad."
+      />
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+        <a href={phoneHref} class="group w-fit">
+          <p class="text-text-muted text-sm">Teléfono</p>
+          <p class="text-text group-hover:text-primary mt-1 text-2xl font-bold transition-colors">
+            {formattedPhone}
+          </p>
+        </a>
+
+        <a href={whatsappLink} class="group w-fit">
+          <p class="text-text-muted text-sm">WhatsApp</p>
+          <p
+            class="text-text group-hover:text-primary mt-1 flex items-center gap-2 text-2xl font-bold transition-colors"
+          >
+            <WhatsappIcon aria-hidden="true" class="size-5" />
+            Enviar mensaje
+          </p>
+        </a>
+
+        <a href={`mailto:${businessInfo.email}`} class="group w-fit">
+          <p class="text-text-muted text-sm">Email</p>
+          <p class="text-text group-hover:text-primary mt-1 font-bold transition-colors">
+            {businessInfo.email}
+          </p>
+        </a>
+
+        <a
+          href={businessInfo.socialMedia.instagram.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group w-fit"
+        >
+          <p class="text-text-muted text-sm">Instagram</p>
+          <p class="text-text group-hover:text-primary mt-1 font-bold transition-colors">
+            @{businessInfo.socialMedia.instagram.username}
+          </p>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-border bg-surface rounded-3xl border p-4">
+      <div class="bg-background aspect-video overflow-hidden rounded-2xl">
+        <ContactMap
+          lat={businessInfo.lat}
+          lng={businessInfo.lng}
+          zoom={14}
+          markerLabel={businessInfo.name}
+        />
+      </div>
+
+      <div
+        class="mt-5 grid items-start gap-8 px-2 pb-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2"
+      >
+        <div class="grid gap-2">
+          <p class="text-text text-lg font-bold">Ubicación del taller</p>
+
+          <a
+            href={businessInfo.googleMapsUrl}
+            class="text-text-muted hover:text-primary text-sm leading-6 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {businessInfo.address}
+          </a>
+
+          <InlineLink href={businessInfo.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+            Ver en Google Maps
+          </InlineLink>
+        </div>
+
+        <div>
+          <p class="text-text text-lg font-bold">Horario</p>
+
+          <dl class="mt-2 grid gap-1 text-sm">
+            {
+              openingHours.map((item) => (
+                <div class="grid gap-1">
+                  <dt class="text-text font-semibold">{item.days}</dt>
+                  <dd class="text-text-muted">{item.hours}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
