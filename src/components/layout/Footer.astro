@@ -1,25 +1,179 @@
 ---
+import LogoWithText from '@components/brand/LogoWithText.astro';
+import WhatsappIcon from '@components/icons/WhatsappIcon.astro';
+import ButtonLink from '@components/shared/ButtonLink.astro';
+import businessInfo from '@lib/business/info';
+import { formatWhatsappLink, getPhoneDisplay } from '@lib/business/utils';
 import { getEntrySlug } from '@lib/content/entries';
-import { useTranslatedPath, type Language } from '@lib/i18n/utils';
+import type { translations } from '@lib/i18n/translations';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { getCollection } from 'astro:content';
 
 const currentLocale = Astro.currentLocale as Language;
 const trPath = useTranslatedPath(currentLocale);
+const { tn } = useTranslations(currentLocale);
+
+const whatsappLink = formatWhatsappLink(businessInfo.phone);
+
+const currentYear = new Date().getFullYear();
+const foundingYear = 2023;
+const displayYear =
+  currentYear === foundingYear ? `${currentYear}` : `${foundingYear} - ${currentYear}`;
+
 const legals = await getCollection('legal', ({ id }) => id.endsWith(`/${currentLocale}`));
+
+const services = await getCollection('services', ({ id }) => id.endsWith(`/${currentLocale}`));
+services.sort((a, b) => a.data.order - b.data.order);
+
+type ServiceAreasSection = typeof translations.es.home.serviceAreas;
+const serviceAreas = tn<ServiceAreasSection>('home.serviceAreas');
+
+const mainNavigation = [
+  { label: 'Inicio', href: trPath('/') },
+  { label: 'Servicios', href: trPath('#home-services') },
+  { label: 'Proyectos realizados', href: trPath('/proyectos') },
+  { label: 'Consejos y guías', href: trPath('#home-blogs') },
+  { label: 'Contacto', href: trPath('/contacto') },
+];
 ---
 
-<footer>
-  <ul class="flex gap-4">
-    {
-      legals.map((legal) => {
-        const slug = getEntrySlug(legal);
-        return (
+<footer class="border-border footer-gradient bg-surface mt-24 border-t px-4 md:px-8">
+  <div class="mx-auto max-w-6xl py-12">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+      <!-- Brand + Contact -->
+      <div>
+        <LogoWithText size="xs" />
+
+        <p class="text-text-muted mt-2 max-w-md text-sm leading-7 text-balance">
+          Fabricación e instalación de estructuras metálicas y trabajos de soldadura a medida.
+        </p>
+
+        <p class="text-text-muted/90 mt-3 text-xs leading-6">
+          {serviceAreas.areasSummary.join(' · ')}
+        </p>
+
+        <ul class="mt-6 space-y-2 text-sm">
           <li>
-            <a href={trPath(`/legal/${slug}`)}>{legal.data.title}</a>
+            <a
+              href={`tel:${businessInfo.phone.number}`}
+              class="text-text-muted/85 hover:text-primary transition-colors"
+            >
+              {getPhoneDisplay(businessInfo.phone)}
+            </a>
           </li>
-        );
-      })
-    }
-  </ul>
-  <h2>Footer</h2>
+
+          <li>
+            <a
+              href={`mailto:${businessInfo.email}`}
+              class="text-text-muted/85 hover:text-primary transition-colors"
+            >
+              {businessInfo.email}
+            </a>
+          </li>
+        </ul>
+
+        <div class="mt-4 flex max-w-sm flex-col gap-2.5 sm:flex-row">
+          <ButtonLink href={trPath('/contacto')} variant="primary" size="xs">
+            Pedir presupuesto
+          </ButtonLink>
+
+          <ButtonLink href={whatsappLink} variant="outline" size="xs" class="gap-2">
+            <WhatsappIcon aria-hidden="true" class="block size-4 shrink-0" />
+            <span class="block">WhatsApp</span>
+          </ButtonLink>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Navegación</h3>
+
+        <ul class="mt-6 space-y-3 text-sm">
+          {
+            mainNavigation.map((item) => (
+              <li>
+                <a href={item.href} class="hover:text-primary transition-colors">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Servicios</h3>
+
+        <ul class="mt-6 space-y-3 text-sm">
+          {
+            services.map((service) => {
+              const slug = getEntrySlug(service);
+
+              return (
+                <li>
+                  <a
+                    href={trPath(`/servicios/${slug}`)}
+                    class="hover:text-primary transition-colors"
+                  >
+                    {service.data.title}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="border-border text-text-muted mt-12 flex flex-col gap-6 border-t pt-4 text-sm md:flex-row md:items-center md:justify-between"
+    >
+      <p>&copy; {displayYear} {businessInfo.name} Todos los derechos reservados.</p>
+
+      <ul class="flex flex-wrap gap-6">
+        {
+          legals.map((legal) => {
+            const slug = getEntrySlug(legal);
+
+            return (
+              <li>
+                <a href={trPath(`/legal/${slug}`)} class="hover:text-primary transition-colors">
+                  {legal.data.title}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
 </footer>
+
+<style>
+  .footer-gradient {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .footer-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+      radial-gradient(
+        circle at 10% 15%,
+        color-mix(in oklab, var(--color-primary) 4%, transparent) 0%,
+        transparent 42%
+      ),
+      radial-gradient(
+        circle at 88% 85%,
+        color-mix(in oklab, var(--color-accent) 3%, transparent) 0%,
+        transparent 38%
+      );
+  }
+</style>
