@@ -37,103 +37,117 @@ const navTranslations = tn<navTranslationType>('nav');
 
 <footer class="border-border footer-gradient bg-surface mt-24 border-t px-4 md:px-8">
   <div class="mx-auto max-w-6xl py-12">
-    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+    <div
+      class="flex flex-col items-center gap-12 text-center md:flex-row md:items-start md:gap-18 md:text-left lg:gap-24"
+    >
       <!-- Brand + Contact -->
-      <div>
-        <LogoWithText size="xs" />
+      <div class="flex flex-col items-center md:items-start">
+        <div class="flex flex-col items-center md:items-start">
+          <LogoWithText size="xs" />
 
-        <p class="text-text-muted mt-2 max-w-md text-sm leading-7 text-balance">
-          {t('footer.description')}
-        </p>
+          <p class="text-text-muted mt-2 max-w-md text-sm leading-7 text-balance">
+            {t('footer.description')}
+          </p>
 
-        <p class="text-text-muted/90 mt-3 text-xs leading-6">
-          {serviceAreas.areasSummary.join(' · ')}
-        </p>
+          <p class="text-text-muted/90 mt-3 text-xs leading-6">
+            {serviceAreas.areasSummary.join(' · ')}
+          </p>
+        </div>
 
-        <ul class="mt-6 space-y-2 text-sm">
-          <li>
-            <a
-              href={`tel:${businessInfo.phone.number}`}
-              class="text-text-muted/85 hover:text-primary transition-colors"
-            >
-              {getPhoneDisplay(businessInfo.phone)}
-            </a>
-          </li>
+        <div>
+          <h3 class="text-text-muted mt-6 text-xs font-semibold tracking-[0.2em] uppercase">
+            {t('footer.contactTitle')}
+          </h3>
 
-          <li>
-            <a
-              href={`mailto:${businessInfo.email}`}
-              class="text-text-muted/85 hover:text-primary transition-colors"
-            >
-              {businessInfo.email}
-            </a>
-          </li>
-        </ul>
+          <ul class="mt-3 flex flex-col items-center gap-1 text-sm md:items-start">
+            <li>
+              <a
+                href={`tel:${businessInfo.phone.number}`}
+                class="text-text-muted/85 hover:text-primary transition-colors"
+              >
+                {getPhoneDisplay(businessInfo.phone)}
+              </a>
+            </li>
 
-        <div class="mt-4 flex max-w-sm flex-col gap-2.5 sm:flex-row">
-          <ButtonLink href={trPath('/contacto')} variant="primary" size="xs">
-            {t('footer.quoteCta')}
-          </ButtonLink>
+            <li>
+              <a
+                href={`mailto:${businessInfo.email}`}
+                class="text-text-muted/85 hover:text-primary transition-colors"
+              >
+                {businessInfo.email}
+              </a>
+            </li>
+          </ul>
 
-          <ButtonLink href={whatsappLink} variant="outline" size="xs" class="gap-2">
-            <WhatsappIcon aria-hidden="true" class="block size-4 shrink-0" />
-            <span class="block">{t('footer.whatsapp')}</span>
-          </ButtonLink>
+          <div class="mt-4 flex flex-row justify-center gap-2.5 md:justify-start">
+            <ButtonLink href={trPath('/contacto')} variant="primary" size="xs">
+              {t('footer.quoteCta')}
+            </ButtonLink>
+
+            <ButtonLink href={whatsappLink} variant="outline" size="xs" class="gap-2">
+              <WhatsappIcon aria-hidden="true" class="block size-4 shrink-0" />
+              <span class="block">{t('footer.whatsapp')}</span>
+            </ButtonLink>
+          </div>
         </div>
       </div>
 
-      <!-- Navigation -->
-      <div>
-        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
-          {t('footer.navigationTitle')}
-        </h3>
+      <div
+        class="flex basis-full flex-col items-center justify-around gap-10 sm:flex-row sm:items-start sm:gap-12 md:gap-18 lg:gap-24"
+      >
+        <!-- Navigation -->
+        <div>
+          <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
+            {t('footer.navigationTitle')}
+          </h3>
 
-        <ul class="mt-6 space-y-3 text-sm">
-          {
-            navigation.map((item) => (
-              <li>
-                <a href={item.href} class="hover:text-primary transition-colors">
-                  {navTranslations[item.key as keyof navTranslationType]}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <!-- Services -->
-      <div>
-        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
-          {t('footer.servicesTitle')}
-        </h3>
-
-        <ul class="mt-6 space-y-3 text-sm">
-          {
-            services.map((service) => {
-              const slug = getEntrySlug(service);
-
-              return (
+          <ul class="mt-6 space-y-3 text-sm">
+            {
+              navigation.map((item) => (
                 <li>
-                  <a
-                    href={trPath(`/servicios/${slug}`)}
-                    class="hover:text-primary transition-colors"
-                  >
-                    {service.data.title}
+                  <a href={item.href} class="hover:text-primary transition-colors">
+                    {navTranslations[item.key as keyof navTranslationType]}
                   </a>
                 </li>
-              );
-            })
-          }
-        </ul>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
+            {t('footer.servicesTitle')}
+          </h3>
+
+          <ul class="mt-6 space-y-3 text-sm">
+            {
+              services.map((service) => {
+                const slug = getEntrySlug(service);
+
+                return (
+                  <li>
+                    <a
+                      href={trPath(`/servicios/${slug}`)}
+                      class="hover:text-primary transition-colors"
+                    >
+                      {service.data.title}
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </div>
       </div>
     </div>
 
     <div
-      class="border-border text-text-muted mt-12 flex flex-col gap-6 border-t pt-4 text-sm md:flex-row md:items-center md:justify-between"
+      class="border-border text-text-muted mt-12 flex flex-col items-center gap-6 border-t pt-4 text-center text-xs md:flex-row md:items-center md:justify-between md:text-left"
     >
       <p>&copy; {displayYear} {businessInfo.name} {t('footer.copyright')}</p>
 
-      <ul class="flex flex-wrap gap-6">
+      <ul class="flex flex-wrap justify-center gap-6 md:justify-start">
         {
           legals.map((legal) => {
             const slug = getEntrySlug(legal);
