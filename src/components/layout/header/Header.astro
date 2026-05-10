@@ -4,6 +4,7 @@ import ButtonLink from '@components/shared/ButtonLink.astro';
 import LanguageSelector from '@components/shared/LanguageSelector.astro';
 import ThemeToggle from '@components/shared/ThemeToggle.astro';
 import HeaderNav from './HeaderNav.astro';
+import ServicesMegaPanel from './ServicesMegaPanel.astro';
 
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
@@ -14,28 +15,94 @@ const { t } = useTranslations(currentLocale);
 
 <header class="sticky top-0 z-100">
   <div class="bg-bg/5 p-4 pb-0 backdrop-blur-xl">
-    <div
-      class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-lg xl:grid-cols-[auto_1fr_auto]"
-    >
-      <a href={trPath('/')}>
-        <LogoWithText size="sm" />
-      </a>
+    <div class="header-shell relative" data-header-shell>
+      <div
+        class="header-main bg-bg-subtle grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-lg xl:grid-cols-[auto_1fr_auto]"
+      >
+        <a href={trPath('/')}>
+          <LogoWithText size="sm" />
+        </a>
 
-      <div class="hidden justify-center xl:flex">
-        <HeaderNav />
+        <div class="hidden justify-center xl:flex">
+          <HeaderNav />
+        </div>
+
+        <div class="flex items-center gap-6">
+          <ButtonLink href={trPath('/contacto')} variant="primary" size="sm">
+            {t('home.hero.mainCTA')}
+          </ButtonLink>
+
+          <div class="bg-border h-12 w-px"></div>
+
+          <LanguageSelector />
+          <ThemeToggle />
+        </div>
       </div>
 
-      <div class="flex items-center gap-6">
-        <ButtonLink href={trPath('/contacto')} variant="primary" size="sm">
-          {t('home.hero.mainCTA')}
-        </ButtonLink>
-
-        <!-- Divider -->
-        <div class="bg-border h-12 w-px"></div>
-
-        <LanguageSelector />
-        <ThemeToggle />
+      <div class="services-panel absolute top-full right-0 left-0 z-50" data-services-panel>
+        <div class="border-border bg-bg-subtle rounded-b-xl border-t px-6 pt-4 pb-6 shadow-lg">
+          <ServicesMegaPanel />
+        </div>
       </div>
     </div>
   </div>
 </header>
+
+<style>
+  .services-panel {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 180ms ease;
+  }
+
+  .header-shell[data-services-open='true'] .services-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .header-shell[data-services-open='true'] > .header-main {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+</style>
+
+<script>
+  const shell = document.querySelector('[data-header-shell]');
+  const trigger = document.querySelector('[data-services-trigger]');
+  const panel = document.querySelector('[data-services-panel]');
+
+  let closeTimeout: number | undefined;
+
+  function openPanel() {
+    window.clearTimeout(closeTimeout);
+    shell?.setAttribute('data-services-open', 'true');
+  }
+
+  function closePanel() {
+    closeTimeout = window.setTimeout(() => {
+      shell?.removeAttribute('data-services-open');
+    }, 120);
+  }
+
+  trigger?.addEventListener('mouseenter', openPanel);
+  trigger?.addEventListener('mouseleave', closePanel);
+
+  panel?.addEventListener('mouseenter', openPanel);
+  panel?.addEventListener('mouseleave', closePanel);
+
+  trigger?.addEventListener('focus', openPanel);
+  panel?.addEventListener('focusin', openPanel);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      shell?.removeAttribute('data-services-open');
+    }
+  });
+</script>

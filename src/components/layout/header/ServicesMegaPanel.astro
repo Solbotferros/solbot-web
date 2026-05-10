@@ -10,16 +10,16 @@ const services = await getCollection('services', ({ id }) => id.endsWith(`/${cur
 services.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<div
-  class="border-border bg-bg-subtle w-[min(720px,calc(100vw-4rem))] rounded-2xl border p-6 shadow-2xl"
->
-  <div class="mb-5 flex items-center justify-between">
-    <h3 class="text-sm font-semibold">Servicios</h3>
+<div class="grid gap-8 md:grid-cols-[0.8fr_1fr]">
+  <div>
+    <p class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Servicios</p>
 
-    <a href={trPath('/servicios')} class="text-primary text-sm font-semibold"> Ver todos → </a>
+    <a href={trPath('/servicios')} class="text-primary mt-4 inline-block text-sm font-semibold">
+      Ver todos →
+    </a>
   </div>
 
-  <ul class="grid gap-3 sm:grid-cols-2">
+  <ul class="grid gap-4 sm:grid-cols-2">
     {
       services.map((service) => {
         const slug = getEntrySlug(service);
