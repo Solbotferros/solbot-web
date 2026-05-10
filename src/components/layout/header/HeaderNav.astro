@@ -1,0 +1,52 @@
+---
+import type { translations } from '@lib/i18n/translations';
+import type { Language } from '@lib/i18n/types';
+import { useTranslations } from '@lib/i18n/utils';
+import { buildNavigation } from '@lib/navigation';
+import { ChevronDown } from '@lucide/astro';
+import ServicesMegaMenu from './HeaderServicesMenu.astro';
+
+const lang = Astro.currentLocale as Language;
+const navigation = await buildNavigation(lang);
+
+const { tn } = useTranslations(lang);
+type navTranslationsType = typeof translations.es.nav;
+const navTranslations = tn<navTranslationsType>('nav');
+---
+
+<nav aria-label="Navegación principal">
+  <ul class="flex items-center gap-2">
+    {
+      navigation.map((item) => {
+        const label = navTranslations[item.key as keyof navTranslationsType] || item.key;
+        const hasChildren = item.children && item.children.length > 0;
+
+        return (
+          <li class="group relative">
+            <a
+              href={item.href}
+              class:list={[
+                'text-text-muted hover:text-text hover:bg-surface-elevated inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm leading-none font-medium transition-all duration-200',
+                hasChildren && 'hover:text-primary',
+              ]}
+            >
+              <span>{label}</span>
+              {hasChildren && (
+                <ChevronDown
+                  size={14}
+                  class="shrink-0 transition-transform duration-200 group-hover:rotate-180"
+                />
+              )}
+            </a>
+
+            {item.key === 'services' && (
+              <div class="pointer-events-none invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100">
+                <ServicesMegaMenu />
+              </div>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

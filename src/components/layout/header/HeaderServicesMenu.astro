@@ -1,0 +1,44 @@
+---
+import { getEntrySlug } from '@lib/content/entries';
+import { useTranslatedPath, type Language } from '@lib/i18n/utils';
+import { getCollection } from 'astro:content';
+
+const currentLocale = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(currentLocale);
+
+const services = await getCollection('services', ({ id }) => id.endsWith(`/${currentLocale}`));
+services.sort((a, b) => a.data.order - b.data.order);
+---
+
+<div
+  class="border-border bg-bg-subtle w-[min(720px,calc(100vw-4rem))] rounded-2xl border p-6 shadow-2xl"
+>
+  <div class="mb-5 flex items-center justify-between">
+    <h3 class="text-sm font-semibold">Servicios</h3>
+
+    <a href={trPath('/servicios')} class="text-primary text-sm font-semibold"> Ver todos → </a>
+  </div>
+
+  <ul class="grid gap-3 sm:grid-cols-2">
+    {
+      services.map((service) => {
+        const slug = getEntrySlug(service);
+
+        return (
+          <li>
+            <a
+              href={trPath(`/servicios/${slug}`)}
+              class="hover:bg-surface-elevated block rounded-xl p-4 transition-colors"
+            >
+              <p class="font-semibold">{service.data.title}</p>
+
+              {service.data.description && (
+                <p class="text-text-muted mt-1 text-sm leading-6">{service.data.description}</p>
+              )}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>

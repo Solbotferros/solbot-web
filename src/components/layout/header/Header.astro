@@ -3,6 +3,7 @@ import LogoWithText from '@components/brand/LogoWithText.astro';
 import ButtonLink from '@components/shared/ButtonLink.astro';
 import LanguageSelector from '@components/shared/LanguageSelector.astro';
 import ThemeToggle from '@components/shared/ThemeToggle.astro';
+import HeaderNav from './HeaderNav.astro';
 
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
@@ -14,14 +15,18 @@ const { t } = useTranslations(currentLocale);
 <header class="sticky top-0 z-100">
   <div class="bg-bg/5 p-4 pb-0 backdrop-blur-xl">
     <div
-      class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg px-6 py-4 shadow-xl"
+      class="bg-bg-subtle mx-auto grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-lg xl:grid-cols-[auto_1fr_auto]"
     >
       <a href={trPath('/')}>
         <LogoWithText size="sm" />
       </a>
 
+      <div class="hidden justify-center xl:flex">
+        <HeaderNav />
+      </div>
+
       <div class="flex items-center gap-6">
-        <ButtonLink href={trPath('/contacto')} variant="primary" size="sm" class="mr-4">
+        <ButtonLink href={trPath('/contacto')} variant="primary" size="sm">
           {t('home.hero.mainCTA')}
         </ButtonLink>
 
