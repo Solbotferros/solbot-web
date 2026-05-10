@@ -10,7 +10,7 @@ const trPath = useTranslatedPath(Astro.currentLocale as Language);
 const lang = Astro.currentLocale as Language;
 ---
 
-<section class="mx-auto max-w-6xl px-8">
+<section id="home-blogs" class="mx-auto max-w-6xl px-8">
   <SectionTitle title={trUI('home.blog.title')} />
   <FeaturedBlogPosts lang={lang} />
   <div class="mt-10 text-center">

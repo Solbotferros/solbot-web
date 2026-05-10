@@ -18,7 +18,7 @@ const services = await getCollection(
 services.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section class="mx-auto max-w-6xl px-8">
+<section id="home-services" class="mx-auto max-w-6xl px-8">
   <SectionTitle title={t('home.services.title')} subtitle={t('home.services.description')} />
 
   <div class="mt-12 grid gap-6 md:grid-cols-2">
