@@ -14,6 +14,7 @@ export const serviceAreasTranslations = {
         'Vallès Occidental',
         'Vilassar de Mar',
       ],
+      areasSummary: ['Barcelona', 'Maresme', 'Vallès'],
     },
   },
   ca: {
@@ -31,6 +32,7 @@ export const serviceAreasTranslations = {
         'Vallès Occidental',
         'Vilassar de Mar',
       ],
+      areasSummary: ['Barcelona', 'Maresme', 'Vallès'],
     },
   },
   en: {
@@ -48,6 +50,7 @@ export const serviceAreasTranslations = {
         'Vallès Occidental',
         'Vilassar de Mar',
       ],
+      areasSummary: ['Barcelona', 'Maresme', 'Vallès'],
     },
   },
 } as const;
