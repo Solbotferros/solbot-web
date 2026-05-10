@@ -19,6 +19,9 @@ import { contactTranslations } from './contact';
 // Navigation translations
 import { navigationTranslations } from './navigation';
 
+// Footer translations
+import { footerTranslations } from './footer';
+
 export const translations = {
   es: {
     ...commonTranslations.es,
@@ -28,6 +31,7 @@ export const translations = {
     ...servicesTranslations.es,
     ...contactTranslations.es,
     ...navigationTranslations.es,
+    ...footerTranslations.es,
   },
   ca: {
     ...commonTranslations.ca,
@@ -37,6 +41,7 @@ export const translations = {
     ...servicesTranslations.ca,
     ...contactTranslations.ca,
     ...navigationTranslations.ca,
+    ...footerTranslations.ca,
   },
   en: {
     ...commonTranslations.en,
@@ -46,5 +51,6 @@ export const translations = {
     ...servicesTranslations.en,
     ...contactTranslations.en,
     ...navigationTranslations.en,
+    ...footerTranslations.en,
   },
 } as const;

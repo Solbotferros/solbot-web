@@ -7,11 +7,12 @@ import { formatWhatsappLink, getPhoneDisplay } from '@lib/business/utils';
 import { getEntrySlug } from '@lib/content/entries';
 import type { translations } from '@lib/i18n/translations';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+import { buildNavigation } from '@lib/navigation';
 import { getCollection } from 'astro:content';
 
 const currentLocale = Astro.currentLocale as Language;
 const trPath = useTranslatedPath(currentLocale);
-const { tn } = useTranslations(currentLocale);
+const { tn, t } = useTranslations(currentLocale);
 
 const whatsappLink = formatWhatsappLink(businessInfo.phone);
 
@@ -28,13 +29,10 @@ services.sort((a, b) => a.data.order - b.data.order);
 type ServiceAreasSection = typeof translations.es.home.serviceAreas;
 const serviceAreas = tn<ServiceAreasSection>('home.serviceAreas');
 
-const mainNavigation = [
-  { label: 'Inicio', href: trPath('/') },
-  { label: 'Servicios', href: trPath('#home-services') },
-  { label: 'Proyectos realizados', href: trPath('/proyectos') },
-  { label: 'Consejos y guías', href: trPath('#home-blogs') },
-  { label: 'Contacto', href: trPath('/contacto') },
-];
+const navigation = await buildNavigation(currentLocale);
+
+type navTranslationType = typeof translations.es.nav;
+const navTranslations = tn<navTranslationType>('nav');
 ---
 
 <footer class="border-border footer-gradient bg-surface mt-24 border-t px-4 md:px-8">
@@ -45,7 +43,7 @@ const mainNavigation = [
         <LogoWithText size="xs" />
 
         <p class="text-text-muted mt-2 max-w-md text-sm leading-7 text-balance">
-          Fabricación e instalación de estructuras metálicas y trabajos de soldadura a medida.
+          {t('footer.description')}
         </p>
 
         <p class="text-text-muted/90 mt-3 text-xs leading-6">
@@ -74,26 +72,28 @@ const mainNavigation = [
 
         <div class="mt-4 flex max-w-sm flex-col gap-2.5 sm:flex-row">
           <ButtonLink href={trPath('/contacto')} variant="primary" size="xs">
-            Pedir presupuesto
+            {t('footer.quoteCta')}
           </ButtonLink>
 
           <ButtonLink href={whatsappLink} variant="outline" size="xs" class="gap-2">
             <WhatsappIcon aria-hidden="true" class="block size-4 shrink-0" />
-            <span class="block">WhatsApp</span>
+            <span class="block">{t('footer.whatsapp')}</span>
           </ButtonLink>
         </div>
       </div>
 
       <!-- Navigation -->
       <div>
-        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Navegación</h3>
+        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
+          {t('footer.navigationTitle')}
+        </h3>
 
         <ul class="mt-6 space-y-3 text-sm">
           {
-            mainNavigation.map((item) => (
+            navigation.map((item) => (
               <li>
                 <a href={item.href} class="hover:text-primary transition-colors">
-                  {item.label}
+                  {navTranslations[item.key as keyof navTranslationType]}
                 </a>
               </li>
             ))
@@ -103,7 +103,9 @@ const mainNavigation = [
 
       <!-- Services -->
       <div>
-        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Servicios</h3>
+        <h3 class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
+          {t('footer.servicesTitle')}
+        </h3>
 
         <ul class="mt-6 space-y-3 text-sm">
           {
@@ -129,7 +131,7 @@ const mainNavigation = [
     <div
       class="border-border text-text-muted mt-12 flex flex-col gap-6 border-t pt-4 text-sm md:flex-row md:items-center md:justify-between"
     >
-      <p>&copy; {displayYear} {businessInfo.name} Todos los derechos reservados.</p>
+      <p>&copy; {displayYear} {businessInfo.name} {t('footer.copyright')}</p>
 
       <ul class="flex flex-wrap gap-6">
         {
