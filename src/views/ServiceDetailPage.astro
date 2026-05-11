@@ -1,7 +1,7 @@
 ---
 import ServiceApproach from '@components/services/ServiceApproach.astro';
 import ServiceContactAside from '@components/services/ServiceContactAside.astro';
-import ServiceHero from '@components/services/ServiceHero.astro';
+import ServiceDetailHero from '@components/services/ServiceDetailHero.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
@@ -49,7 +49,7 @@ const relatedProjects = allProjects
 
 <Layout title={seoTitle ?? title} description={description}>
   <main class="space-y-24">
-    <ServiceHero
+    <ServiceDetailHero
       title={title}
       description={description}
       coverImage={coverImage}
