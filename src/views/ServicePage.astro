@@ -1,0 +1,35 @@
+---
+import Layout from '@layouts/Layout.astro';
+
+import Sectors from '@components/home/Sectors.astro';
+import ServiceAreas from '@components/sections/serviceArea/ServiceArea.astro';
+import WorkProcess from '@components/sections/WorkProcess.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import ServiceSeoText from '@components/services/ServiceSeoText.astro';
+import ContactCta from '@components/shared/ContactCta.astro';
+import Services from '@components/shared/ServicesGrid.astro';
+
+import { ensureRouterReady } from '@lib/i18n/router';
+await ensureRouterReady();
+
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const { t } = useTranslations(Astro.currentLocale as Language);
+---
+
+<Layout title={t('services.meta.title')} description={t('services.meta.description')}>
+  <div class="mt-24 space-y-24 md:space-y-32">
+    <div class="space-y-10">
+      <ServiceHero />
+      <Services showHeader={false} />
+    </div>
+    <WorkProcess />
+    <Sectors />
+    <ServiceAreas />
+    <ServiceSeoText />
+
+    <div class="mx-auto max-w-6xl px-8">
+      <ContactCta />
+    </div>
+  </div>
+</Layout>

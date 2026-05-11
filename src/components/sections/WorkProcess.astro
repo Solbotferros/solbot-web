@@ -1,0 +1,39 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { translations } from '@lib/i18n/translations';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const { tn } = useTranslations(Astro.currentLocale as Language);
+type WorkProcessTranslations = typeof translations.es.services.workProcess;
+const workProcessTranslations = tn<WorkProcessTranslations>('services.workProcess');
+---
+
+<section class="mx-auto max-w-6xl px-8">
+  <div class="grid gap-10 lg:grid-cols-[0.85fr_1.4fr] lg:gap-16">
+    <div>
+      <p class="text-primary mb-3 text-xs font-bold tracking-[0.25em] uppercase">
+        {workProcessTranslations.eyebrow}
+      </p>
+
+      <SectionTitle
+        titleTag="h2"
+        title={workProcessTranslations.title}
+        subtitle={workProcessTranslations.subtitle}
+      />
+    </div>
+
+    <div class="grid gap-0 sm:grid-cols-2">
+      {
+        workProcessTranslations.steps.map((step, index) => (
+          <article class="border-primary/20 border-t py-7 sm:px-8 sm:odd:pl-0 sm:nth-2:border-l sm:nth-4:border-l lg:nth-[-n+2]:border-t-0">
+            <span class="text-primary text-xs font-bold">{String(index + 1).padStart(2, '0')}</span>
+
+            <h3 class="text-text mt-4 text-xl font-bold">{step.title}</h3>
+
+            <p class="text-text-muted mt-3 text-sm leading-relaxed">{step.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

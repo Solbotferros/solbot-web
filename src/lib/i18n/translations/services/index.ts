@@ -1,3 +1,7 @@
+import { servicesHeroTranslations } from './hero';
+import { servicesSeoTranslations } from './seo';
+import { workProcessTranslations } from './workProcess';
+
 export const servicesTranslations = {
   es: {
     services: {
@@ -5,6 +9,14 @@ export const servicesTranslations = {
       secondaryCta: 'Ver proyectos relacionados',
       relatedProjects: 'Trabajos de este tipo realizados',
       allProjects: 'Ver todos los proyectos',
+      meta: {
+        title: 'Servicios de carpintería metálica y soldadura en Barcelona',
+        description:
+          'Servicios de carpintería metálica, soldadura, estructuras metálicas y trabajos en hierro a medida en Barcelona, Maresme y Vallès.',
+      },
+      seo: servicesSeoTranslations.es.seo,
+      hero: servicesHeroTranslations.es,
+      workProcess: workProcessTranslations.es,
     },
   },
   ca: {
@@ -13,6 +25,14 @@ export const servicesTranslations = {
       secondaryCta: 'Veure projectes relacionats',
       relatedProjects: "Projectes d'aquest tipus realitzats",
       allProjects: 'Veure tots els projectes',
+      meta: {
+        title: 'Serveis de serralleria metàl·lica i soldadura a Barcelona',
+        description:
+          'Serveis de serralleria metàl·lica, soldadura, estructures metàl·liques i treballs en ferro a mida a Barcelona, Maresme i Vallès.',
+      },
+      seo: servicesSeoTranslations.ca.seo,
+      hero: servicesHeroTranslations.ca,
+      workProcess: workProcessTranslations.ca,
     },
   },
   en: {
@@ -21,6 +41,14 @@ export const servicesTranslations = {
       secondaryCta: 'View related projects',
       relatedProjects: 'Related projects we have completed',
       allProjects: 'View all projects',
+      meta: {
+        title: 'Metalwork and welding services in Barcelona',
+        description:
+          'Metalwork, welding, structural steel and custom ironwork services in Barcelona, Maresme and Vallès.',
+      },
+      seo: servicesSeoTranslations.en.seo,
+      hero: servicesHeroTranslations.en,
+      workProcess: workProcessTranslations.en,
     },
   },
 } as const;
