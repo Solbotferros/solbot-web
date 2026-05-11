@@ -25,20 +25,23 @@ const navTranslations = tn<navTranslationsType>('nav');
             <a
               href={item.href}
               class:list={[
-                'text-text-muted hover:text-text hover:bg-surface-elevated inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm leading-none font-medium transition-all duration-200',
+                'text-text-muted hover:text-text hover:bg-surface-elevated inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-center text-sm leading-none font-medium transition-all duration-200',
                 item.key === 'services' && 'services-trigger hover:text-primary',
               ]}
               data-services-trigger={item.key === 'services' ? true : undefined}
             >
               <span>{label}</span>
-              {hasChildren && <ChevronDown size={14} class="shrink-0" />}
+              {hasChildren && (
+                <ChevronDown
+                  size={14}
+                  class:list={[
+                    'shrink-0 transition-transform duration-200',
+                    item.key === 'services' &&
+                      'group-hover:rotate-180 group-[.header-shell[data-services-open="true"]_&]:rotate-180',
+                  ]}
+                />
+              )}
             </a>
-
-            {/* {item.key === 'services' && (
-              <div class="pointer-events-none invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100">
-                <ServicesMegaMenu />
-              </div>
-            )} */}
           </li>
         );
       })

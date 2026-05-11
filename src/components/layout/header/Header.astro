@@ -5,6 +5,7 @@ import LanguageSelector from '@components/shared/LanguageSelector.astro';
 import ThemeToggle from '@components/shared/ThemeToggle.astro';
 import HeaderNav from './HeaderNav.astro';
 import ServicesMegaPanel from './ServicesMegaPanel.astro';
+import MobileMenu from './MobileMenu.astro';
 
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
@@ -13,63 +14,219 @@ const trPath = useTranslatedPath(currentLocale);
 const { t } = useTranslations(currentLocale);
 ---
 
-<header class="sticky top-0 z-100">
-  <div class="bg-bg/5 p-4 pb-0 backdrop-blur-xl">
-    <div class="header-shell relative" data-header-shell>
-      <div
-        class="header-main bg-bg-subtle grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-lg xl:grid-cols-[auto_1fr_auto]"
-      >
-        <a href={trPath('/')}>
-          <LogoWithText size="sm" />
-        </a>
+<div class="header-root" data-header-root>
+  <header class="sticky top-0 z-100">
+    <div class="bg-bg/5 p-4 pb-0 backdrop-blur-xl">
+      <div class="header-shell relative" data-header-shell>
+        <div
+          class="header-main bg-bg-subtle relative z-110 grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-xl md:grid-cols-[1fr_auto_auto] xl:grid-cols-[auto_1fr_auto]"
+        >
+          <a href={trPath('/')}>
+            <LogoWithText size="sm" />
+          </a>
 
-        <div class="hidden justify-center xl:flex">
-          <HeaderNav />
+          <div class="hidden justify-center xl:flex">
+            <HeaderNav />
+          </div>
+
+          <div class="hidden items-center gap-6 md:flex">
+            <ButtonLink href={trPath('/contacto')} variant="primary" size="sm">
+              {t('home.hero.mainCTA')}
+            </ButtonLink>
+
+            <div class="hidden items-center gap-6 lg:flex">
+              <div class="bg-border h-12 w-px"></div>
+              <LanguageSelector />
+              <ThemeToggle />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="mobile-menu-button inline-grid xl:hidden"
+            data-mobile-menu-toggle
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
         </div>
+        <MobileMenu />
 
-        <div class="flex items-center gap-6">
-          <ButtonLink href={trPath('/contacto')} variant="primary" size="sm">
-            {t('home.hero.mainCTA')}
-          </ButtonLink>
-
-          <div class="bg-border h-12 w-px"></div>
-
-          <LanguageSelector />
-          <ThemeToggle />
-        </div>
-      </div>
-
-      <div class="services-panel absolute top-full right-0 left-0 z-50" data-services-panel>
-        <div class="border-border bg-bg-subtle rounded-b-xl border-t px-6 pt-4 pb-6 shadow-lg">
-          <ServicesMegaPanel />
+        <div
+          class="services-panel absolute inset-x-0 top-[calc(100%-0.75rem)] z-120 rounded-b-xl"
+          data-services-panel
+        >
+          <div class="services-panel-inner">
+            <div class="services-panel-content bg-bg-subtle rounded-b-xl px-6 pt-8 pb-6">
+              <ServicesMegaPanel />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
+
+  <button
+    type="button"
+    class="mobile-menu-backdrop"
+    data-mobile-menu-backdrop
+    aria-label="Cerrar menú"
+  >
+  </button>
+</div>
 
 <style>
+  .header-root {
+    position: relative;
+  }
+
   .services-panel {
-    opacity: 0;
+    display: grid;
+    grid-template-rows: 0fr;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-6px);
+    box-shadow: none;
+
     transition:
-      opacity 180ms ease,
-      transform 180ms ease,
-      visibility 180ms ease;
+      grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 320ms ease,
+      visibility 0s linear 320ms;
+  }
+
+  .services-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .services-panel-content {
+    position: relative;
+    transform: translateY(-6px);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .services-panel-content::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: color-mix(in oklab, var(--color-text) 10%, transparent);
   }
 
   .header-shell[data-services-open='true'] .services-panel {
-    opacity: 1;
+    grid-template-rows: 1fr;
     visibility: visible;
     pointer-events: auto;
+
+    box-shadow:
+      0 36px 48px -24px rgb(0 0 0 / 0.18),
+      0 16px 24px -20px rgb(0 0 0 / 0.1);
+
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 320ms ease,
+      visibility 0s;
+  }
+
+  .header-shell[data-services-open='true'] .services-panel-content {
     transform: translateY(0);
   }
 
-  .header-shell[data-services-open='true'] > .header-main {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  .mobile-menu-button {
+    position: relative;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: color-mix(in oklab, var(--color-surface-elevated) 65%, transparent);
+    color: var(--color-text);
+    cursor: pointer;
+
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
+  }
+
+  .mobile-menu-button:hover {
+    background: var(--color-surface-elevated);
+    border-color: color-mix(in oklab, var(--color-primary) 35%, var(--color-border));
+  }
+
+  .mobile-menu-button:active {
+    transform: scale(0.96);
+  }
+
+  .mobile-menu-button span {
+    position: absolute;
+    width: 1.15rem;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+
+    transition:
+      transform 240ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 180ms ease,
+      width 200ms ease;
+  }
+
+  .mobile-menu-button span:nth-child(1) {
+    transform: translateY(-0.38rem);
+  }
+
+  .mobile-menu-button span:nth-child(2) {
+    width: 0.85rem;
+  }
+
+  .mobile-menu-button span:nth-child(3) {
+    transform: translateY(0.38rem);
+  }
+
+  .header-shell[data-mobile-open='true'] .mobile-menu-button span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+
+  .header-shell[data-mobile-open='true'] .mobile-menu-button span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+
+  .header-shell[data-mobile-open='true'] .mobile-menu-button span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    background: rgb(0 0 0 / 0.12);
+    backdrop-filter: blur(2px);
+
+    transition:
+      opacity 200ms ease,
+      visibility 0s linear 200ms;
+  }
+
+  :global(.header-root:has(.header-shell[data-mobile-open='true'])) .mobile-menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transition:
+      opacity 200ms ease,
+      visibility 0s;
   }
 </style>
 
@@ -103,6 +260,48 @@ const { t } = useTranslations(currentLocale);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       shell?.removeAttribute('data-services-open');
+      closeMobileMenu();
     }
   });
+
+  const mobileToggle = document.querySelector('[data-mobile-menu-toggle]');
+  const mobileBackdrop = document.querySelector('[data-mobile-menu-backdrop]');
+
+  function closeMobileMenu() {
+    shell?.removeAttribute('data-mobile-open');
+    mobileToggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  function openMobileMenu() {
+    shell?.setAttribute('data-mobile-open', 'true');
+    mobileToggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  mobileToggle?.addEventListener('click', () => {
+    const isOpen = shell?.getAttribute('data-mobile-open') === 'true';
+
+    if (isOpen) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  mobileBackdrop?.addEventListener('click', closeMobileMenu);
+
+  const xlMedia = window.matchMedia('(min-width: 1280px)');
+
+  function handleBreakpointChange(event: MediaQueryListEvent) {
+    if (event.matches) {
+      closeMobileMenu();
+    }
+  }
+
+  xlMedia.addEventListener('change', handleBreakpointChange);
+
+  if (xlMedia.matches) {
+    closeMobileMenu();
+  }
 </script>
