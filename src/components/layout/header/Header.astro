@@ -21,7 +21,7 @@ const { t } = useTranslations(currentLocale);
         <div
           class="header-main bg-bg-subtle relative z-110 grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-6 py-3 shadow-xl md:grid-cols-[1fr_auto_auto] xl:grid-cols-[auto_1fr_auto]"
         >
-          <a href={trPath('/')}>
+          <a href={trPath('/')} aria-label={t('header.logoAriaLabel')}>
             <LogoWithText size="sm" />
           </a>
 
@@ -45,7 +45,9 @@ const { t } = useTranslations(currentLocale);
             type="button"
             class="mobile-menu-button inline-grid xl:hidden"
             data-mobile-menu-toggle
-            aria-label="Abrir menú"
+            data-open-label={t('header.mobileMenuButton.openAriaLabel')}
+            data-close-label={t('header.mobileMenuButton.closeAriaLabel')}
+            aria-label={t('header.mobileMenuButton.openAriaLabel')}
             aria-expanded="false"
             aria-controls="mobile-menu"
           >
@@ -74,7 +76,8 @@ const { t } = useTranslations(currentLocale);
     type="button"
     class="mobile-menu-backdrop"
     data-mobile-menu-backdrop
-    aria-label="Cerrar menú"
+    aria-hidden="true"
+    aria-label={t('header.mobileMenuBackdrop.ariaLabel')}
   >
   </button>
 </div>
@@ -263,15 +266,20 @@ const { t } = useTranslations(currentLocale);
   const mobileToggle = document.querySelector('[data-mobile-menu-toggle]');
   const mobileBackdrop = document.querySelector('[data-mobile-menu-backdrop]');
 
+  const openLabel = mobileToggle?.getAttribute('data-open-label') ?? 'Open menu';
+  const closeLabel = mobileToggle?.getAttribute('data-close-label') ?? 'Close menu';
+
   function closeMobileMenu() {
     shell?.removeAttribute('data-mobile-open');
     mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileToggle?.setAttribute('aria-label', openLabel);
     document.body.style.overflow = '';
   }
 
   function openMobileMenu() {
     shell?.setAttribute('data-mobile-open', 'true');
     mobileToggle?.setAttribute('aria-expanded', 'true');
+    mobileToggle?.setAttribute('aria-label', closeLabel);
     document.body.style.overflow = 'hidden';
   }
 

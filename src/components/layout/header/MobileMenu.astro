@@ -32,7 +32,7 @@ services.sort((a, b) => a.data.order - b.data.order);
     <div
       class="border-border mx-auto mt-4 max-w-md space-y-8 border-t pt-6 pb-6 sm:max-w-lg md:max-w-xl"
     >
-      <nav aria-label="Navegación móvil">
+      <nav aria-label={t('header.mobileMenu.ariaLabel')}>
         <ul class="space-y-2">
           {
             navigation.map((item) => {
@@ -54,7 +54,7 @@ services.sort((a, b) => a.data.order - b.data.order);
                             href={item.href}
                             class="text-primary block rounded-lg px-3 py-2 text-sm font-semibold"
                           >
-                            {t('footer.servicesTitle')}
+                            {t('header.servicesPanel.viewAll')}
                           </a>
                         </li>
 

@@ -8,12 +8,12 @@ import { ChevronDown } from '@lucide/astro';
 const lang = Astro.currentLocale as Language;
 const navigation = await buildNavigation(lang);
 
-const { tn } = useTranslations(lang);
+const { tn, t } = useTranslations(lang);
 type navTranslationsType = typeof translations.es.nav;
 const navTranslations = tn<navTranslationsType>('nav');
 ---
 
-<nav aria-label="Navegación principal">
+<nav aria-label={t('header.mainNav.ariaLabel')}>
   <ul class="flex items-center gap-2">
     {
       navigation.map((item) => {

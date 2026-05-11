@@ -1,28 +1,31 @@
 ---
 import InlineLink from '@components/shared/InlineLink.astro';
 import { getEntrySlug } from '@lib/content/entries';
-import { useTranslatedPath, type Language } from '@lib/i18n/utils';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { getCollection } from 'astro:content';
 
-const currentLocale = Astro.currentLocale as Language;
-const trPath = useTranslatedPath(currentLocale);
+const lang = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(lang);
+const { t } = useTranslations(lang);
 
-const services = await getCollection('services', ({ id }) => id.endsWith(`/${currentLocale}`));
+const services = await getCollection('services', ({ id }) => id.endsWith(`/${lang}`));
 services.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <div class="grid gap-10 lg:grid-cols-[0.75fr_2fr]">
   <div class="max-w-xs">
-    <p class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">Servicios</p>
+    <p class="text-text-muted text-xs font-semibold tracking-[0.2em] uppercase">
+      {t('header.servicesPanel.eyebrow')}
+    </p>
 
-    <h2 class="mt-3 text-xl font-semibold">Soluciones metálicas a medida</h2>
+    <h2 class="mt-3 text-xl font-semibold">{t('header.servicesPanel.title')}</h2>
 
     <p class="text-text-muted mt-3 text-sm leading-6">
-      Diseño, fabricación e instalación para viviendas, negocios e industria.
+      {t('header.servicesPanel.description')}
     </p>
 
     <div class="mt-5">
-      <InlineLink href={trPath('/servicios')}>Ver todos</InlineLink>
+      <InlineLink href={trPath('/servicios')}>{t('header.servicesPanel.viewAll')}</InlineLink>
     </div>
   </div>
 
