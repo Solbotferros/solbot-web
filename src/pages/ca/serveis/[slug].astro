@@ -1,6 +1,6 @@
 ---
 import { getEntrySlug } from '@lib/content/entries';
-import ServicePage from '@views/ServicePage.astro';
+import ServiceDetailPage from '@views/ServiceDetailPage.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 // Genera páginas en build
@@ -30,4 +30,4 @@ const { Content } = await render(service);
 const { title, coverAlt } = service.data;
 ---
 
-<ServicePage service={service} Content={Content} />
+<ServiceDetailPage service={service} Content={Content} />
