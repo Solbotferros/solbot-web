@@ -61,16 +61,16 @@ const relatedProjects = allProjects
     </div>
 
     <section class="mx-auto max-w-3xl px-6 lg:max-w-6xl lg:px-12">
-      <div class="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <div class="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_390px]">
         <article class="min-w-0">
           <div class="prose prose-content-text max-w-none">
             <Content />
           </div>
         </article>
 
-        <aside class="mx-auto lg:sticky lg:top-12 lg:self-start">
+        <div class="mx-auto lg:sticky lg:top-32 lg:self-start">
           <ServiceContactAside title={cta?.title} description={cta?.description} />
-        </aside>
+        </div>
       </div>
     </section>
 
