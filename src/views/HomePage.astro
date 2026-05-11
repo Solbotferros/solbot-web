@@ -6,10 +6,10 @@ import Hero from '@components/home/Hero.astro';
 import SeoTextSection from '@components/home/HomeSeoText.astro';
 import Projects from '@components/home/ProjectsPreview.astro';
 import Sectors from '@components/home/Sectors.astro';
-import ServiceAreas from '@components/home/serviceArea/ServiceArea.astro';
-import Services from '@components/home/services/Services.astro';
 import WhyUs from '@components/home/WhyUs.astro';
+import ServiceAreas from '@components/sections/serviceArea/ServiceArea.astro';
 import ContactCta from '@components/shared/ContactCta.astro';
+import Services from '@components/shared/Services.astro';
 
 // Ensures the router is ready and route segments are built before rendering the components
 import { ensureRouterReady } from '@lib/i18n/router';
@@ -23,7 +23,7 @@ const { t } = useTranslations(Astro.currentLocale as Language);
 <Layout title={t('home.title')} description={t('home.description')}>
   <div class="space-y-24 md:space-y-32">
     <Hero />
-    <Services />
+    <Services showHeader={true} />
     <WhyUs />
     <Sectors />
     <Projects />

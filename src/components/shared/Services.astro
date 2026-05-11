@@ -16,10 +16,19 @@ const services = await getCollection(
   ({ id, data }) => id.endsWith(`/${lang}`) && data.type === 'service',
 );
 services.sort((a, b) => a.data.order - b.data.order);
+
+export interface ServicesProps {
+  showHeader?: boolean;
+}
+const { showHeader } = Astro.props;
 ---
 
 <section id="home-services" class="mx-auto max-w-6xl px-8">
-  <SectionTitle title={t('home.services.title')} subtitle={t('home.services.description')} />
+  {
+    showHeader && (
+      <SectionTitle title={t('home.services.title')} subtitle={t('home.services.description')} />
+    )
+  }
 
   <div class="mt-12 grid gap-6 md:grid-cols-2">
     {
