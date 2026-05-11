@@ -41,14 +41,23 @@ services.sort((a, b) => a.data.order - b.data.order);
               if (item.key === 'services') {
                 return (
                   <li>
-                    <details class="group">
-                      <summary class="group-open:bg-surface-elevated hover:bg-surface-elevated flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-3 text-sm font-semibold transition-colors">
-                        {' '}
-                        <span>{label}</span>
-                        <ChevronDown class="size-4 transition-transform group-open:rotate-180" />{' '}
-                      </summary>
+                    <button
+                      type="button"
+                      class="services-accordion-trigger hover:bg-surface-elevated flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-3 text-sm font-semibold transition-colors"
+                      data-services-accordion-trigger
+                      aria-expanded="false"
+                      aria-controls="mobile-services-panel"
+                    >
+                      <span>{label}</span>
+                      <ChevronDown class="size-4 transition-transform" data-services-chevron />
+                    </button>
 
-                      <ul class="mt-2 space-y-1 pl-3">
+                    <div
+                      id="mobile-services-panel"
+                      class="services-accordion-panel"
+                      data-services-accordion-panel
+                    >
+                      <ul class="space-y-1 pt-2 pl-3">
                         <li>
                           <a
                             href={item.href}
@@ -73,7 +82,7 @@ services.sort((a, b) => a.data.order - b.data.order);
                           );
                         })}
                       </ul>
-                    </details>
+                    </div>
                   </li>
                 );
               }
@@ -138,4 +147,44 @@ services.sort((a, b) => a.data.order - b.data.order);
       box-shadow 280ms ease,
       visibility 0s;
   }
+
+  .services-accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .services-accordion-panel > ul {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .services-accordion-panel[data-open='true'] {
+    grid-template-rows: 1fr;
+  }
+
+  .services-accordion-trigger[aria-expanded='true'] {
+    background: var(--color-surface-elevated);
+  }
+
+  .services-accordion-trigger[aria-expanded='true'] [data-services-chevron] {
+    transform: rotate(180deg);
+  }
 </style>
+
+<script>
+  const trigger = document.querySelector('[data-services-accordion-trigger]');
+  const panel = document.querySelector('[data-services-accordion-panel]');
+
+  trigger?.addEventListener('click', () => {
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+
+    if (isOpen) {
+      panel?.removeAttribute('data-open');
+    } else {
+      panel?.setAttribute('data-open', 'true');
+    }
+  });
+</script>
