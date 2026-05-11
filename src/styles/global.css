@@ -14,7 +14,8 @@
     scroll-behavior: smooth;
   }
 
-  section {
+  section,
+  .linked-section {
     scroll-margin-top: 9rem;
   }
 
