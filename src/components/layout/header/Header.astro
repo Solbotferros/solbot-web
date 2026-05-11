@@ -14,7 +14,7 @@ const trPath = useTranslatedPath(currentLocale);
 const { t } = useTranslations(currentLocale);
 ---
 
-<div class="header-root" data-header-root>
+<div class="header-wrapper contents" data-header-root>
   <header class="sticky top-0 z-100">
     <div class="bg-bg/5 p-4 pb-0 backdrop-blur-xl">
       <div class="header-shell relative" data-header-shell>
@@ -80,10 +80,6 @@ const { t } = useTranslations(currentLocale);
 </div>
 
 <style>
-  .header-root {
-    position: relative;
-  }
-
   .services-panel {
     display: grid;
     grid-template-rows: 0fr;
@@ -219,7 +215,7 @@ const { t } = useTranslations(currentLocale);
       visibility 0s linear 200ms;
   }
 
-  :global(.header-root:has(.header-shell[data-mobile-open='true'])) .mobile-menu-backdrop {
+  :global(.header-wrapper:has(.header-shell[data-mobile-open='true'])) .mobile-menu-backdrop {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
