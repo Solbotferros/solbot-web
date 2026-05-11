@@ -6,7 +6,7 @@ import { useTranslations, type Language } from '@lib/i18n/utils';
 const { t } = useTranslations(Astro.currentLocale as Language);
 ---
 
-<div id="theme-toggle" aria-label="Seleccionar tema">
+<div class="theme-toggle" data-theme-toggle aria-label="Seleccionar tema">
   <button
     type="button"
     class="theme-toggle__option"
@@ -31,17 +31,18 @@ const { t } = useTranslations(Astro.currentLocale as Language);
 <script>
   import { applyTheme, getPreferredTheme, setTheme, type Theme } from '@lib/theme';
 
-  const root = document.querySelector('#theme-toggle');
-  const options = root?.querySelectorAll('[data-theme-option]');
+  const roots = document.querySelectorAll<HTMLElement>('[data-theme-toggle]');
 
   const updateUI = (theme: Theme) => {
-    if (!root || !options) return;
+    roots.forEach((root) => {
+      const options = root.querySelectorAll<HTMLElement>('[data-theme-option]');
 
-    root.setAttribute('data-selected', theme);
+      root.setAttribute('data-selected', theme);
 
-    options.forEach((option) => {
-      const isActive = option.getAttribute('data-theme-option') === theme;
-      option.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      options.forEach((option) => {
+        const isActive = option.getAttribute('data-theme-option') === theme;
+        option.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
     });
   };
 
@@ -49,19 +50,23 @@ const { t } = useTranslations(Astro.currentLocale as Language);
   applyTheme(theme);
   updateUI(theme);
 
-  options?.forEach((option) => {
-    option.addEventListener('click', () => {
-      const next = option.getAttribute('data-theme-option');
-      if (next !== 'light' && next !== 'dark') return;
+  roots.forEach((root) => {
+    const options = root.querySelectorAll<HTMLElement>('[data-theme-option]');
 
-      setTheme(next);
-      updateUI(next);
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const next = option.getAttribute('data-theme-option');
+        if (next !== 'light' && next !== 'dark') return;
+
+        setTheme(next);
+        updateUI(next);
+      });
     });
   });
 </script>
 
 <style>
-  #theme-toggle {
+  .theme-toggle {
     --toggle-padding: 0.25rem;
     --toggle-height: 2rem;
     --option-width: 2.5rem;
@@ -153,7 +158,7 @@ const { t } = useTranslations(Astro.currentLocale as Language);
   }
 
   [data-theme='dark'] {
-    #theme-toggle {
+    .theme-toggle {
       &::before {
         box-shadow:
           0 1px 2px rgb(0 0 0 / 0.16),
