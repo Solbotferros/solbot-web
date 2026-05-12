@@ -22,9 +22,9 @@ const { title, items } = approach;
     <SectionTitle title={title} titleTag="h2" />
   </div>
 
-  <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
+  <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
     {
-      approach.items.map((item, index) => (
+      items.map((item, index) => (
         <article class="border-primary/35 border-l pl-5">
           <p class="text-primary text-sm font-semibold tracking-wide">
             {(index + 1).toString().padStart(2, '0')}
