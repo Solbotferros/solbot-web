@@ -48,7 +48,9 @@ const formattedUpdatedDate =
       <div class="text-text-muted mb-6 text-sm">
         <p>
           {trUI('time.published')}
-          <span class="text-text font-medium">{formattedPubDate}</span>
+          <time datetime={String(pubDate)} class="text-text font-medium">
+            {formattedPubDate}
+          </time>
           {' · '}
           {trUI('time.readingTime')}
           <span class="text-text font-medium">{readingTime} {trUI('time.minuteShort')}</span>
@@ -58,7 +60,9 @@ const formattedUpdatedDate =
           formattedUpdatedDate && (
             <p class="mt-1">
               {trUI('time.lastUpdated')}{' '}
-              <span class="text-text font-medium">{formattedUpdatedDate}</span>
+              <time datetime={String(updatedDate)} class="text-text font-medium">
+                {formattedUpdatedDate}
+              </time>
             </p>
           )
         }
