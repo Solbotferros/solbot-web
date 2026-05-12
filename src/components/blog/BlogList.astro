@@ -1,5 +1,6 @@
 ---
 import InlineLink from '@components/shared/InlineLink.astro';
+import SectionTitle from '@components/shared/SectionTitle.astro';
 import { formatLongDate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
@@ -34,41 +35,45 @@ const getPostHref = (post: CollectionEntry<'blog'>) => {
 <section class="mx-auto max-w-6xl px-8">
   {
     featuredPost && (
-      <article class="bg-surface overflow-hidden rounded-3xl shadow-xl">
-        <a
-          href={getPostHref(featuredPost)}
-          class="group grid min-h-[360px] lg:grid-cols-[0.95fr_1.15fr]"
-        >
-          <div class="flex flex-col justify-center p-8 md:p-10 lg:p-12">
-            <div class="text-primary mb-5 flex flex-wrap items-center gap-x-10 gap-y-3 text-xs font-bold tracking-[0.16em] uppercase">
-              <span>{featuredPost.data.category}</span>
-              {/* <span aria-hidden="true">·</span> */}
-              <time datetime={String(featuredPost.data.pubDate)}>
-                {formatDate(featuredPost.data.pubDate)}
-              </time>
-            </div>
+      <div>
+        <p class="text-primary mb-4 text-xs font-bold tracking-[0.25em] uppercase">
+          {t('blog.latestArticle')}
+        </p>
+        <article class="bg-surface overflow-hidden rounded-3xl shadow-xl">
+          <a
+            href={getPostHref(featuredPost)}
+            class="group grid min-h-90 lg:grid-cols-[1.15fr_0.95fr]"
+          >
+            {featuredPost.data.coverImage && (
+              <div class="min-h-70 overflow-hidden">
+                <Image
+                  src={featuredPost.data.coverImage}
+                  alt={featuredPost.data.coverAlt ?? ''}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="eager"
+                />
+              </div>
+            )}
+            <div class="flex flex-col justify-center p-8 md:p-10 lg:p-12">
+              <div class="text-primary mb-5 flex flex-wrap items-center gap-3 text-xs font-bold tracking-[0.16em] uppercase">
+                <span>{featuredPost.data.category}</span>
+                <span aria-hidden="true">·</span>
+                <time datetime={String(featuredPost.data.pubDate)}>
+                  {formatDate(featuredPost.data.pubDate)}
+                </time>
+              </div>
 
-            <h2 class="text-text text-3xl font-bold md:text-4xl">{featuredPost.data.title}</h2>
-
-            <p class="text-text-muted mt-5 max-w-xl text-sm leading-relaxed md:text-base">
-              {featuredPost.data.description}
-            </p>
-
-            <InlineLink class="mt-8">{t('blog.readArticle')}</InlineLink>
-          </div>
-
-          {featuredPost.data.coverImage && (
-            <div class="min-h-[280px] overflow-hidden">
-              <Image
-                src={featuredPost.data.coverImage}
-                alt={featuredPost.data.coverAlt ?? ''}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="eager"
+              <SectionTitle
+                titleTag="h2"
+                title={featuredPost.data.title}
+                subtitle={featuredPost.data.description}
               />
+
+              <InlineLink class="mt-8">{t('blog.readArticle')}</InlineLink>
             </div>
-          )}
-        </a>
-      </article>
+          </a>
+        </article>
+      </div>
     )
   }
 
@@ -77,7 +82,7 @@ const getPostHref = (post: CollectionEntry<'blog'>) => {
       <div class="mt-16">
         <h2 class="text-text text-2xl font-bold md:text-3xl">{t('blog.allArticles')}</h2>
 
-        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-8 grid grid-cols-[repeat(auto-fit,minmax(min(100%,19rem),1fr))] gap-6">
           {regularPosts.map((post) => (
             <article class="border-border bg-surface overflow-hidden rounded-3xl border">
               <a href={getPostHref(post)} class="group block h-full">
