@@ -1,7 +1,7 @@
 ---
 import { getEntrySlug } from '@lib/content/entries';
 import { calculateReadingTime } from '@lib/content/reading-time';
-import BlogPage from '@views/BlogPage.astro';
+import BlogDetailPage from '@views/BlogDetailPage.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 // Genera páginas en build
@@ -34,7 +34,7 @@ const readingTime = calculateReadingTime(page.body ?? '').minutes;
 const { title, description, pubDate, updatedDate, tags, coverImage, coverAlt, cta } = page.data;
 ---
 
-<BlogPage
+<BlogDetailPage
   title={title}
   description={description}
   pubDate={pubDate}
