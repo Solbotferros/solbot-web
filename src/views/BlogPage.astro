@@ -1,0 +1,32 @@
+---
+import BlogHero from '@components/blog/BlogHero.astro';
+import BlogList from '@components/blog/BlogList.astro';
+import ContactCta from '@components/shared/ContactCta.astro';
+import Layout from '@layouts/Layout.astro';
+
+import { ensureRouterReady } from '@lib/i18n/router';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+import { getCollection } from 'astro:content';
+
+await ensureRouterReady();
+
+const lang = Astro.currentLocale as Language;
+const { t } = useTranslations(lang);
+
+const posts = await getCollection('blog', ({ id }) => id.endsWith(`/${lang}`));
+
+posts.sort((a, b) => {
+  return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
+});
+---
+
+<Layout title={t('blog.meta.title')} description={t('blog.meta.description')}>
+  <div class="mt-24 space-y-24 md:space-y-32">
+    <BlogHero />
+    <BlogList posts={posts} />
+
+    <div class="mx-auto max-w-6xl px-8">
+      <ContactCta />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,15 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const lang = Astro.currentLocale as Language;
+const { t } = useTranslations(lang);
+---
+
+<section class="mx-auto max-w-6xl px-8">
+  <p class="text-primary mb-3 text-xs font-bold tracking-[0.25em] uppercase">
+    {t('blog.hero.eyebrow')}
+  </p>
+
+  <SectionTitle titleTag="h1" title={t('blog.hero.title')} subtitle={t('blog.hero.subtitle')} />
+</section>

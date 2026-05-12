@@ -1,0 +1,119 @@
+---
+import InlineLink from '@components/shared/InlineLink.astro';
+import { formatLongDate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+
+const lang = Astro.currentLocale as Language;
+const trPath = useTranslatedPath(lang);
+const { t } = useTranslations(lang);
+
+const sortedPosts = [...posts]
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const featuredPost = sortedPosts.find((post) => post.data.featured) ?? sortedPosts[0];
+
+const regularPosts = featuredPost ? sortedPosts.filter((post) => post.id !== featuredPost.id) : [];
+
+const formatDate = (dateString: string | Date) => {
+  return formatLongDate(new Date(dateString), lang);
+};
+
+const getPostHref = (post: CollectionEntry<'blog'>) => {
+  return trPath(`/blog/${post.data.localizedSlug}`);
+};
+---
+
+<section class="mx-auto max-w-6xl px-8">
+  {
+    featuredPost && (
+      <article class="bg-surface overflow-hidden rounded-3xl shadow-xl">
+        <a
+          href={getPostHref(featuredPost)}
+          class="group grid min-h-[360px] lg:grid-cols-[0.95fr_1.15fr]"
+        >
+          <div class="flex flex-col justify-center p-8 md:p-10 lg:p-12">
+            <div class="text-primary mb-5 flex flex-wrap items-center gap-x-10 gap-y-3 text-xs font-bold tracking-[0.16em] uppercase">
+              <span>{featuredPost.data.category}</span>
+              {/* <span aria-hidden="true">·</span> */}
+              <time datetime={String(featuredPost.data.pubDate)}>
+                {formatDate(featuredPost.data.pubDate)}
+              </time>
+            </div>
+
+            <h2 class="text-text text-3xl font-bold md:text-4xl">{featuredPost.data.title}</h2>
+
+            <p class="text-text-muted mt-5 max-w-xl text-sm leading-relaxed md:text-base">
+              {featuredPost.data.description}
+            </p>
+
+            <InlineLink class="mt-8">{t('blog.readArticle')}</InlineLink>
+          </div>
+
+          {featuredPost.data.coverImage && (
+            <div class="min-h-[280px] overflow-hidden">
+              <Image
+                src={featuredPost.data.coverImage}
+                alt={featuredPost.data.coverAlt ?? ''}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
+              />
+            </div>
+          )}
+        </a>
+      </article>
+    )
+  }
+
+  {
+    regularPosts.length > 0 && (
+      <div class="mt-16">
+        <h2 class="text-text text-2xl font-bold md:text-3xl">{t('blog.allArticles')}</h2>
+
+        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {regularPosts.map((post) => (
+            <article class="border-border bg-surface overflow-hidden rounded-3xl border">
+              <a href={getPostHref(post)} class="group block h-full">
+                {post.data.coverImage && (
+                  <div class="overflow-hidden">
+                    <Image
+                      src={post.data.coverImage}
+                      alt={post.data.coverAlt ?? ''}
+                      class="aspect-4/3 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                <div class="p-6">
+                  <div class="text-primary mb-3 flex flex-wrap items-center gap-2 text-[0.7rem] font-bold tracking-[0.14em] uppercase">
+                    <span>{post.data.category}</span>
+                    <span aria-hidden="true">·</span>
+                    <time datetime={String(post.data.pubDate)}>
+                      {formatDate(post.data.pubDate)}
+                    </time>
+                  </div>
+
+                  <h3 class="text-text text-xl font-bold">{post.data.title}</h3>
+
+                  <p class="text-text-muted mt-3 text-sm leading-relaxed">
+                    {post.data.description}
+                  </p>
+
+                  <InlineLink class="mt-5">{t('blog.readArticle')}</InlineLink>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</section>
