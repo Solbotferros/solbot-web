@@ -1,0 +1,76 @@
+---
+import InlineLink from '@components/shared/InlineLink.astro';
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  variant?: 'default' | 'hero';
+}
+
+const { items = [], variant = 'default' } = Astro.props;
+
+const isHero = variant === 'hero';
+
+// Do not render anything if there are fewer than 2 items.
+if (items.length < 2) {
+  return null;
+}
+---
+
+<nav aria-label="Breadcrumb" class={isHero ? '' : 'mx-auto max-w-6xl px-8 pt-4 md:pt-6'}>
+  <ol
+    class:list={[
+      'flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm',
+      isHero ? 'text-white/65' : 'text-text-muted',
+    ]}
+  >
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+
+        return (
+          <>
+            <li class="max-w-48 md:max-w-md lg:max-w-lg">
+              {!isLast && item.href ? (
+                <InlineLink
+                  class={
+                    isHero
+                      ? 'hover:text-primary/95! font-medium! text-white/75!'
+                      : 'text-text-muted! hover:text-primary! font-medium!'
+                  }
+                  href={item.href}
+                  showArrow={false}
+                  title={item.label}
+                >
+                  {item.label}
+                </InlineLink>
+              ) : (
+                <span
+                  class={isHero ? 'text-white/85' : 'text-text block truncate font-medium'}
+                  aria-current="page"
+                  title={item.label}
+                >
+                  {item.label}
+                </span>
+              )}
+            </li>
+
+            {!isLast && (
+              <li
+                aria-hidden="true"
+                class={isHero ? 'text-white/40' : 'text-text-muted/40'}
+                select-none
+              >
+                /
+              </li>
+            )}
+          </>
+        );
+      })
+    }
+  </ol>
+</nav>
