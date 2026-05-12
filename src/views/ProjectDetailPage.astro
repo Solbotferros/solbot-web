@@ -37,9 +37,15 @@ const relatedProjects = allProjects
   .filter((entry) => entry.data.sector === sector || entry.data.service === service)
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
+
+const breadcrumbs = [
+  { label: t('nav.home'), href: trPath('/') },
+  { label: t('nav.projects'), href: trPath('/projects/') },
+  { label: title },
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} breadcrumbs={breadcrumbs}>
   <article>
     <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 md:pt-24 md:pb-16">
       <header class="max-w-5xl">

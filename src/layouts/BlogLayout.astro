@@ -4,9 +4,11 @@ import Layout from '@layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
 import ContactCta from '@components/shared/ContactCta.astro';
-import { formatLongDate, useTranslations, type Language } from '@lib/i18n/utils';
+import { formatLongDate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
-const { t: trUI } = useTranslations(Astro.currentLocale as Language);
+const lang = Astro.currentLocale as Language;
+const { t: trUI } = useTranslations(lang);
+const trPath = useTranslatedPath(lang);
 
 interface Props {
   title: string;
@@ -40,9 +42,15 @@ const formattedUpdatedDate =
   updatedDate && updatedDate.getTime() > pubDate.getTime()
     ? formatLongDate(updatedDate, Astro.currentLocale as Language)
     : null;
+
+const breadcrumbs = [
+  { label: trUI('nav.home'), href: trPath('/') },
+  { label: trUI('nav.blog'), href: trPath('/blog') },
+  { label: title },
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} breadcrumbs={breadcrumbs}>
   <article class="mx-auto mt-16 max-w-4xl px-8 sm:px-12 lg:px-16">
     <header class="mb-10">
       <div class="text-text-muted mb-6 text-sm">
