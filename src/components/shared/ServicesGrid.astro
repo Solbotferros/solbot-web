@@ -1,8 +1,7 @@
 ---
 import ServiceImageCard from '@components/home/services/ServiceCard.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
-
-// import { services } from '@lib/business/services';
+import InlineLink from './InlineLink.astro';
 
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import { getCollection } from 'astro:content';
@@ -19,8 +18,9 @@ services.sort((a, b) => a.data.order - b.data.order);
 
 export interface ServicesProps {
   showHeader?: boolean;
+  showViewAll?: boolean;
 }
-const { showHeader } = Astro.props;
+const { showHeader, showViewAll } = Astro.props;
 ---
 
 <section id="home-services" class="mx-auto max-w-6xl px-8">
@@ -44,4 +44,12 @@ const { showHeader } = Astro.props;
       })
     }
   </div>
+
+  {
+    showViewAll && (
+      <div class="mt-12 text-center">
+        <InlineLink href={trPath('/servicios')}>{t('home.services.viewAll')}</InlineLink>
+      </div>
+    )
+  }
 </section>

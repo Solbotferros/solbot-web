@@ -4,6 +4,7 @@ export const servicesTranslations = {
       title: 'Servicios de carpintería metálica en Barcelona',
       description:
         'Diseñamos, fabricamos e instalamos soluciones metálicas a medida para viviendas, negocios, industria y proyectos técnicos.',
+      viewAll: 'Ver todos los servicios',
       items: {
         welding: {
           title: 'Servicios de soldadura',
@@ -34,6 +35,7 @@ export const servicesTranslations = {
       title: 'Serveis de fusteria metàl·lica a Barcelona',
       description:
         'Dissenyem, fabriquem i instal·lem solucions metàl·liques a mida per a habitatges, negocis, indústria i projectes tècnics.',
+      viewAll: 'Veure tots els serveis',
       items: {
         welding: {
           title: 'Serveis de soldadura',
@@ -64,6 +66,7 @@ export const servicesTranslations = {
       title: 'Metalwork services in Barcelona',
       description:
         'We design, fabricate and install custom metal solutions for homes, businesses, industry and technical projects.',
+      viewAll: 'View all services',
       items: {
         welding: {
           title: 'Welding services',
