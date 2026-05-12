@@ -3,6 +3,7 @@ export const blogTranslations = {
     blog: {
       readArticle: 'Leer artículo',
       allArticles: 'Todos los artículos',
+      latestArticle: 'Último artículo',
       new: 'Nuevo',
       meta: {
         title: 'Consejos sobre carpintería metálica y soldadura | Solbot Ferros',
@@ -21,6 +22,7 @@ export const blogTranslations = {
     blog: {
       readArticle: 'Llegir article',
       allArticles: 'Tots els articles',
+      latestArticle: 'Últim article',
       new: 'Nou',
       meta: {
         title: 'Consells sobre serralleria metàl·lica i soldadura | Solbot Ferros',
@@ -39,6 +41,7 @@ export const blogTranslations = {
     blog: {
       readArticle: 'Read article',
       allArticles: 'All articles',
+      latestArticle: 'Latest Article',
       new: 'New',
       meta: {
         title: 'Metalwork and Welding Tips | Solbot Ferros',
