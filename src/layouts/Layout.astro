@@ -9,17 +9,26 @@ import type { Language } from '@lib/i18n/types';
 
 import { translatePathname } from '@lib/i18n/utils';
 
-const { title, description } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  breadcrumbs?: {
+    label: string;
+    href?: string;
+  }[];
+}
+const { title, description, breadcrumbs } = Astro.props;
 
 import { locales, defaultLang } from '@lib/i18n/locales';
 
 import { ensureRouterReady } from '@lib/i18n/router';
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 await ensureRouterReady();
 
 const lang = Astro.currentLocale as Language;
 
 // Add Solbot Ferros only if it is not included in the title to avoid redundancy in SEO titles
-const fullTitle = title.includes(businessInfo.shortName)
+const fullTitle = title?.includes(businessInfo.shortName)
   ? title
   : `${title} ${title ? '|' : ''} ${businessInfo.shortName}`;
 
@@ -68,6 +77,7 @@ const alternateUrls = Object.fromEntries(
   <body>
     <Header />
     <main>
+      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
       <slot />
     </main>
     <Footer />
