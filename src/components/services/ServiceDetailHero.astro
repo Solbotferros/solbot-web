@@ -1,4 +1,5 @@
 ---
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import ButtonLink from '@components/shared/ButtonLink.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
@@ -9,13 +10,14 @@ type Props = {
   description: string;
   coverImage?: ImageMetadata;
   coverAlt?: string;
+  breadcrumbs?: { label: string; href?: string }[];
 };
 
 const lang = Astro.currentLocale as Language;
 const { t } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);
 
-const { title, description, coverImage, coverAlt } = Astro.props;
+const { title, description, coverImage, coverAlt, breadcrumbs } = Astro.props;
 ---
 
 <section class="relative -mt-28 overflow-hidden bg-black text-white">
@@ -37,8 +39,16 @@ const { title, description, coverImage, coverAlt } = Astro.props;
     </div>
 
     <div
-      class="relative z-10 mx-auto flex min-h-170 max-w-6xl items-end px-8 pt-56 pb-24 sm:px-12 md:min-h-180 lg:px-16"
+      class="relative z-10 mx-auto flex min-h-170 max-w-6xl flex-col justify-end px-8 pt-56 pb-24 sm:px-12 md:min-h-180 lg:px-16"
     >
+      {
+        breadcrumbs && breadcrumbs.length > 0 && (
+          <div class="mb-5">
+            <Breadcrumbs items={breadcrumbs} variant="hero" />
+          </div>
+        )
+      }
+
       <div class="max-w-2xl">
         <SectionTitle
           title={title}

@@ -45,15 +45,22 @@ const relatedProjects = allProjects
   )
   .slice(0, 3)
   .map(({ project }) => project);
+
+const breadcrumbs = [
+  { label: t('nav.home'), href: trPath('/') },
+  { label: t('nav.services'), href: trPath('/servicios/') },
+  { label: title },
+];
 ---
 
 <Layout title={seoTitle ?? title} description={description}>
-  <main class="space-y-24">
+  <section class="space-y-24">
     <ServiceDetailHero
       title={title}
       description={description}
       coverImage={coverImage}
       coverAlt={coverAlt}
+      breadcrumbs={breadcrumbs}
     />
 
     <div class="mx-auto max-w-6xl px-8 py-16 sm:px-12 lg:px-16">
@@ -82,5 +89,5 @@ const relatedProjects = allProjects
         viewAllLabel={t('services.allProjects')}
       />
     </div>
-  </main>
+  </section>
 </Layout>
