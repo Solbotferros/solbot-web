@@ -30,7 +30,7 @@ const getPostUrl = (post: CollectionEntry<'blog'>) => {
 
 {
   featuredPosts.length > 0 && (
-    <div class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(min(100%,19rem),22rem))] gap-6">
+    <div class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(min(100%,19rem),1fr))] gap-6">
       {featuredPosts.map((post, i) => (
         <a
           href={getPostUrl(post)}
