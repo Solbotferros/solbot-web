@@ -1,0 +1,105 @@
+---
+import InlineLink from '@components/shared/InlineLink.astro';
+import businessInfo from '@lib/business/info';
+import { interpolate, useTranslations, type Language } from '@lib/i18n/utils';
+import { getCollection } from 'astro:content';
+
+const lang = Astro.currentLocale as Language;
+const { t } = useTranslations(lang);
+
+const testimonials = await getCollection(
+  'testimonials',
+  (testimonial) => testimonial.data.featured && testimonial.id.endsWith(`/${lang}`),
+).then((testimonials) => testimonials.sort((a, b) => a.data.order - b.data.order));
+
+console.log(testimonials);
+
+const renderStars = (rating: number) => '★'.repeat(rating);
+
+const formatRating = (rating: number) =>
+  new Intl.NumberFormat(lang ?? 'en-US', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(rating);
+---
+
+<section class="mx-auto max-w-6xl px-8">
+  <div class="mb-10 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+    <div>
+      <p class="text-primary mb-3 text-xs font-bold tracking-[0.25em] uppercase">
+        {t('home.testimonials.eyebrow')}
+      </p>
+
+      <h2 class="text-text max-w-2xl text-3xl font-bold md:text-4xl">
+        {t('home.testimonials.title')}
+      </h2>
+    </div>
+
+    <div class="md:text-right">
+      <p
+        class="text-primary text-lg tracking-[0.2em]"
+        aria-label={interpolate(t('home.testimonials.starsAriaLabel'), {
+          rating: formatRating(businessInfo.reviews.google.rating),
+        })}
+      >
+        {renderStars(businessInfo.reviews.google.rating)}
+      </p>
+
+      <p class="text-text-muted mt-2 text-sm">
+        {
+          interpolate(t('home.testimonials.ratingSummary'), {
+            rating: formatRating(businessInfo.reviews.google.rating),
+            count: businessInfo.reviews.google.totalReviews,
+          })
+        }
+      </p>
+
+      <div class="mt-3">
+        <InlineLink href={businessInfo.reviews.google.url}>
+          {t('home.testimonials.viewAll')}
+        </InlineLink>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      testimonials.map(({ data: testimonial, body }) => (
+        <a
+          href={testimonial.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group border-border bg-surface-elevated hover:border-glow block rounded-3xl border p-6 transition-all duration-200 hover:-translate-y-0.5"
+        >
+          <div class="flex items-center gap-3">
+            <div class="bg-primary/10 text-primary grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-bold">
+              {testimonial.initials}
+            </div>
+
+            <div>
+              <h3 class="text-text text-sm font-bold">{testimonial.name}</h3>
+              <p class="text-text-muted text-xs">{testimonial.location}</p>
+            </div>
+          </div>
+
+          <div
+            class="text-primary mt-4 text-sm tracking-[0.15em]"
+            aria-label={interpolate(t('home.testimonials.starsAriaLabel'), {
+              rating: formatRating(testimonial.rating),
+            })}
+          >
+            {renderStars(testimonial.rating)}
+          </div>
+
+          <p class="text-text-muted mt-4 line-clamp-4 text-sm leading-relaxed">“{body}”</p>
+
+          <p class="text-text-muted group-hover:text-primary mt-4 text-xs font-medium transition-colors">
+            {interpolate(t('home.testimonials.reviewSource'), {
+              source: testimonial.source.charAt(0).toUpperCase() + testimonial.source.slice(1),
+            })}
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</section>
