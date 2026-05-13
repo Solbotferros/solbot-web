@@ -7,9 +7,11 @@ import {
   getPhoneDisplay,
   getPhoneHref,
 } from '@lib/business/utils';
-import { useTranslations, type Language } from '@lib/i18n/utils';
+import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
-const { t: trUI } = useTranslations(Astro.currentLocale as Language);
+const lang = Astro.currentLocale as Language;
+const { t: trUI } = useTranslations(lang);
+const trPath = useTranslatedPath(lang);
 
 interface Props {
   title?: string;
@@ -20,7 +22,7 @@ interface Props {
 const {
   title = trUI('contactCta.title'),
   description = trUI('contactCta.description'),
-  href = `/${Astro.currentLocale}/contacto`,
+  href = trPath('/contacto'),
 } = Astro.props;
 
 const phoneHref = getPhoneHref(businessInfo.phone);
