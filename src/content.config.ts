@@ -175,9 +175,31 @@ const services = defineCollection({
       }),
 });
 
+const testimonials = defineCollection({
+  loader: glob({
+    base: './src/content/testimonials',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z.object({
+    name: z.string(),
+    initials: z.string().min(1).max(3),
+
+    location: z.string().optional(),
+
+    rating: z.number().min(1).max(5).default(5),
+    source: z.enum(['google']).default('google'),
+    sourceUrl: z.url().optional(),
+
+    featured: z.boolean().default(false),
+    order: z.number().default(999),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   legal,
   blog,
   projects,
   services,
+  testimonials,
 };
