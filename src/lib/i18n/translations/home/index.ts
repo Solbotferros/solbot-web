@@ -4,6 +4,7 @@ import { projectsTranslations } from './projects';
 import { sectorsTranslations } from './sectors';
 import { serviceAreasTranslations } from './serviceArea';
 import { servicesTranslations } from './services';
+import { testimonialsTranslations } from './testimonials';
 import { whyUsTranslations } from './whyUs';
 
 export const homeTranslations = {
@@ -20,6 +21,7 @@ export const homeTranslations = {
       ...sectorsTranslations.es,
       ...whyUsTranslations.es,
       ...serviceAreasTranslations.es,
+      ...testimonialsTranslations.es,
     },
   },
 
@@ -36,6 +38,7 @@ export const homeTranslations = {
       ...sectorsTranslations.ca,
       ...whyUsTranslations.ca,
       ...serviceAreasTranslations.ca,
+      ...testimonialsTranslations.ca,
     },
   },
 
@@ -52,6 +55,7 @@ export const homeTranslations = {
       ...sectorsTranslations.en,
       ...whyUsTranslations.en,
       ...serviceAreasTranslations.en,
+      ...testimonialsTranslations.en,
     },
   },
 } as const;

@@ -37,6 +37,13 @@ const businessInfo = {
       intervals: [],
     },
   ],
+  reviews: {
+    google: {
+      url: 'https://maps.app.goo.gl/QyQbVbHVUpwPBNkK6',
+      rating: 5.0,
+      totalReviews: 12,
+    },
+  },
 };
 
 export default businessInfo;
