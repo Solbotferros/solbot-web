@@ -9,7 +9,7 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
 import { ensureRouterReady } from '@lib/i18n/router';
-ensureRouterReady();
+await ensureRouterReady();
 
 interface Props {
   service: CollectionEntry<'services'>;

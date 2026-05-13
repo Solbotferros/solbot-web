@@ -6,6 +6,9 @@ import { Image } from 'astro:assets';
 import ContactCta from '@components/shared/ContactCta.astro';
 import { formatLongDate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 
+import { ensureRouterReady } from '@lib/i18n/router';
+await ensureRouterReady();
+
 const lang = Astro.currentLocale as Language;
 const { t: trUI } = useTranslations(lang);
 const trPath = useTranslatedPath(lang);

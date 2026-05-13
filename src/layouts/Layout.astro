@@ -22,8 +22,9 @@ const { title, description, breadcrumbs } = Astro.props;
 import { locales, defaultLang } from '@lib/i18n/locales';
 
 import { ensureRouterReady } from '@lib/i18n/router';
-import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 await ensureRouterReady();
+
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 
 const lang = Astro.currentLocale as Language;
 

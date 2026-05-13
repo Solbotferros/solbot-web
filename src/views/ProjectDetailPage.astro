@@ -12,7 +12,7 @@ import { getCollection } from 'astro:content';
 
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import { ensureRouterReady } from '@lib/i18n/router';
-ensureRouterReady();
+await ensureRouterReady();
 
 interface Props {
   project: CollectionEntry<'projects'>;
