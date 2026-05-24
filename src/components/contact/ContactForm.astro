@@ -19,14 +19,7 @@ type FormType = typeof translations.es.contact.form;
 const { tn } = useTranslations(lang);
 const formTranslations = tn<FormType>('contact.form');
 
-const fileMessages = {
-  selectedOne: formTranslations.files.selectedOne,
-  selectedMany: formTranslations.files.selectedMany,
-  invalidOne: formTranslations.files.invalidOne,
-  invalidMany: formTranslations.files.invalidMany,
-  maxExceeded: formTranslations.files.maxExceeded,
-  removeImage: formTranslations.files.removeImage,
-};
+const fileMessages = formTranslations.files;
 
 const submitFeedbackMessages = formTranslations.submit.feedback;
 
@@ -143,7 +136,7 @@ const ALLOWED_IMAGE_MIME_TYPES = [
                   class="sr-only"
                   type="radio"
                   name="service"
-                  value={service.data.title}
+                  value={service.data.internalTitle ?? service.data.title}
                   required
                 />
 
@@ -616,7 +609,9 @@ const ALLOWED_IMAGE_MIME_TYPES = [
       }
 
       if (totalSize > maxTotalSizeMb * 1024 * 1024) {
-        fileError.textContent = `Las imágenes no pueden superar ${maxTotalSizeMb} MB en total.`;
+        fileError.textContent = interpolateClient(fileMessages.maxTotalSizeExceeded, {
+          max: maxTotalSizeMb,
+        });
         fileError.classList.remove('hidden');
 
         syncFileInput();
@@ -630,6 +625,10 @@ const ALLOWED_IMAGE_MIME_TYPES = [
 
     syncFileInput();
     renderFileFeedback();
+
+    if (fileInput) {
+      fileInput.value = '';
+    }
   };
 
   fileInput?.addEventListener('change', () => {
@@ -644,7 +643,7 @@ const ALLOWED_IMAGE_MIME_TYPES = [
 
     const index = Number(button.dataset.removeFile);
 
-    selectedFiles.splice(index, 1);
+    selectedFiles = selectedFiles.filter((_, i) => i !== index);
 
     syncFileInput();
     renderFileFeedback();
