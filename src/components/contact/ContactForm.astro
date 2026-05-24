@@ -30,7 +30,16 @@ const fileMessages = {
 
 const submitFeedbackMessages = formTranslations.submit.feedback;
 
-const MAX_IMAGES = 6;
+const MAX_IMAGES = 4;
+const MAX_TOTAL_SIZE_MB = 10;
+
+const ALLOWED_IMAGE_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/heic',
+  'image/heif',
+];
 ---
 
 <section class="px-4 pb-20 md:pb-24">
@@ -318,7 +327,7 @@ const MAX_IMAGES = 6;
           class="sr-only"
           type="file"
           name="files"
-          accept="image/*"
+          accept={ALLOWED_IMAGE_MIME_TYPES.join(',')}
           multiple
           data-max-files={MAX_IMAGES}
           data-messages={JSON.stringify(fileMessages)}
@@ -337,7 +346,7 @@ const MAX_IMAGES = 6;
         <button
           type="submit"
           data-submit-button
-          class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] cursor-pointer items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
+          class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] cursor-pointer items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-70"
         >
           <span data-submit-label>{formTranslations.submit.label}</span>
         </button>
