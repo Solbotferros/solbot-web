@@ -109,6 +109,7 @@ export const formTranslations = {
         invalidOne: '1 archivo no es una imagen válida.',
         invalidMany: '{count} archivos no son imágenes válidas.',
         maxExceeded: 'Solo puedes subir hasta {max} imágenes.',
+        maxTotalSizeExceeded: 'Las imágenes no pueden superar {max} MB en total.',
         removeImage: 'Eliminar imagen',
       },
 
@@ -235,6 +236,7 @@ export const formTranslations = {
         invalidOne: '1 fitxer no és una imatge vàlida.',
         invalidMany: '{count} fitxers no són imatges vàlides.',
         maxExceeded: 'Només pots pujar fins a {max} imatges.',
+        maxTotalSizeExceeded: 'Les imatges no poden superar els {max} MB en total.',
         removeImage: 'Eliminar imatge',
       },
 
@@ -362,6 +364,7 @@ export const formTranslations = {
         invalidOne: '1 file is not a valid image.',
         invalidMany: '{count} files are not valid images.',
         maxExceeded: 'You can only upload up to {max} images.',
+        maxTotalSizeExceeded: 'Images cannot exceed {max} MB in total.',
         removeImage: 'Remove image',
       },
 
