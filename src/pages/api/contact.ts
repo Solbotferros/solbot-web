@@ -96,7 +96,9 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ error: 'Field too long' }, { status: 400 });
   }
 
-  const files = formData.getAll('files').filter((file): file is File => file instanceof File);
+  const files = formData
+    .getAll('files')
+    .filter((file): file is File => file instanceof File && file.size > 0);
 
   const totalSize = files.reduce((sum, file) => sum + file.size, 0);
 
@@ -128,9 +130,18 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
+  const submittedAt = new Date().toLocaleString('es-ES', {
+    dateStyle: 'full',
+    timeStyle: 'short',
+    timeZone: 'Europe/Madrid',
+  });
+
   // Construct email content
   const emailMessage = `
 Nueva solicitud de presupuesto desde la web
+
+Fecha:
+${submittedAt}
 
 Nombre: ${name}
 Ubicación: ${location}
@@ -172,7 +183,7 @@ ${accessConditions.length ? accessConditions.map((x) => `- ${x}`).join('\n') : '
   const { error } = await resend.emails.send({
     from: contactFromEmail,
     to: [contactToEmail],
-    subject: `Nueva solicitud de presupuesto - ${name}`,
+    subject: `[Web] ${service} - ${name}`,
     text: emailMessage,
     replyTo: email || undefined,
     attachments,
