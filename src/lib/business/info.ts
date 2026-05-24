@@ -5,7 +5,7 @@ const businessInfo = {
   shortName: 'Solbot Ferros',
   description:
     'Empresa especializada en carpinteria metálica, ofreciendo soluciones de alta calidad para proyectos residenciales y comerciales.',
-  address: 'Calle inventada, 123, 28000 Madrid, España',
+  address: 'Camí del Crist, 08339 Vilassar de Mar, Barcelona, España',
   googleMapsUrl: 'https://maps.app.goo.gl/C96EQKSeDXYL3pyZ7',
   lat: 41.52232337015609,
   lng: 2.4256151966086894,
