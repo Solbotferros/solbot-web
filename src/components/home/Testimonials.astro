@@ -12,8 +12,6 @@ const testimonials = await getCollection(
   (testimonial) => testimonial.data.featured && testimonial.id.endsWith(`/${lang}`),
 ).then((testimonials) => testimonials.sort((a, b) => a.data.order - b.data.order));
 
-console.log(testimonials);
-
 const renderStars = (rating: number) => '★'.repeat(rating);
 
 const formatRating = (rating: number) =>
