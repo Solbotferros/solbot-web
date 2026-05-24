@@ -88,6 +88,17 @@ export const POST: APIRoute = async ({ request }) => {
   const name = formData.get('name')?.toString().trim() ?? '';
   const location = formData.get('location')?.toString().trim() ?? '';
   const phone = formData.get('phone')?.toString().trim() ?? '';
+
+  const isValidPhone = (value: string) => {
+    const normalized = value.replace(/[\s()-]/g, '');
+
+    return /^\+?[0-9]{7,15}$/.test(normalized);
+  };
+
+  if (!isValidPhone(phone)) {
+    return Response.json({ error: 'Invalid phone' }, { status: 400 });
+  }
+
   const email = formData.get('email')?.toString().trim() ?? '';
 
   const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
