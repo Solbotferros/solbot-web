@@ -115,6 +115,12 @@ export const formTranslations = {
       submit: {
         note: 'Te responderemos lo antes posible para comentar detalles y próximos pasos.',
         label: 'Enviar solicitud',
+
+        feedback: {
+          loading: 'Enviando solicitud...',
+          success: 'Solicitud enviada correctamente. Te contactaremos pronto.',
+          error: 'No se ha podido enviar la solicitud. Inténtalo de nuevo.',
+        },
       },
     },
   },
@@ -235,6 +241,12 @@ export const formTranslations = {
       submit: {
         note: 'Et respondrem al més aviat possible per comentar detalls i pròxims passos.',
         label: 'Enviar sol·licitud',
+
+        feedback: {
+          loading: 'Enviant sol·licitud...',
+          success: 'Sol·licitud enviada correctament. Et contactarem aviat.',
+          error: "No s'ha pogut enviar la sol·licitud. Torna-ho a provar.",
+        },
       },
     },
   },
@@ -356,6 +368,12 @@ export const formTranslations = {
       submit: {
         note: 'We will get back to you as soon as possible to discuss details and next steps.',
         label: 'Send request',
+
+        feedback: {
+          loading: 'Sending request...',
+          success: 'Request sent successfully. We will contact you soon.',
+          error: 'The request could not be sent. Please try again.',
+        },
       },
     },
   },
