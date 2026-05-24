@@ -9,6 +9,7 @@ order: 4
 draft: false
 
 title: 'Mobiliario metálico'
+internalTitle: 'Mobiliario metálico'
 
 description: Muebles de diseño en hierro y madera, mobiliario para hostelería, separadores, estanterías, barbacoas y cartelería metálica.
 

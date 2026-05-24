@@ -9,6 +9,7 @@ order: 3
 draft: false
 
 title: 'Carpintería metálica'
+internalTitle: 'Carpintería metálica'
 
 description: Rejas de seguridad, barandillas, vallas, puertas metálicas y escaleras a medida para viviendas, negocios y comunidades.
 

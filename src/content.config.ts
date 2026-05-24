@@ -117,6 +117,7 @@ const services = defineCollection({
         locationKey: z.enum(['barcelona', 'maresme', 'valles', 'vilassar', 'mataro']).optional(),
 
         title: z.string(),
+        internalTitle: z.string().optional(),
         description: z.string(),
         localizedSlug: z.string(),
 

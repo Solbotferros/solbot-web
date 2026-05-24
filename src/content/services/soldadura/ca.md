@@ -9,6 +9,7 @@ order: 1
 draft: false
 
 title: 'Serveis de soldadura'
+internalTitle: 'Soldadura'
 
 description: Soldadura estructural, reparacions metàl·liques i substitució d’elements oxidats.
 

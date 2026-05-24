@@ -9,6 +9,7 @@ order: 3
 draft: false
 
 title: 'Metalwork'
+internalTitle: 'Carpintería metálica'
 
 description: Security grilles, railings, fences, gates and custom metal staircases for homes, businesses and residential communities.
 

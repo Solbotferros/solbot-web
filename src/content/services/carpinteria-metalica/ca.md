@@ -9,6 +9,7 @@ order: 3
 draft: false
 
 title: 'Fusteria metàl·lica'
+internalTitle: 'Carpintería metálica'
 
 description: Reixes de seguretat, baranes, tanques, portes metàl·liques i escales a mida per a habitatges, negocis i comunitats.
 

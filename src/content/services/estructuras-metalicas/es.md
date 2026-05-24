@@ -9,6 +9,7 @@ order: 2
 draft: false
 
 title: 'Estructuras metálicas'
+internalTitle: 'Estructuras metálicas'
 
 description: Fabricación e instalación de pérgolas, porches, marquesinas, cocheras, cerramientos, vigas y refuerzos estructurales.
 

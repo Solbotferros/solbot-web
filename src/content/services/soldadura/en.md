@@ -9,6 +9,7 @@ order: 1
 draft: false
 
 title: 'Welding Services'
+internalTitle: 'Soldadura'
 
 description: Structural welding, metal repairs and replacement of rusted elements.
 

@@ -9,6 +9,7 @@ order: 1
 draft: false
 
 title: 'Servicios de soldadura'
+internalTitle: 'Soldadura'
 
 description: Soldadura estructural, reparaciones metálicas y sustitución de elementos oxidados.
 

@@ -9,6 +9,7 @@ order: 2
 draft: false
 
 title: 'Estructures metàl·liques'
+internalTitle: 'Estructuras metálicas'
 
 description: Fabricació i instal·lació de pèrgoles, porxos, marquesines, coberts, tancaments, bigues i reforços estructurals.
 

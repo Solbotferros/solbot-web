@@ -9,6 +9,7 @@ order: 4
 draft: false
 
 title: 'Mobiliari metàl·lic'
+internalTitle: 'Mobiliario metálico'
 
 description: Mobles de disseny en ferro i fusta, mobiliari per a hostaleria, prestatgeries, separadors, barbacoes i cartelleria metàl·lica.
 

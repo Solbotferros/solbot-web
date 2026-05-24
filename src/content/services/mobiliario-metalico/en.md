@@ -9,6 +9,7 @@ order: 4
 draft: false
 
 title: 'Metal Furniture'
+internalTitle: 'Mobiliario metálico'
 
 description: Custom furniture in iron and wood, hospitality furniture, shelving, partitions, barbecues and metal signage.
 

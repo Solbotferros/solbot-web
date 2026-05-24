@@ -9,6 +9,7 @@ order: 2
 draft: false
 
 title: 'Metal Structures'
+internalTitle: 'Estructuras metálicas'
 
 description: Design, fabrication and installation of pergolas, canopies, carports, enclosures, beams and structural reinforcements.
 
