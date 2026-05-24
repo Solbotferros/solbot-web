@@ -22,6 +22,7 @@
     "@fontsource-variable/orbitron": "^5.2.8",
     "@fontsource/rajdhani": "^5.2.7",
     "@lucide/astro": "^1.11.0",
+    "@netlify/blobs": "^10.7.8",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.3.7",
     "leaflet": "^1.9.4",
