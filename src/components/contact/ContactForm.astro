@@ -330,6 +330,8 @@ const ALLOWED_IMAGE_MIME_TYPES = [
           accept={ALLOWED_IMAGE_MIME_TYPES.join(',')}
           multiple
           data-max-files={MAX_IMAGES}
+          data-max-total-size-mb={MAX_TOTAL_SIZE_MB}
+          data-allowed-mime-types={JSON.stringify(ALLOWED_IMAGE_MIME_TYPES)}
           data-messages={JSON.stringify(fileMessages)}
         />
 
@@ -468,7 +470,11 @@ const ALLOWED_IMAGE_MIME_TYPES = [
     removeImage: string;
   };
 
-  const maxFiles = Number(fileInput?.dataset.maxFiles ?? 6);
+  const maxFiles = Number(fileInput?.dataset.maxFiles ?? 4);
+
+  const maxTotalSizeMb = Number(fileInput?.dataset.maxTotalSizeMb ?? 10);
+
+  const allowedMimeTypes = JSON.parse(fileInput?.dataset.allowedMimeTypes ?? '[]') as string[];
 
   let selectedFiles: File[] = [];
 
@@ -568,14 +574,30 @@ const ALLOWED_IMAGE_MIME_TYPES = [
     });
   };
 
-  fileInput?.addEventListener('change', () => {
-    const incomingFiles = Array.from(fileInput.files ?? []);
+  const handleIncomingFiles = (incomingFiles: File[]) => {
+    const invalidFiles = incomingFiles.filter((file) => !allowedMimeTypes.includes(file.type));
 
-    const invalidFiles = incomingFiles.filter((file) => !file.type.startsWith('image/'));
+    const validFiles = incomingFiles.filter((file) => allowedMimeTypes.includes(file.type));
 
-    const validFiles = incomingFiles.filter((file) => file.type.startsWith('image/'));
+    const nextFiles = [...selectedFiles, ...validFiles];
+
+    const uniqueFiles = nextFiles.filter(
+      (file, index, self) =>
+        index ===
+        self.findIndex(
+          (f) =>
+            f.name === file.name && f.size === file.size && f.lastModified === file.lastModified,
+        ),
+    );
+
+    const limitedFiles = uniqueFiles.slice(0, maxFiles);
+
+    const totalSize = limitedFiles.reduce((sum, file) => sum + file.size, 0);
 
     if (fileError) {
+      fileError.classList.add('hidden');
+      fileError.textContent = '';
+
       if (invalidFiles.length > 0) {
         fileError.textContent =
           invalidFiles.length === 1
@@ -583,34 +605,35 @@ const ALLOWED_IMAGE_MIME_TYPES = [
             : interpolateClient(fileMessages.invalidMany, { count: invalidFiles.length });
 
         fileError.classList.remove('hidden');
-      } else {
-        fileError.classList.add('hidden');
-        fileError.textContent = '';
+      }
+
+      if (uniqueFiles.length > maxFiles) {
+        fileError.textContent = interpolateClient(fileMessages.maxExceeded, {
+          max: maxFiles,
+        });
+
+        fileError.classList.remove('hidden');
+      }
+
+      if (totalSize > maxTotalSizeMb * 1024 * 1024) {
+        fileError.textContent = `Las imágenes no pueden superar ${maxTotalSizeMb} MB en total.`;
+        fileError.classList.remove('hidden');
+
+        syncFileInput();
+        renderFileFeedback();
+
+        return;
       }
     }
 
-    const nextFiles = [...selectedFiles, ...validFiles];
-
-    if (fileError && nextFiles.length > maxFiles) {
-      fileError.textContent = interpolateClient(fileMessages.maxExceeded, {
-        max: maxFiles,
-      });
-      fileError.classList.remove('hidden');
-    }
-
-    selectedFiles = nextFiles
-      .filter(
-        (file, index, self) =>
-          index ===
-          self.findIndex(
-            (f) =>
-              f.name === file.name && f.size === file.size && f.lastModified === file.lastModified,
-          ),
-      )
-      .slice(0, maxFiles);
+    selectedFiles = limitedFiles;
 
     syncFileInput();
     renderFileFeedback();
+  };
+
+  fileInput?.addEventListener('change', () => {
+    handleIncomingFiles(Array.from(fileInput.files ?? []));
   });
 
   fileList?.addEventListener('click', (event) => {
@@ -644,48 +667,7 @@ const ALLOWED_IMAGE_MIME_TYPES = [
   fileDropzone?.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
-
-    const invalidFiles = droppedFiles.filter((file) => !file.type.startsWith('image/'));
-
-    const validFiles = droppedFiles.filter((file) => file.type.startsWith('image/'));
-
-    if (fileError) {
-      if (invalidFiles.length > 0) {
-        fileError.textContent =
-          invalidFiles.length === 1
-            ? fileMessages.invalidOne
-            : interpolateClient(fileMessages.invalidMany, { count: invalidFiles.length });
-
-        fileError.classList.remove('hidden');
-      } else {
-        fileError.classList.add('hidden');
-        fileError.textContent = '';
-      }
-    }
-
-    const nextFiles = [...selectedFiles, ...validFiles];
-
-    if (fileError && nextFiles.length > maxFiles) {
-      fileError.textContent = interpolateClient(fileMessages.maxExceeded, {
-        max: maxFiles,
-      });
-      fileError.classList.remove('hidden');
-    }
-
-    selectedFiles = nextFiles
-      .filter(
-        (file, index, self) =>
-          index ===
-          self.findIndex(
-            (f) =>
-              f.name === file.name && f.size === file.size && f.lastModified === file.lastModified,
-          ),
-      )
-      .slice(0, maxFiles);
-
-    syncFileInput();
-    renderFileFeedback();
+    handleIncomingFiles(Array.from(event.dataTransfer?.files ?? []));
   });
 
   // Email submit
@@ -724,7 +706,8 @@ const ALLOWED_IMAGE_MIME_TYPES = [
       });
 
       if (!response.ok) {
-        throw new Error();
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.error ?? 'Contact request failed');
       }
 
       contactForm.reset();
@@ -736,7 +719,7 @@ const ALLOWED_IMAGE_MIME_TYPES = [
 
       showToast('success', submitMessages.success);
     } catch (error) {
-      console.error(error);
+      console.error('Contact form submission failed', error);
 
       showToast('error', submitMessages.error);
     } finally {
