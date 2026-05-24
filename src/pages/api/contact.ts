@@ -16,6 +16,42 @@ const ALLOWED_IMAGE_MIME_TYPES = [
   'image/heif',
 ];
 
+const ALLOWED_IMAGE_EXTENSIONS = [
+  '.jpg',
+  '.jpeg',
+  '.jfif',
+  '.pjpeg',
+  '.pjp',
+  '.png',
+  '.webp',
+  '.heic',
+  '.heif',
+];
+
+const isAllowedImageFile = (file: File) => {
+  const fileName = file.name.toLowerCase();
+
+  return (
+    ALLOWED_IMAGE_MIME_TYPES.includes(file.type) ||
+    ALLOWED_IMAGE_EXTENSIONS.some((extension) => fileName.endsWith(extension))
+  );
+};
+
+const getContentType = (file: File) => {
+  if (file.type) return file.type;
+
+  const name = file.name.toLowerCase();
+
+  if (name.endsWith('.heic')) return 'image/heic';
+  if (name.endsWith('.heif')) return 'image/heif';
+  if (name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.jfif'))
+    return 'image/jpeg';
+  if (name.endsWith('.png')) return 'image/png';
+  if (name.endsWith('.webp')) return 'image/webp';
+
+  return 'application/octet-stream';
+};
+
 const MAX_FIELD_LENGTHS = {
   name: 100,
   location: 150,
@@ -117,17 +153,10 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const invalidFiles = files.filter((file) => !ALLOWED_IMAGE_MIME_TYPES.includes(file.type));
+  const invalidFiles = files.filter((file) => !isAllowedImageFile(file));
 
   if (invalidFiles.length > 0) {
-    return Response.json(
-      {
-        error: 'Invalid file type',
-      },
-      {
-        status: 400,
-      },
-    );
+    return Response.json({ error: 'Invalid file type' }, { status: 400 });
   }
 
   const submittedAt = new Date().toLocaleString('es-ES', {
@@ -174,6 +203,7 @@ ${accessConditions.length ? accessConditions.map((x) => `- ${x}`).join('\n') : '
             return {
               filename: file.name,
               content: buffer.toString('base64'),
+              contentType: getContentType(file),
             };
           }),
         )

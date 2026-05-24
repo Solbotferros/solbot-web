@@ -33,6 +33,18 @@ const ALLOWED_IMAGE_MIME_TYPES = [
   'image/heic',
   'image/heif',
 ];
+
+const ALLOWED_IMAGE_EXTENSIONS = [
+  '.jpg',
+  '.jpeg',
+  '.jfif',
+  '.pjpeg',
+  '.pjp',
+  '.png',
+  '.webp',
+  '.heic',
+  '.heif',
+];
 ---
 
 <section class="px-4 pb-20 md:pb-24">
@@ -325,6 +337,7 @@ const ALLOWED_IMAGE_MIME_TYPES = [
           data-max-files={MAX_IMAGES}
           data-max-total-size-mb={MAX_TOTAL_SIZE_MB}
           data-allowed-mime-types={JSON.stringify(ALLOWED_IMAGE_MIME_TYPES)}
+          data-allowed-extensions={JSON.stringify(ALLOWED_IMAGE_EXTENSIONS)}
           data-messages={JSON.stringify(fileMessages)}
         />
 
@@ -468,6 +481,16 @@ const ALLOWED_IMAGE_MIME_TYPES = [
   const maxTotalSizeMb = Number(fileInput?.dataset.maxTotalSizeMb ?? 10);
 
   const allowedMimeTypes = JSON.parse(fileInput?.dataset.allowedMimeTypes ?? '[]') as string[];
+  const allowedExtensions = JSON.parse(fileInput?.dataset.allowedExtensions ?? '[]') as string[];
+
+  const isAllowedFile = (file: File) => {
+    const fileName = file.name.toLowerCase();
+
+    return (
+      allowedMimeTypes.includes(file.type) ||
+      allowedExtensions.some((extension) => fileName.endsWith(extension))
+    );
+  };
 
   let selectedFiles: File[] = [];
 
@@ -568,9 +591,9 @@ const ALLOWED_IMAGE_MIME_TYPES = [
   };
 
   const handleIncomingFiles = (incomingFiles: File[]) => {
-    const invalidFiles = incomingFiles.filter((file) => !allowedMimeTypes.includes(file.type));
+    const invalidFiles = incomingFiles.filter((file) => !isAllowedFile(file));
 
-    const validFiles = incomingFiles.filter((file) => allowedMimeTypes.includes(file.type));
+    const validFiles = incomingFiles.filter((file) => isAllowedFile(file));
 
     const nextFiles = [...selectedFiles, ...validFiles];
 
@@ -625,10 +648,6 @@ const ALLOWED_IMAGE_MIME_TYPES = [
 
     syncFileInput();
     renderFileFeedback();
-
-    if (fileInput) {
-      fileInput.value = '';
-    }
   };
 
   fileInput?.addEventListener('change', () => {
