@@ -28,11 +28,17 @@ const fileMessages = {
   removeImage: formTranslations.files.removeImage,
 };
 
+const submitFeedbackMessages = formTranslations.submit.feedback;
+
 const MAX_IMAGES = 6;
 ---
 
 <section class="px-4 pb-20 md:pb-24">
-  <form class="border-border bg-surface rounded-3xl border p-6 md:p-8">
+  <form
+    id="contact-form"
+    data-submit-messages={JSON.stringify(submitFeedbackMessages)}
+    class="border-border bg-surface rounded-3xl border p-6 md:p-8"
+  >
     <div>
       <p class="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
         {formTranslations.eyebrow}
@@ -330,13 +336,27 @@ const MAX_IMAGES = 6;
 
         <button
           type="submit"
+          data-submit-button
           class="bg-primary hover:bg-primary-hover text-on-primary inline-flex h-12 min-w-[18ch] cursor-pointer items-center justify-center rounded-xl px-8 text-sm font-semibold transition-colors"
         >
-          {formTranslations.submit.label}
+          <span data-submit-label>{formTranslations.submit.label}</span>
         </button>
       </div>
     </div>
   </form>
+  <div
+    id="toast"
+    class="pointer-events-none fixed right-6 bottom-6 z-50 translate-y-2 opacity-0 transition-all duration-300"
+  >
+    <div
+      id="toast-content"
+      class="border-border bg-surface-elevated flex max-w-sm items-start gap-3 rounded-2xl border px-5 py-4 shadow-2xl"
+    >
+      <div id="toast-indicator" class="my-auto size-2 shrink-0 rounded-full bg-green-500"></div>
+
+      <p id="toast-message" class="text-sm leading-6 font-medium"></p>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -352,6 +372,37 @@ const MAX_IMAGES = 6;
 </style>
 
 <script>
+  // Toast
+  const toast = document.querySelector<HTMLElement>('#toast');
+  const toastMessage = document.querySelector<HTMLElement>('#toast-message');
+  const toastIndicator = document.querySelector<HTMLElement>('#toast-indicator');
+
+  let toastTimeout: number | undefined;
+
+  const showToast = (type: 'success' | 'error', message: string) => {
+    if (!toast || !toastMessage || !toastIndicator) return;
+
+    window.clearTimeout(toastTimeout);
+
+    toastMessage.textContent = message;
+
+    toastIndicator.classList.remove('bg-green-500', 'bg-red-500');
+
+    toastIndicator.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+
+    toast.classList.remove('pointer-events-none', 'translate-y-2', 'opacity-0');
+
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    toastTimeout = window.setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+
+      toast.classList.add('translate-y-2', 'opacity-0', 'pointer-events-none');
+    }, 5000);
+  };
+
+  // Forms ---
+
   const serviceRadios = document.querySelectorAll<HTMLInputElement>('input[name="service"]');
   const otherRadio = document.querySelector<HTMLInputElement>('[data-service-other-radio]');
   const otherField = document.querySelector<HTMLElement>('#service-other-field');
@@ -620,5 +671,65 @@ const MAX_IMAGES = 6;
 
     syncFileInput();
     renderFileFeedback();
+  });
+
+  // Email submit
+  const contactForm = document.querySelector('#contact-form') as HTMLFormElement | null;
+  const submitButton = document.querySelector<HTMLButtonElement>('[data-submit-button]');
+  const submitLabel = document.querySelector<HTMLElement>('[data-submit-label]');
+
+  const submitMessages = JSON.parse(contactForm?.dataset.submitMessages ?? '{}') as {
+    loading: string;
+    success: string;
+    error: string;
+  };
+
+  const defaultSubmitLabel = submitLabel?.textContent ?? '';
+
+  contactForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    submitButton?.setAttribute('disabled', 'true');
+
+    if (submitLabel) {
+      submitLabel.textContent = submitMessages.loading;
+    }
+
+    try {
+      const formData = new FormData(contactForm);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      contactForm.reset();
+
+      selectedFiles = [];
+      syncFileInput();
+      renderFileFeedback();
+      updateOtherField();
+
+      showToast('success', submitMessages.success);
+    } catch (error) {
+      console.error(error);
+
+      showToast('error', submitMessages.error);
+    } finally {
+      submitButton?.removeAttribute('disabled');
+
+      if (submitLabel) {
+        submitLabel.textContent = defaultSubmitLabel;
+      }
+    }
   });
 </script>
