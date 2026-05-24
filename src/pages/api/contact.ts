@@ -1,9 +1,9 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-// import { Resend } from 'resend';
+import { Resend } from 'resend';
 
-// const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
@@ -15,9 +15,7 @@ export const POST: APIRoute = async ({ request }) => {
   const message = formData.get('message')?.toString().trim() ?? '';
 
   if (!name || !location || !phone || !message) {
-    return new Response(JSON.stringify({ error: 'Missing required fields' }), {
-      status: 400,
-    });
+    return Response.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
   const selectedService = formData.get('service')?.toString() ?? '';
@@ -36,7 +34,7 @@ Teléfono: ${phone}
 Email: ${email || 'No indicado'}
 
 Servicio:
-${service}
+${service || 'No indicado'}
 
 Mensaje:
 ${message}
@@ -54,23 +52,18 @@ Imágenes:
 ${files.length ? files.map((file) => `- ${file.name}`).join('\n') : 'No adjuntadas'}
 `.trim();
 
-  console.log(emailMessage);
-
-  // const { error } = await resend.emails.send({
-  //   from: 'Solbot Web <contacto@tudominio.com>',
-  //   to: ['destino@tudominio.com'],
-  //   subject: `Nueva solicitud de presupuesto - ${name}`,
-  //   text: emailMessage,
-  //   replyTo: email || undefined,
-  // });
-
-  // if (error) {
-  //   return new Response(JSON.stringify({ error: 'Email send failed' }), {
-  //     status: 500,
-  //   });
-  // }
-
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
+  const { error } = await resend.emails.send({
+    from: import.meta.env.CONTACT_FROM_EMAIL,
+    to: [import.meta.env.CONTACT_TO_EMAIL],
+    subject: `Nueva solicitud de presupuesto - ${name}`,
+    text: emailMessage,
+    replyTo: email || undefined,
   });
+
+  if (error) {
+    console.error(error);
+    return Response.json({ error: 'Email send failed' }, { status: 500 });
+  }
+
+  return Response.json({ ok: true }, { status: 200 });
 };
