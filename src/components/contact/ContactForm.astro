@@ -338,6 +338,12 @@ const ALLOWED_IMAGE_MIME_TYPES = [
         <p data-file-error class="mt-4 hidden text-sm text-red-600/80"></p>
       </div>
 
+      <div class="hidden" aria-hidden="true">
+        <label for="website">Website</label>
+
+        <input id="website" type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+
       <div class="mt-8 flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-text-muted text-sm leading-6">
           {formTranslations.submit.note}

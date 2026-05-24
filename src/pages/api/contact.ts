@@ -40,6 +40,15 @@ export const POST: APIRoute = async ({ request }) => {
   // Parse form data and validate fields
   const formData = await request.formData();
 
+  // Check honeypot field to prevent spam
+  const website = formData.get('website')?.toString().trim();
+
+  if (website) {
+    return Response.json({ ok: true }, { status: 200 });
+  }
+
+  // Real validation of form fields
+
   const name = formData.get('name')?.toString().trim() ?? '';
   const location = formData.get('location')?.toString().trim() ?? '';
   const phone = formData.get('phone')?.toString().trim() ?? '';
