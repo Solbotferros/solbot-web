@@ -1,6 +1,5 @@
 const businessInfo = {
-  //TODO: Revisar el CIF/NIF correcto de la empresa
-  taxId: 'REVISAR-12345678A',
+  taxId: 'B22794697',
 
   foundingDate: '2023-07-10',
   name: 'Solbot Ferros, S.L.',
@@ -8,7 +7,7 @@ const businessInfo = {
   description:
     'Empresa especializada en carpintería metálica, estructuras metálicas y soldadura profesional para proyectos residenciales, comerciales e industriales en Barcelona, Maresme y Vallès.',
 
-  logo: '/images/brand/logo.png',
+  logo: '/brand/logo.png',
   image: '/images/og-solbot-ferros.jpg',
 
   address: 'Camí del Crist, 08339 Vilassar de Mar, Barcelona, España',
