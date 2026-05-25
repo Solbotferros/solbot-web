@@ -32,6 +32,10 @@ export const commonTranslations = {
     },
     dayRangeConnector: 'a',
     closed: 'Cerrado',
+    seo: {
+      defaultDescription:
+        'Estructuras metálicas, carpintería metálica y soldadura profesional en Barcelona, Maresme y Vallès.',
+    },
   },
 
   ca: {
@@ -66,6 +70,10 @@ export const commonTranslations = {
     },
     dayRangeConnector: 'a',
     closed: 'Tancat',
+    seo: {
+      defaultDescription:
+        'Estructures metàl·liques, fusteria metàl·lica i soldadura professional a Barcelona, Maresme i Vallès.',
+    },
   },
 
   en: {
@@ -100,5 +108,9 @@ export const commonTranslations = {
     },
     dayRangeConnector: 'to',
     closed: 'Closed',
+    seo: {
+      defaultDescription:
+        'Custom metal structures, metal carpentry and professional welding in Barcelona, Maresme and Vallès.',
+    },
   },
 } as const;
