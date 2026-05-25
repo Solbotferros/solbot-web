@@ -6,6 +6,12 @@ export const languages = {
   en: 'English',
 };
 
+export const localeRegions = {
+  es: 'ES',
+  ca: 'ES',
+  en: 'GB',
+} as const;
+
 /** Rutas a las imágenes de banderas por idioma */
 export const languageFlags = {
   es: '/images/flags/es.svg',
