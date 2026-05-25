@@ -7,19 +7,29 @@ import '@styles/global.css';
 
 import type { Language } from '@lib/i18n/types';
 
-import { translatePathname } from '@lib/i18n/utils';
+import { translatePathname, useTranslations } from '@lib/i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
   breadcrumbs?: {
     label: string;
     href?: string;
   }[];
 }
-const { title, description, breadcrumbs } = Astro.props;
+const {
+  title,
+  description,
+  image = '/images/og-solbot-ferros.jpg',
+  type = 'website',
+  noindex = false,
+  breadcrumbs,
+} = Astro.props;
 
-import { locales, defaultLang } from '@lib/i18n/locales';
+import { locales, defaultLang, localeRegions } from '@lib/i18n/locales';
 
 import { ensureRouterReady } from '@lib/i18n/router';
 await ensureRouterReady();
@@ -27,19 +37,152 @@ await ensureRouterReady();
 import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 
 const lang = Astro.currentLocale as Language;
-
-// Add Solbot Ferros only if it is not included in the title to avoid redundancy in SEO titles
-const fullTitle = title?.includes(businessInfo.shortName)
-  ? title
-  : `${title} ${title ? '|' : ''} ${businessInfo.shortName}`;
+const { t } = useTranslations(lang);
 
 // SEO for multilingual sites: Generate alternate URLs for each locale
 const currentPath = Astro.url.pathname;
 const siteUrl = Astro.site?.origin ?? 'https://solbot-ferros.es';
+const currentUrl = `${siteUrl}${currentPath}`;
+const businessName = businessInfo.shortName ?? 'Solbot Ferros';
+const socialImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+const phoneNumber = `${businessInfo.phone.prefix}${businessInfo.phone.number}`;
+
+const absoluteUrl = (path: string) => {
+  return path.startsWith('http') ? path : `${siteUrl}${path}`;
+};
+
+const dayToSchemaDay: Record<string, string> = {
+  monday: 'Monday',
+  tuesday: 'Tuesday',
+  wednesday: 'Wednesday',
+  thursday: 'Thursday',
+  friday: 'Friday',
+  saturday: 'Saturday',
+  sunday: 'Sunday',
+};
+
+const openingHoursSpecification = businessInfo.openingHours.flatMap((group) =>
+  group.intervals.map((interval) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: group.days.map((day) => dayToSchemaDay[day] ?? day),
+    opens: interval.opens,
+    closes: interval.closes,
+  })),
+);
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'HomeAndConstructionBusiness'],
+  '@id': `${siteUrl}/#localbusiness`,
+
+  name: businessInfo.shortName,
+  legalName: businessInfo.name,
+  taxID: businessInfo.taxId,
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'CIF',
+    value: businessInfo.taxId,
+  },
+
+  url: siteUrl,
+  description: businessInfo.description,
+
+  logo: absoluteUrl(businessInfo.logo),
+  image: absoluteUrl(businessInfo.image),
+
+  telephone: phoneNumber,
+  email: businessInfo.email,
+  priceRange: businessInfo.priceRange,
+
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Camí del Crist',
+    postalCode: '08339',
+    addressLocality: 'Vilassar de Mar',
+    addressRegion: 'Barcelona',
+    addressCountry: 'ES',
+  },
+
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: businessInfo.lat,
+    longitude: businessInfo.lng,
+  },
+
+  hasMap: businessInfo.googleMapsUrl,
+
+  areaServed: businessInfo.areaServed.map((area) => ({
+    '@type': 'AdministrativeArea',
+    name: area,
+  })),
+
+  knowsAbout: businessInfo.services,
+
+  openingHoursSpecification,
+
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: phoneNumber,
+    contactType: 'customer service',
+    areaServed: 'ES',
+    availableLanguage: businessInfo.languages,
+  },
+
+  foundingDate: businessInfo.foundingDate,
+
+  currenciesAccepted: 'EUR',
+  paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+
+  sameAs: [businessInfo.googleBusinessProfile, businessInfo.socialMedia.instagram.url].filter(
+    Boolean,
+  ),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  name: businessName,
+  url: siteUrl,
+  inLanguage: lang,
+  publisher: {
+    '@id': `${siteUrl}/#localbusiness`,
+  },
+};
+
+const breadcrumbSchema =
+  breadcrumbs && breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.label,
+          item: item.href ? `${siteUrl}${item.href}` : currentUrl,
+        })),
+      }
+    : null;
+
+// Add Solbot Ferros only if it is not included in the title to avoid redundancy in SEO titles
+const fullTitle =
+  title && title.includes(businessName)
+    ? title
+    : title
+      ? `${title} | ${businessName}`
+      : businessName;
+const metaDescription =
+  description ??
+  t('seo.defaultDescription') ??
+  'Estructuras metálicas, carpintería metálica y soldadura profesional en Barcelona, Maresme y Vallès.';
+
 // Build alternate URLs by translating the current path for each locale
 const alternateUrls = Object.fromEntries(
   locales.map((l) => [l, `${siteUrl}${translatePathname(currentPath, l)}`]),
 );
+
+// Map our locales to Open Graph locale format (e.g., 'en' -> 'en_GB')
+const localeToOgLocale = (locale: Language) => `${locale}_${localeRegions[locale]}`;
 ---
 
 <!doctype html>
@@ -52,7 +195,51 @@ const alternateUrls = Object.fromEntries(
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- SEO: Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={alternateUrls[lang]} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content={`${businessName} - estructuras metálicas y soldadura en Barcelona`}
+    />
+    <meta property="og:site_name" content={businessName} />
+    <meta property="og:locale" content={localeToOgLocale(lang)} />
+
+    {
+      locales
+        .filter((locale) => locale !== lang)
+        .map((locale) => <meta property="og:locale:alternate" content={localeToOgLocale(locale)} />)
+    }
+
+    <!-- SEO: Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta
+      name="twitter:image:alt"
+      content={`${businessName} - estructuras metálicas y soldadura en Barcelona`}
+    />
+
+    <!-- SEO: LocalBusiness structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+    <!-- SEO: WebSite structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+    {
+      breadcrumbSchema && (
+        <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+      )
+    }
 
     <!-- SEO: canonical link -->
     <link rel="canonical" href={alternateUrls[lang]} />
@@ -62,6 +249,8 @@ const alternateUrls = Object.fromEntries(
 
     <!-- SEO: x-default alternate -->
     <link rel="alternate" hreflang="x-default" href={alternateUrls[defaultLang]} />
+
+    <slot name="head" />
 
     <!-- SCRIPT TEMA -->
     <script is:inline>
