@@ -41,8 +41,8 @@
   --color-on-header: var(--color-text);
   --color-header-border: color-mix(in oklab, var(--color-border) 70%, transparent);
 
-  --color-scrim: color-mix(in oklab, black 18%, transparent);
-  --color-on-scrim: oklch(0.97 0.004 85);
+  --color-scrim: color-mix(in oklab, black 72%, transparent);
+  --color-on-scrim: oklch(0.98 0.004 85);
 
   --color-glow: color-mix(in oklab, var(--color-brand) 30%, transparent);
   --color-focus: color-mix(in oklab, var(--color-brand) 45%, white 55%);
@@ -98,8 +98,8 @@
     --color-on-header: var(--color-text);
     --color-header-border: color-mix(in oklab, var(--color-border) 70%, transparent);
 
-    --color-scrim: color-mix(in oklab, black 18%, transparent);
-    --color-on-scrim: oklch(0.97 0.004 85);
+    --color-scrim: color-mix(in oklab, black 72%, transparent);
+    --color-on-scrim: oklch(0.98 0.004 85);
 
     --color-glow: color-mix(in oklab, var(--color-brand) 30%, transparent);
     --color-focus: color-mix(in oklab, var(--color-brand) 40%, white 60%);
@@ -156,8 +156,8 @@
     --color-on-header: var(--color-text);
     --color-header-border: color-mix(in oklab, var(--color-brand) 16%, transparent);
 
-    --color-scrim: color-mix(in oklab, black 45%, transparent);
-    --color-on-scrim: oklch(0.97 0.004 85);
+    --color-scrim: color-mix(in oklab, black 78%, transparent);
+    --color-on-scrim: oklch(0.98 0.004 85);
 
     --color-glow: color-mix(in oklab, var(--color-brand) 38%, transparent);
     --color-focus: color-mix(in oklab, var(--color-brand) 50%, white 20%);

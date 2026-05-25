@@ -36,6 +36,12 @@ export const commonTranslations = {
       defaultDescription:
         'Estructuras metálicas, carpintería metálica y soldadura profesional en Barcelona, Maresme y Vallès.',
     },
+    gallery: {
+      open: 'Abrir galería',
+      close: 'Cerrar galería',
+      previous: 'Imagen anterior',
+      next: 'Siguiente imagen',
+    },
   },
 
   ca: {
@@ -74,6 +80,12 @@ export const commonTranslations = {
       defaultDescription:
         'Estructures metàl·liques, fusteria metàl·lica i soldadura professional a Barcelona, Maresme i Vallès.',
     },
+    gallery: {
+      open: 'Obrir galeria',
+      close: 'Tancar galeria',
+      previous: 'Imatge anterior',
+      next: 'Següent imatge',
+    },
   },
 
   en: {
@@ -111,6 +123,12 @@ export const commonTranslations = {
     seo: {
       defaultDescription:
         'Custom metal structures, metal carpentry and professional welding in Barcelona, Maresme and Vallès.',
+    },
+    gallery: {
+      open: 'Open gallery',
+      close: 'Close gallery',
+      previous: 'Previous image',
+      next: 'Next image',
     },
   },
 } as const;

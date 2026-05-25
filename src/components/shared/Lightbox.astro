@@ -1,0 +1,210 @@
+---
+import { ChevronLeft, ChevronRight, X } from '@lucide/astro';
+import { useTranslations, type Language } from '@lib/i18n/utils';
+
+const { t } = useTranslations(Astro.currentLocale as Language);
+
+interface LightboxImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  id?: string;
+  images: LightboxImage[];
+  closeLabel?: string;
+  previousLabel?: string;
+  nextLabel?: string;
+}
+
+const {
+  id = 'lightbox',
+  images,
+  closeLabel = t('gallery.close'),
+  previousLabel = t('gallery.previous'),
+  nextLabel = t('gallery.next'),
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class="bg-scrim fixed inset-0 z-100 hidden px-4 py-6 backdrop-blur-sm md:px-8"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  data-lightbox-root={id}
+>
+  <button
+    type="button"
+    class="text-on-scrim bg-on-scrim/8 hover:bg-on-scrim/16 border-on-scrim/15 absolute top-4 right-4 z-20 grid size-11 cursor-pointer place-items-center rounded-full border transition"
+    data-lightbox-close
+    aria-label={closeLabel}
+  >
+    <X class="h-6 w-6" />
+  </button>
+
+  <button
+    type="button"
+    class="text-on-scrim bg-on-scrim/10 hover:bg-on-scrim/20 border-on-scrim/15 absolute bottom-6 left-6 z-20 grid size-11 cursor-pointer place-items-center rounded-full border transition md:top-1/2 md:bottom-auto md:left-8 md:-translate-y-1/2"
+    data-lightbox-prev
+    aria-label={previousLabel}
+  >
+    <ChevronLeft class="h-6 w-6" />
+  </button>
+
+  <button
+    type="button"
+    class="text-on-scrim bg-on-scrim/10 hover:bg-on-scrim/20 border-on-scrim/15 absolute right-6 bottom-6 z-20 grid size-11 cursor-pointer place-items-center rounded-full border transition md:top-1/2 md:right-8 md:bottom-auto md:-translate-y-1/2"
+    data-lightbox-next
+    aria-label={nextLabel}
+  >
+    <ChevronRight class="h-6 w-6" />
+  </button>
+
+  <div
+    class="flex h-full flex-col items-center justify-center gap-3 pt-4 pb-8"
+    data-lightbox-backdrop
+  >
+    <img
+      data-lightbox-image
+      src=""
+      alt=""
+      class="max-h-[80vh] max-w-full rounded-2xl object-contain shadow-2xl"
+    />
+
+    <p data-lightbox-caption class="text-on-scrim/80 max-w-3xl text-center text-sm"></p>
+
+    <p
+      data-lightbox-counter
+      class="text-on-scrim/50 text-xs font-semibold tracking-[0.18em] uppercase"
+    >
+    </p>
+  </div>
+</div>
+
+<script define:vars={{ id, images }}>
+  const root = document.querySelector(`[data-lightbox-root="${id}"]`);
+
+  if (root) {
+    const image = root.querySelector('[data-lightbox-image]');
+    const caption = root.querySelector('[data-lightbox-caption]');
+    const counter = root.querySelector('[data-lightbox-counter]');
+
+    const closeButton = root.querySelector('[data-lightbox-close]');
+    const prevButton = root.querySelector('[data-lightbox-prev]');
+    const nextButton = root.querySelector('[data-lightbox-next]');
+    const backdrop = root.querySelector('[data-lightbox-backdrop]');
+
+    const triggers = document.querySelectorAll(`[data-lightbox-trigger="${id}"]`);
+
+    let currentIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const hasMultipleImages = images.length > 1;
+
+    const updateImage = () => {
+      const currentImage = images[currentIndex];
+
+      if (!currentImage) return;
+
+      image.src = currentImage.src;
+      image.alt = currentImage.alt;
+      caption.textContent = currentImage.alt;
+      counter.textContent = `${currentIndex + 1} / ${images.length}`;
+
+      prevButton.style.display = hasMultipleImages ? '' : 'none';
+      nextButton.style.display = hasMultipleImages ? '' : 'none';
+    };
+
+    const openLightbox = (index) => {
+      currentIndex = index;
+      updateImage();
+
+      root.classList.remove('hidden');
+      root.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+
+      closeButton.focus();
+    };
+
+    const closeLightbox = () => {
+      root.classList.add('hidden');
+      root.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+
+      image.src = '';
+      image.alt = '';
+    };
+
+    const showPrevious = () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateImage();
+    };
+
+    const showNext = () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateImage();
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const index = Number(trigger.dataset.lightboxIndex ?? 0);
+        openLightbox(index);
+      });
+    });
+
+    closeButton.addEventListener('click', closeLightbox);
+    prevButton.addEventListener('click', showPrevious);
+    nextButton.addEventListener('click', showNext);
+
+    backdrop.addEventListener('click', (event) => {
+      if (event.target === backdrop) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (root.classList.contains('hidden')) return;
+
+      if (event.key === 'Escape') {
+        closeLightbox();
+      }
+
+      if (event.key === 'ArrowLeft' && hasMultipleImages) {
+        showPrevious();
+      }
+
+      if (event.key === 'ArrowRight' && hasMultipleImages) {
+        showNext();
+      }
+    });
+
+    root.addEventListener(
+      'touchstart',
+      (event) => {
+        touchStartX = event.changedTouches[0].screenX;
+      },
+      { passive: true },
+    );
+
+    root.addEventListener(
+      'touchend',
+      (event) => {
+        touchEndX = event.changedTouches[0].screenX;
+
+        const swipeDistance = touchEndX - touchStartX;
+        const minimumSwipeDistance = 50;
+
+        if (Math.abs(swipeDistance) < minimumSwipeDistance || !hasMultipleImages) return;
+
+        if (swipeDistance > 0) {
+          showPrevious();
+        } else {
+          showNext();
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>

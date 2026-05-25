@@ -6,10 +6,11 @@ import type { translations } from '@lib/i18n/translations';
 import type { Language } from '@lib/i18n/types';
 import { useTranslatedPath, useTranslations } from '@lib/i18n/utils';
 
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
+import Lightbox from '@components/shared/Lightbox.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import { ensureRouterReady } from '@lib/i18n/router';
 await ensureRouterReady();
@@ -43,6 +44,25 @@ const breadcrumbs = [
   { label: t('nav.projects'), href: trPath('/projects/') },
   { label: title },
 ];
+
+const galleryItems = gallery ?? [];
+
+const lightboxId = `project-lightbox-${project.id}`;
+
+const lightboxImages = await Promise.all(
+  [{ image: cover, alt: coverAlt }, ...galleryItems].map(async (item) => {
+    const optimizedImage = await getImage({
+      src: item.image,
+      width: 1800,
+      format: 'webp',
+    });
+
+    return {
+      src: optimizedImage.src,
+      alt: item.alt,
+    };
+  }),
+);
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
@@ -90,12 +110,30 @@ const breadcrumbs = [
           </div>
         </dl>
 
-        <Image
-          src={cover}
-          alt={coverAlt}
-          class="aspect-4/3 max-h-170 w-full rounded-3xl object-cover"
-          loading="eager"
-        />
+        <button
+          type="button"
+          class="group relative block w-full cursor-zoom-in overflow-hidden rounded-3xl text-left"
+          data-lightbox-trigger={lightboxId}
+          data-lightbox-index="0"
+          aria-label={`Abrir imagen: ${coverAlt}`}
+        >
+          <Image
+            src={cover}
+            alt={coverAlt}
+            class="aspect-4/3 max-h-170 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            loading="eager"
+          />
+
+          <span
+            class="pointer-events-none absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/15"
+          ></span>
+
+          <span
+            class="pointer-events-none absolute right-4 bottom-4 rounded-full bg-black/70 px-4 py-2 text-sm font-semibold text-white opacity-0 transition duration-300 group-hover:opacity-100"
+          >
+            Ver galería
+          </span>
+        </button>
       </aside>
 
       <div class="prose prose-content-text max-w-none md:pt-1">
@@ -109,13 +147,27 @@ const breadcrumbs = [
           <SectionTitle titleTag="h2" title={t('projects.gallery')} />
 
           <div class="grid gap-5 sm:grid-cols-2">
-            {gallery.map((item) => (
-              <Image
-                src={item.image}
-                alt={item.alt}
-                class="aspect-4/3 w-full rounded-3xl object-cover"
-                loading="lazy"
-              />
+            {galleryItems.map((item, index) => (
+              <button
+                type="button"
+                class="group relative block cursor-zoom-in overflow-hidden rounded-3xl text-left"
+                data-lightbox-trigger={lightboxId}
+                data-lightbox-index={index + 1}
+                aria-label={`Abrir imagen: ${item.alt}`}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  class="aspect-4/3 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+
+                <span class="pointer-events-none absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/15" />
+
+                <span class="pointer-events-none absolute right-4 bottom-4 rounded-full bg-black/70 px-4 py-2 text-sm font-semibold text-white opacity-0 transition duration-300 group-hover:opacity-100">
+                  Ampliar
+                </span>
+              </button>
             ))}
           </div>
         </section>
@@ -133,4 +185,6 @@ const breadcrumbs = [
       <ContactCta />
     </div>
   </article>
+
+  <Lightbox id={lightboxId} images={lightboxImages} />
 </Layout>
