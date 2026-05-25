@@ -2,6 +2,7 @@ const businessInfo = {
   //TODO: Revisar el CIF/NIF correcto de la empresa
   taxId: 'REVISAR-12345678A',
 
+  foundingDate: '2023-07-10',
   name: 'Solbot Ferros, S.L.',
   shortName: 'Solbot Ferros',
   description:
