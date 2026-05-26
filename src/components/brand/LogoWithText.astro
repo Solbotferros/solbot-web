@@ -1,5 +1,5 @@
 ---
-import Logo from './Logo.astro';
+import TextLogo from './TextLogo.astro';
 // import { BUSINESS_INFO } from "@lib/config/business_info";
 
 export interface Props {
@@ -34,16 +34,11 @@ const logoClass = responsive ? logoSizeClasses[size] : '';
 ---
 
 <div class={`flex items-center ${className}`}>
-  <Logo class={logoClass} size={responsive ? 'xs' : size} />
+  <!-- <Logo class={logoClass} size={responsive ? 'xs' : size} /> -->
   <div>
     {
       showText && (
-        <span
-          class={`font-orbitron leading-loose font-semibold tracking-wider uppercase ${textClass}`}
-        >
-          Sol<span class="text-brand-emphasis">bot</span>
-          {/* {BUSINESS_INFO.nombre} */}
-        </span>
+        <TextLogo class={textClass} size={size} responsive={responsive} title="Solbot Ferros" />
       )
     }
   </div>
