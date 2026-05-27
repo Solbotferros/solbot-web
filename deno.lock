@@ -11,17 +11,18 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@astrojs/mdx@^5.0.3",
+        "npm:@astrojs/mdx@^5.0.6",
         "npm:@astrojs/netlify@^7.0.10",
         "npm:@fontsource-variable/inter@^5.2.8",
         "npm:@fontsource-variable/orbitron@^5.2.8",
         "npm:@fontsource/rajdhani@^5.2.7",
         "npm:@lucide/astro@^1.11.0",
+        "npm:@netlify/blobs@^10.7.8",
         "npm:@tailwindcss/typography@~0.5.19",
         "npm:@tailwindcss/vite@^4.2.2",
         "npm:@types/leaflet@^1.9.21",
         "npm:@typescript-eslint/parser@^8.58.1",
-        "npm:astro@^6.1.5",
+        "npm:astro@^6.3.7",
         "npm:eslint-plugin-astro@^1.7.0",
         "npm:eslint-plugin-jsx-a11y@^6.10.2",
         "npm:eslint@^9.39.4",
