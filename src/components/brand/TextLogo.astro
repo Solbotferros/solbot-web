@@ -4,6 +4,7 @@ export interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg';
   responsive?: boolean;
   title?: string;
+  unstyledSize?: boolean;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   size = 'md',
   responsive = true,
   title = 'Solbot Ferros',
+  unstyledSize = false,
 } = Astro.props;
 
 const sizeClasses = {
@@ -22,11 +24,11 @@ const sizeClasses = {
 
 const responsiveSizeClass = 'h-4 md:h-5 lg:h-6';
 
-const logoSizeClass = responsive ? responsiveSizeClass : sizeClasses[size];
+const logoSizeClass = unstyledSize ? '' : responsive ? responsiveSizeClass : sizeClasses[size];
 ---
 
 <svg
-  class:list={['solbot-logo block w-auto text-current', logoSizeClass, className]}
+  class:list={['solbot-logo block w-auto shrink-0 text-current', logoSizeClass, className]}
   viewBox="0 0 1190 193"
   xmlns="http://www.w3.org/2000/svg"
   role="img"

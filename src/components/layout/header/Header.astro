@@ -21,8 +21,8 @@ const { t } = useTranslations(currentLocale);
         <div
           class="header-main header-glass bg-bg-subtle relative z-110 grid grid-cols-[1fr_auto] items-center gap-8 rounded-xl px-8 py-4 shadow-xl md:grid-cols-[1fr_auto_auto] xl:grid-cols-[auto_1fr_auto]"
         >
-          <a href={trPath('/')} aria-label={t('header.logoAriaLabel')}>
-            <LogoWithText size="sm" />
+          <a href={trPath('/')} class="grid content-center" aria-label={t('header.logoAriaLabel')}>
+            <LogoWithText />
           </a>
 
           <div class="hidden justify-center xl:flex">
