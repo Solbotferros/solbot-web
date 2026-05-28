@@ -143,6 +143,42 @@ const services = defineCollection({
             .default([]),
         }),
 
+        localContext: z
+          .object({
+            title: z.string(),
+            description: z.string(),
+            points: z
+              .array(
+                z.object({
+                  label: z.string(),
+                  value: z.string(),
+                }),
+              )
+              .optional()
+              .default([]),
+          })
+          .optional(),
+
+        commonJobs: z
+          .array(
+            z.object({
+              title: z.string(),
+              description: z.string(),
+            }),
+          )
+          .optional()
+          .default([]),
+
+        faqs: z
+          .array(
+            z.object({
+              question: z.string(),
+              answer: z.string(),
+            }),
+          )
+          .optional()
+          .default([]),
+
         relatedServices: z.array(z.string()).default([]),
         relatedLocations: z.array(z.string()).default([]),
 

@@ -1,13 +1,16 @@
 ---
+import CommonJobsList from '@components/services/CommonJobsList.astro';
 import ServiceApproach from '@components/services/ServiceApproach.astro';
 import ServiceContactAside from '@components/services/ServiceContactAside.astro';
 import ServiceDetailHero from '@components/services/ServiceDetailHero.astro';
+import FaqAccordion from '@components/shared/FaqAccordion.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
 import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
+import LocalServiceContext from '@components/services/LocalServiceContext.astro';
 import { ensureRouterReady } from '@lib/i18n/router';
 await ensureRouterReady();
 
@@ -28,13 +31,35 @@ const allProjects = await getCollection('projects', (entry) =>
   entry.id.endsWith(`/${Astro.currentLocale}`),
 );
 
+const isLocalizedService = service.data.type === 'service-location';
+
+const locationLabels = {
+  barcelona: 'Barcelona',
+  maresme: 'Maresme',
+  valles: 'Vallès',
+  vilassar: 'Vilassar de Mar',
+  mataro: 'Mataró',
+} as const;
+
+const locationLabel = service.data.locationKey
+  ? locationLabels[service.data.locationKey]
+  : undefined;
+
 const relatedProjects = allProjects
   .map((project) => {
-    const score = project.data.serviceKeys.reduce((total, key) => {
+    let score = project.data.serviceKeys.reduce((total, key) => {
       if (key === service.data.serviceKey) return total + 3;
       if (service.data.relatedServices?.includes(key)) return total + 1;
       return total;
     }, 0);
+
+    if (
+      isLocalizedService &&
+      service.data.locationKey &&
+      project.data.location?.slug === service.data.locationKey
+    ) {
+      score += 3;
+    }
 
     return { project, score };
   })
@@ -67,12 +92,32 @@ const breadcrumbs = [
       <ServiceApproach approach={approach} />
     </div>
 
+    {
+      service.data.localContext && (
+        <LocalServiceContext
+          eyebrow={locationLabel}
+          title={service.data.localContext.title}
+          description={service.data.localContext.description}
+          points={service.data.localContext.points}
+        />
+      )
+    }
+
     <section class="mx-auto max-w-3xl px-6 lg:max-w-6xl lg:px-12">
       <div class="grid gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_390px]">
-        <article class="min-w-0">
+        <article class="min-w-0 space-y-14">
           <div class="prose prose-content-text max-w-none">
             <Content />
           </div>
+
+          <CommonJobsList
+            title={service.data.type === 'service-location' && locationLabel
+              ? `Trabajos habituales de ${title.toLowerCase()}`
+              : t('services.commonJobs')}
+            items={service.data.commonJobs}
+          />
+
+          <FaqAccordion title={t('services.faqTitle')} items={service.data.faqs} class="pt-6" />
         </article>
 
         <div class="mx-auto lg:sticky lg:top-32 lg:self-start">

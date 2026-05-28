@@ -1,0 +1,48 @@
+---
+import SectionTitle from '@components/shared/SectionTitle.astro';
+
+interface Job {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  items: Job[];
+  class?: string;
+}
+
+const { eyebrow, title, subtitle, items, class: className = '' } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class={`space-y-10 ${className}`}>
+      <div>
+        {eyebrow && (
+          <p class="text-primary mb-3 text-sm font-semibold tracking-wide uppercase">{eyebrow}</p>
+        )}
+
+        <SectionTitle title={title} subtitle={subtitle} />
+      </div>
+
+      <div class="space-y-8">
+        {items.map((item, index) => (
+          <article class="border-border grid gap-4 border-b pb-8 last:border-b-0 last:pb-0 sm:grid-cols-[3rem_1fr]">
+            <div class="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full text-sm leading-none font-bold">
+              {String(index + 1).padStart(2, '0')}
+            </div>
+
+            <div>
+              <h3 class="text-text text-xl font-semibold">{item.title}</h3>
+
+              <p class="text-text-muted mt-2 text-base leading-7">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
