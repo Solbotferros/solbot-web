@@ -6,10 +6,17 @@ export interface Props {
   class?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   showText?: boolean;
+  showSymbol?: boolean;
   responsive?: boolean;
 }
 
-const { class: className = '', size = 'md', showText = true, responsive = true } = Astro.props;
+const {
+  class: className = '',
+  size = 'md',
+  showText = true,
+  showSymbol = true,
+  responsive = true,
+} = Astro.props;
 
 const staticSizes = {
   xs: {
@@ -61,7 +68,7 @@ const selected = responsive ? responsiveSizes[size] : staticSizes[size];
 ---
 
 <div class={`inline-flex items-center ${selected.gap} ${className}`}>
-  <SBLogo class={selected.symbol} title="Solbot Ferros" />
+  {showSymbol && <SBLogo class={selected.symbol} title="Solbot Ferros" />}
 
   {
     showText && (
