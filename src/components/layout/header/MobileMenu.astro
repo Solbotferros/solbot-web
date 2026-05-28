@@ -19,7 +19,7 @@ const navigation = await buildNavigation(currentLocale);
 type NavTranslationsType = typeof translations.es.nav;
 const navTranslations = tn<NavTranslationsType>('nav');
 
-const services = await getCollection('services', ({ id }) => id.endsWith(`/${currentLocale}`));
+const services = navigation.find((item) => item.key === 'services')?.children || [];
 services.sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -68,12 +68,10 @@ services.sort((a, b) => a.data.order - b.data.order);
                         </li>
 
                         {services.map((service) => {
-                          const slug = getEntrySlug(service);
-
                           return (
                             <li>
                               <a
-                                href={trPath(`/servicios/${slug}`)}
+                                href={service.href}
                                 class="text-text-muted hover:text-primary block rounded-lg px-3 py-2 text-sm transition-colors"
                               >
                                 {service.data.title}

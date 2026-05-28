@@ -23,13 +23,13 @@ const displayYear =
 
 const legals = await getCollection('legal', ({ id }) => id.endsWith(`/${currentLocale}`));
 
-const services = await getCollection('services', ({ id }) => id.endsWith(`/${currentLocale}`));
-services.sort((a, b) => a.data.order - b.data.order);
-
 type ServiceAreasSection = typeof translations.es.home.serviceAreas;
 const serviceAreas = tn<ServiceAreasSection>('home.serviceAreas');
 
 const navigation = await buildNavigation(currentLocale);
+
+const services = navigation.find((item) => item.key === 'services')?.children || [];
+services.sort((a, b) => a.data.order - b.data.order);
 
 type navTranslationType = typeof translations.es.nav;
 const navTranslations = tn<navTranslationType>('nav');
@@ -123,14 +123,9 @@ const navTranslations = tn<navTranslationType>('nav');
           <ul class="mt-6 space-y-3 text-sm">
             {
               services.map((service) => {
-                const slug = getEntrySlug(service);
-
                 return (
                   <li>
-                    <a
-                      href={trPath(`/servicios/${slug}`)}
-                      class="hover:text-primary transition-colors"
-                    >
+                    <a href={service.href} class="hover:text-primary transition-colors">
                       {service.data.title}
                     </a>
                   </li>

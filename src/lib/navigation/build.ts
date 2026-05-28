@@ -11,10 +11,13 @@ export async function buildNavigation(locale: Language): Promise<NavigationItem[
 
   services.sort((a, b) => a.data.order - b.data.order);
 
-  const serviceChildren = services.map((service) => ({
-    key: service.data.localizedSlug ?? service.id,
-    href: trPath(`/servicios/${getEntrySlug(service)}`),
-  }));
+  const serviceChildren = services
+    .filter((service) => service.data.type === 'service')
+    .map((service) => ({
+      key: service.data.localizedSlug ?? service.id,
+      href: trPath(`/servicios/${getEntrySlug(service)}`),
+      data: service.data,
+    }));
 
   return [
     {
