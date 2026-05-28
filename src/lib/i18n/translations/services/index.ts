@@ -14,6 +14,9 @@ export const servicesTranslations = {
         description:
           'Servicios de carpintería metálica, soldadura, estructuras metálicas y trabajos en hierro a medida en Barcelona, Maresme y Vallès.',
       },
+      commonJobsTitle: 'Trabajos habituales',
+      commonJobsTitleSpecific: 'Trabajos habituales de {workType}',
+      faqsTitle: 'Preguntas frecuentes',
       seo: servicesSeoTranslations.es.seo,
       hero: servicesHeroTranslations.es,
       workProcess: workProcessTranslations.es,
@@ -30,6 +33,9 @@ export const servicesTranslations = {
         description:
           'Serveis de serralleria metàl·lica, soldadura, estructures metàl·liques i treballs en ferro a mida a Barcelona, Maresme i Vallès.',
       },
+      commonJobsTitle: 'Treballs habituals',
+      commonJobsTitleSpecific: 'Treballs habituals de {workType}',
+      faqsTitle: 'Preguntes freqüents',
       seo: servicesSeoTranslations.ca.seo,
       hero: servicesHeroTranslations.ca,
       workProcess: workProcessTranslations.ca,
@@ -46,6 +52,9 @@ export const servicesTranslations = {
         description:
           'Metalwork, welding, structural steel and custom ironwork services in Barcelona, Maresme and Vallès.',
       },
+      commonJobsTitle: 'Common jobs',
+      commonJobsTitleSpecific: 'Common jobs of {workType}',
+      faqsTitle: 'Frequently asked questions',
       seo: servicesSeoTranslations.en.seo,
       hero: servicesHeroTranslations.en,
       workProcess: workProcessTranslations.en,

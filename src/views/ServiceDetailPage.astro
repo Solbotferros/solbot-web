@@ -6,7 +6,7 @@ import ServiceDetailHero from '@components/services/ServiceDetailHero.astro';
 import FaqAccordion from '@components/shared/FaqAccordion.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
-import { useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+import { interpolate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
@@ -112,12 +112,14 @@ const breadcrumbs = [
 
           <CommonJobsList
             title={service.data.type === 'service-location' && locationLabel
-              ? `Trabajos habituales de ${title.toLowerCase()}`
-              : t('services.commonJobs')}
+              ? interpolate(t('services.commonJobsTitleSpecific'), {
+                  workType: title.toLowerCase(),
+                })
+              : t('services.commonJobsTitle')}
             items={service.data.commonJobs}
           />
 
-          <FaqAccordion title={t('services.faqTitle')} items={service.data.faqs} class="pt-6" />
+          <FaqAccordion title={t('services.faqsTitle')} items={service.data.faqs} class="pt-6" />
         </article>
 
         <div class="mx-auto lg:sticky lg:top-32 lg:self-start">
