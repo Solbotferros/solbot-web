@@ -17,6 +17,18 @@ export const servicesTranslations = {
       commonJobsTitle: 'Trabajos habituales',
       commonJobsTitleSpecific: 'Trabajos habituales de {workType}',
       faqsTitle: 'Preguntas frecuentes',
+      navigation: {
+        eyebrow: 'Servicios relacionados',
+        serviceTitle: 'Servicio disponible por zonas',
+        serviceDescription:
+          'Consulta las páginas específicas de este servicio según la zona donde necesites realizar el trabajo.',
+        localizedTitle: 'Más opciones relacionadas',
+        localizedDescription:
+          'Puedes volver al servicio general, consultar otras zonas o ver servicios relacionados en esta misma ubicación.',
+        availableAreas: 'Zonas disponibles',
+        sameService: 'Este servicio',
+        relatedInArea: 'Servicios relacionados en la zona',
+      },
       seo: servicesSeoTranslations.es.seo,
       hero: servicesHeroTranslations.es,
       workProcess: workProcessTranslations.es,
@@ -36,6 +48,18 @@ export const servicesTranslations = {
       commonJobsTitle: 'Treballs habituals',
       commonJobsTitleSpecific: 'Treballs habituals de {workType}',
       faqsTitle: 'Preguntes freqüents',
+      navigation: {
+        eyebrow: 'Serveis relacionats',
+        serviceTitle: 'Servei disponible per zones',
+        serviceDescription:
+          'Consulta les pàgines específiques d’aquest servei segons la zona on necessitis realitzar el treball.',
+        localizedTitle: 'Més opcions relacionades',
+        localizedDescription:
+          'Pots tornar al servei general, consultar altres zones o veure serveis relacionats en aquesta mateixa ubicació.',
+        availableAreas: 'Zones disponibles',
+        sameService: 'Aquest servei',
+        relatedInArea: 'Serveis relacionats a la zona',
+      },
       seo: servicesSeoTranslations.ca.seo,
       hero: servicesHeroTranslations.ca,
       workProcess: workProcessTranslations.ca,
@@ -55,6 +79,18 @@ export const servicesTranslations = {
       commonJobsTitle: 'Common jobs',
       commonJobsTitleSpecific: 'Common jobs of {workType}',
       faqsTitle: 'Frequently asked questions',
+      navigation: {
+        eyebrow: 'Related services',
+        serviceTitle: 'Service available by area',
+        serviceDescription:
+          'See the specific pages for this service depending on the area where you need the work carried out.',
+        localizedTitle: 'More related options',
+        localizedDescription:
+          'You can return to the general service page, check other areas or view related services in the same location.',
+        availableAreas: 'Available areas',
+        sameService: 'This service',
+        relatedInArea: 'Related services in this area',
+      },
       seo: servicesSeoTranslations.en.seo,
       hero: servicesHeroTranslations.en,
       workProcess: workProcessTranslations.en,

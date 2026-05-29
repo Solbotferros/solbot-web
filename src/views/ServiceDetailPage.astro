@@ -3,6 +3,7 @@ import CommonJobsList from '@components/services/CommonJobsList.astro';
 import ServiceApproach from '@components/services/ServiceApproach.astro';
 import ServiceContactAside from '@components/services/ServiceContactAside.astro';
 import ServiceDetailHero from '@components/services/ServiceDetailHero.astro';
+import ServiceNavigationLinks from '@components/services/ServiceNavigationLinks.astro';
 import FaqAccordion from '@components/shared/FaqAccordion.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
@@ -71,6 +72,10 @@ const relatedProjects = allProjects
   .slice(0, 3)
   .map(({ project }) => project);
 
+const allServices = await getCollection('services', (entry) =>
+  entry.id.endsWith(`/${Astro.currentLocale}`),
+);
+
 const breadcrumbs = [
   { label: t('nav.home'), href: trPath('/') },
   { label: t('nav.services'), href: trPath('/servicios/') },
@@ -126,6 +131,10 @@ const breadcrumbs = [
           <ServiceContactAside title={cta?.title} description={cta?.description} />
         </div>
       </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 lg:px-12">
+      <ServiceNavigationLinks service={service} services={allServices} />
     </section>
 
     <div id="service-related-projects" class="linked-section">
