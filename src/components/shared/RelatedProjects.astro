@@ -30,14 +30,8 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
 ---
 
 <section class="mx-auto max-w-6xl px-4 pb-20">
-  <div class="border-border border-t pt-10">
-    <div class="mb-8 flex items-end justify-between gap-6">
-      <SectionTitle titleTag="h2" title={title} />
-
-      <InlineLink href={viewAllHref}>
-        {viewAllLabel}
-      </InlineLink>
-    </div>
+  <div class="border-border space-y-6 border-t pt-10">
+    <SectionTitle titleTag="h2" title={title} />
 
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
@@ -66,6 +60,11 @@ const getProjectUrl = (project: CollectionEntry<'projects'>) => {
           </a>
         ))
       }
+    </div>
+    <div class="mt-8 flex w-full justify-center lg:mt-12">
+      <InlineLink href={viewAllHref}>
+        {viewAllLabel}
+      </InlineLink>
     </div>
   </div>
 </section>
