@@ -28,10 +28,10 @@ const { title, description, updatedAt } = Astro.props;
       }
     </header>
 
-    <main
+    <div
       class="prose prose-legal prose-headings:tracking-tight prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-7 prose-li:leading-7 prose-a:no-underline hover:prose-a:underline max-w-none"
     >
       <slot />
-    </main>
+    </div>
   </div>
 </Layout>
