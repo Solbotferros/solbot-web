@@ -10,6 +10,7 @@ import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
+import ProjectServiceLinks from '@components/projects/ProjectServiceLinks.astro';
 import Lightbox from '@components/shared/Lightbox.astro';
 import SectionTitle from '@components/shared/SectionTitle.astro';
 import { ensureRouterReady } from '@lib/i18n/router';
@@ -38,6 +39,10 @@ const relatedProjects = allProjects
   .filter((entry) => entry.data.sector === sector || entry.data.service === service)
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
+
+const allServices = await getCollection('services', (entry) =>
+  entry.id.endsWith(`/${Astro.currentLocale}`),
+);
 
 const breadcrumbs = [
   { label: t('nav.home'), href: trPath('/') },
@@ -173,6 +178,12 @@ const lightboxImages = await Promise.all(
         </section>
       )
     }
+
+    <ProjectServiceLinks
+      project={project}
+      services={allServices}
+      class="mx-auto max-w-6xl px-6 lg:px-12"
+    />
 
     <RelatedProjects
       title={t('projects.relatedProjects')}
