@@ -1,5 +1,6 @@
 ---
 import CommonJobsList from '@components/services/CommonJobsList.astro';
+import LocalServiceContext from '@components/services/LocalServiceContext.astro';
 import ServiceApproach from '@components/services/ServiceApproach.astro';
 import ServiceContactAside from '@components/services/ServiceContactAside.astro';
 import ServiceDetailHero from '@components/services/ServiceDetailHero.astro';
@@ -7,11 +8,12 @@ import ServiceNavigationLinks from '@components/services/ServiceNavigationLinks.
 import FaqAccordion from '@components/shared/FaqAccordion.astro';
 import RelatedProjects from '@components/shared/RelatedProjects.astro';
 import Layout from '@layouts/Layout.astro';
+import businessInfo from '@lib/business/info';
 import { interpolate, useTranslatedPath, useTranslations, type Language } from '@lib/i18n/utils';
+
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
-import LocalServiceContext from '@components/services/LocalServiceContext.astro';
 import { ensureRouterReady } from '@lib/i18n/router';
 await ensureRouterReady();
 
@@ -24,9 +26,16 @@ const { service, Content } = Astro.props;
 
 const { title, description, coverImage, coverAlt, approach, cta, seoTitle } = service.data;
 
+const siteUrl = Astro.site?.origin ?? 'https://solbot-ferros.es';
+const currentUrl = `${siteUrl}${Astro.url.pathname}`;
+
 const lang = Astro.currentLocale as Language;
 const trPath = useTranslatedPath(lang);
 const { t } = useTranslations(lang);
+
+const lowercaseFirst = (text: string) => {
+  return text.length > 0 ? `${text.charAt(0).toLowerCase()}${text.slice(1)}` : text;
+};
 
 const allProjects = await getCollection('projects', (entry) =>
   entry.id.endsWith(`/${Astro.currentLocale}`),
@@ -76,6 +85,51 @@ const allServices = await getCollection('services', (entry) =>
   entry.id.endsWith(`/${Astro.currentLocale}`),
 );
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${currentUrl}#service`,
+
+  name: title,
+  description,
+  url: currentUrl,
+  inLanguage: lang,
+
+  provider: {
+    '@id': `${siteUrl}/#localbusiness`,
+  },
+
+  serviceType: service.data.internalTitle ?? title,
+
+  areaServed:
+    service.data.type === 'service-location' && locationLabel
+      ? {
+          '@type': 'AdministrativeArea',
+          name: locationLabel,
+        }
+      : businessInfo.areaServed.map((area) => ({
+          '@type': 'AdministrativeArea',
+          name: area,
+        })),
+};
+
+const faqSchema =
+  service.data.faqs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        inLanguage: lang,
+        mainEntity: service.data.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
+
 const breadcrumbs = [
   { label: t('nav.home'), href: trPath('/') },
   { label: t('nav.services'), href: trPath('/servicios/') },
@@ -83,7 +137,17 @@ const breadcrumbs = [
 ];
 ---
 
-<Layout title={seoTitle ?? title} description={description}>
+<Layout
+  title={seoTitle ?? title}
+  description={description}
+  breadcrumbs={breadcrumbs}
+  showBreadcrumbs={false}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  </Fragment>
+
   <section class="space-y-24">
     <ServiceDetailHero
       title={title}
@@ -118,7 +182,7 @@ const breadcrumbs = [
           <CommonJobsList
             title={service.data.type === 'service-location' && locationLabel
               ? interpolate(t('services.commonJobsTitleSpecific'), {
-                  workType: title.toLowerCase(),
+                  workType: lowercaseFirst(title),
                 })
               : t('services.commonJobsTitle')}
             items={service.data.commonJobs}
@@ -133,15 +197,17 @@ const breadcrumbs = [
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 lg:px-12">
-      <ServiceNavigationLinks service={service} services={allServices} />
-    </section>
+    <ServiceNavigationLinks
+      service={service}
+      services={allServices}
+      class="mx-auto max-w-6xl px-6 lg:px-12"
+    />
 
     <div id="service-related-projects" class="linked-section">
       <RelatedProjects
         title={t('services.relatedProjects')}
         projects={relatedProjects}
-        viewAllHref={trPath(`projects/`)}
+        viewAllHref={trPath(`/projects/`)}
         viewAllLabel={t('services.allProjects')}
       />
     </div>

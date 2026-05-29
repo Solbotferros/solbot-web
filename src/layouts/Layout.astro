@@ -19,6 +19,7 @@ interface Props {
     label: string;
     href?: string;
   }[];
+  showBreadcrumbs?: boolean;
 }
 const {
   title,
@@ -27,6 +28,7 @@ const {
   type = 'website',
   noindex = false,
   breadcrumbs,
+  showBreadcrumbs = true,
 } = Astro.props;
 
 import { locales, defaultLang, localeRegions } from '@lib/i18n/locales';
@@ -267,7 +269,11 @@ const localeToOgLocale = (locale: Language) => `${locale}_${localeRegions[locale
   <body>
     <Header />
     <main>
-      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+      {
+        showBreadcrumbs && breadcrumbs && breadcrumbs.length > 0 && (
+          <Breadcrumbs items={breadcrumbs} />
+        )
+      }
       <slot />
     </main>
     <Footer />
