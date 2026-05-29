@@ -12,6 +12,10 @@ export const projectsTranslations = {
       relatedProjects: 'Más trabajos similares',
       viewAll: 'Ver todos los proyectos',
       gallery: 'Galería del proyecto',
+      relatedServicesEyebrow: 'Servicios relacionados',
+      relatedServicesTitle: 'Servicios aplicados en este proyecto',
+      relatedServicesDescription:
+        'Consulta los servicios relacionados con este trabajo y descubre cómo podemos aplicar soluciones similares a tu proyecto.',
     },
   },
   ca: {
@@ -27,6 +31,10 @@ export const projectsTranslations = {
       relatedProjects: 'Més treballs similars',
       viewAll: 'Veure tots els projectes',
       gallery: 'Galeria del projecte',
+      relatedServicesEyebrow: 'Serveis relacionats',
+      relatedServicesTitle: 'Serveis aplicats en aquest projecte',
+      relatedServicesDescription:
+        'Consulta els serveis relacionats amb aquest treball i descobreix com podem aplicar solucions similars al teu projecte.',
     },
   },
   en: {
@@ -42,6 +50,10 @@ export const projectsTranslations = {
       relatedProjects: 'More similar projects',
       viewAll: 'View all projects',
       gallery: 'Project gallery',
+      relatedServicesEyebrow: 'Related services',
+      relatedServicesTitle: 'Services applied in this project',
+      relatedServicesDescription:
+        'See the services related to this work and discover how we can apply similar solutions to your project.',
     },
   },
 };
