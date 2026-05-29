@@ -5,14 +5,30 @@ interface Props {
   id?: string;
   class?: string;
   showArrow?: boolean; // Optional prop to control arrow visibility
+  target?: string; // Optional prop to control link target
+  rel?: string; // Optional prop to control link rel attribute
 }
 
-const { href, as = href ? 'a' : 'span', id, class: className = '', showArrow = true } = Astro.props;
+const {
+  href,
+  as = href ? 'a' : 'span',
+  id,
+  class: className = '',
+  showArrow = true,
+  target,
+  rel,
+} = Astro.props;
 
 const Tag = as;
 ---
 
-<Tag id={id} href={as === 'a' ? href : undefined} class={`inline-link ${className}`}>
+<Tag
+  id={id}
+  href={as === 'a' ? href : undefined}
+  class={`inline-link ${className}`}
+  target={target}
+  rel={rel}
+>
   <span><slot /></span>
   {
     showArrow && (
