@@ -4,7 +4,7 @@ import type { Language } from '@lib/i18n/types';
 import { getCollection } from 'astro:content';
 import { ImagePlus } from '@lucide/astro';
 import type { translations } from '@lib/i18n/translations';
-import { useTranslations, interpolate } from '@lib/i18n/utils';
+import { useTranslations, interpolate, useTranslatedPath } from '@lib/i18n/utils';
 import { accessIcons, installationPlaceIcons } from '@lib/ui/icons';
 
 const lang = Astro.currentLocale as Language;
@@ -14,6 +14,8 @@ const services = await getCollection(
 );
 
 services.sort((a, b) => a.data.order - b.data.order);
+
+const trPath = useTranslatedPath(lang);
 
 type FormType = typeof translations.es.contact.form;
 const { tn } = useTranslations(lang);
@@ -352,7 +354,31 @@ const ALLOWED_IMAGE_EXTENSIONS = [
         <input id="website" type="text" name="website" tabindex="-1" autocomplete="off" />
       </div>
 
-      <div class="mt-8 flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <label
+        for="privacy"
+        class="mt-8 flex w-fit cursor-pointer items-start gap-3 text-sm leading-6"
+      >
+        <input
+          id="privacy"
+          type="checkbox"
+          name="privacy"
+          value="accepted"
+          required
+          class="accent-primary mt-1 size-4 shrink-0"
+        />
+
+        <span class="text-text-muted">
+          {formTranslations.privacy.acceptText}{' '}
+          <a
+            href={trPath('/legal/privacidad/')}
+            class="text-primary font-semibold underline-offset-4 hover:underline"
+          >
+            {formTranslations.privacy.linkLabel}
+          </a>
+        </span>
+      </label>
+
+      <div class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-text-muted text-sm leading-6">
           {formTranslations.submit.note}
         </p>
@@ -474,6 +500,7 @@ const ALLOWED_IMAGE_EXTENSIONS = [
     invalidMany: string;
     maxExceeded: string;
     removeImage: string;
+    maxTotalSizeExceeded: string;
   };
 
   const maxFiles = Number(fileInput?.dataset.maxFiles ?? 4);

@@ -83,6 +83,13 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ ok: true }, { status: 200 });
   }
 
+  // Check privacy policy acceptance
+  const privacyAccepted = formData.get('privacy')?.toString() === 'accepted';
+
+  if (!privacyAccepted) {
+    return Response.json({ error: 'Privacy policy not accepted' }, { status: 400 });
+  }
+
   // Real validation of form fields
 
   const name = formData.get('name')?.toString().trim() ?? '';

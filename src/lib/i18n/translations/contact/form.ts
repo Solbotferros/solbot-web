@@ -113,6 +113,11 @@ export const formTranslations = {
         removeImage: 'Eliminar imagen',
       },
 
+      privacy: {
+        acceptText: 'He leído y acepto la',
+        linkLabel: 'Política de Privacidad',
+      },
+
       submit: {
         note: 'Te responderemos lo antes posible para comentar detalles y próximos pasos.',
         label: 'Enviar solicitud',
@@ -238,6 +243,11 @@ export const formTranslations = {
         maxExceeded: 'Només pots pujar fins a {max} imatges.',
         maxTotalSizeExceeded: 'Les imatges no poden superar els {max} MB en total.',
         removeImage: 'Eliminar imatge',
+      },
+
+      privacy: {
+        acceptText: 'He llegit i accepto la',
+        linkLabel: 'Política de Privacitat',
       },
 
       submit: {
@@ -366,6 +376,11 @@ export const formTranslations = {
         maxExceeded: 'You can only upload up to {max} images.',
         maxTotalSizeExceeded: 'Images cannot exceed {max} MB in total.',
         removeImage: 'Remove image',
+      },
+
+      privacy: {
+        acceptText: 'I have read and accept the',
+        linkLabel: 'Privacy Policy',
       },
 
       submit: {
