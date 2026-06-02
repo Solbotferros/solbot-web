@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://solbotferros.com/sitemap-index.xml
+Sitemap: https://solbotferros.es/sitemap-index.xml
