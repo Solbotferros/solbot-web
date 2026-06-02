@@ -9,8 +9,11 @@ import { routingConfig } from './src/lib/i18n/routing-config';
 import mdx from '@astrojs/mdx';
 import netlify from '@astrojs/netlify';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://solbotferros.es',
   i18n: {
     defaultLocale: defaultLang,
     locales: locales,
@@ -28,5 +31,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [mdx()],
+  integrations: [mdx(), sitemap()],
 });
