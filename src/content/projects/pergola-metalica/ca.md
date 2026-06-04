@@ -1,10 +1,10 @@
 ---
-title: 'Pèrgola metàl·lica a mida per a pati exterior en habitatge del Maresme'
-description: 'Fabricació i instal·lació de pèrgola metàl·lica a mida per a pati exterior, amb estructura resistent i disseny funcional adaptat a un habitatge del Maresme.'
+title: 'Pèrgola metàl·lica a mida per a pati exterior en habitatge de  Sant Fost de Campsentelles'
+description: 'Fabricació i instal·lació de pèrgola metàl·lica a mida per a pati exterior, amb estructura resistent i disseny funcional adaptat a un habitatge de  Sant Fost de Campsentelles.'
 localizedSlug: 'pergola-metallica-a-mida-pati-habitatge-maresme'
 
 location:
-  name: 'Maresme'
+  name: 'Sant Fost de Campsentelles'
   province: 'Barcelona'
   area: 'Maresme'
   slug: 'maresme'

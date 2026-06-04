@@ -1,10 +1,10 @@
 ---
-title: 'Custom metal pergola for an outdoor patio in a home in the Maresme'
-description: 'Fabrication and installation of a custom metal pergola for an outdoor patio, with a resistant structure and functional design adapted to a home in the Maresme.'
+title: 'Custom metal pergola for an outdoor patio in a home in  Sant Fost de Campsentelles'
+description: 'Fabrication and installation of a custom metal pergola for an outdoor patio, with a resistant structure and functional design adapted to a home in Sant Fost de Campsentelles.'
 localizedSlug: 'custom-metal-pergola-outdoor-patio-home-maresme'
 
 location:
-  name: 'Maresme'
+  name: 'Sant Fost de Campsentelles'
   province: 'Barcelona'
   area: 'Maresme'
   slug: 'maresme'

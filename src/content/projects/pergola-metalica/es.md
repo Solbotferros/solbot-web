@@ -1,10 +1,10 @@
 ---
-title: 'Pérgola metálica a medida para patio exterior en vivienda del Maresme'
-description: 'Fabricación e instalación de pérgola metálica a medida para patio exterior, con estructura resistente y diseño funcional adaptado a una vivienda del Maresme.'
+title: 'Pérgola metálica a medida para patio exterior en vivienda Sant Fost de Campsentelles'
+description: 'Fabricación e instalación de pérgola metálica a medida para patio exterior, con estructura resistente y diseño funcional adaptado a una vivienda de Sant Fost de Campsentelles.'
 localizedSlug: 'pergola-metalica-a-medida-patio-vivienda-maresme'
 
 location:
-  name: 'Maresme'
+  name: 'Sant Fost de Campsentelles'
   province: 'Barcelona'
   area: 'Maresme'
   slug: 'maresme'
