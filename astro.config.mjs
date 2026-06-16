@@ -13,7 +13,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://solbotferros.es',
+  site: 'https://www.solbotferros.es',
   i18n: {
     defaultLocale: defaultLang,
     locales: locales,
